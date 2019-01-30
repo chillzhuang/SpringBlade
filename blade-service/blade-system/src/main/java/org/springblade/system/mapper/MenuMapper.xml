@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.system.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="menuResultMap" type="org.springblade.system.entity.Menu">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="alias" property="alias"/>
+        <result column="path" property="path"/>
+        <result column="source" property="source"/>
+        <result column="sort" property="sort"/>
+        <result column="category" property="category"/>
+        <result column="action" property="action"/>
+        <result column="is_open" property="isOpen"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <resultMap id="treeNodeResultMap" type="org.springblade.core.tool.node.TreeNode">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="title" property="title"/>
+        <result column="value" property="value"/>
+        <result column="key" property="key"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="baseColumnList">
+        select
+        id, code, parent_code, name, alias, path, source, sort, category, action, is_open, remark, is_deleted
+    </sql>
+
+    <select id="selectMenuPage" resultMap="menuResultMap">
+        select * from blade_menu where is_deleted = 0
+    </select>
+
+    <select id="tree" resultMap="treeNodeResultMap">
+        select id, parent_id, name as title, id as `value`, id as `key` from blade_menu where is_deleted = 0 and category = 1
+    </select>
+
+    <select id="allMenu" resultMap="menuResultMap">
+        select * from blade_menu where is_deleted = 0 and category = 1
+    </select>
+
+    <select id="roleMenu" resultMap="menuResultMap">
+        select * from blade_menu where is_deleted = 0 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach> )
+    </select>
+
+    <select id="routes" resultMap="menuResultMap">
+        SELECT
+            *
+        FROM
+            blade_menu
+        WHERE
+            category = 1
+            AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+                        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach> )
+    </select>
+
+    <select id="buttons" resultMap="menuResultMap">
+        SELECT
+            id,
+            parent_id,
+            `code`,
+            `name`,
+            alias,
+            path,
+            source,
+            action,
+            sort
+        FROM
+            blade_menu
+        WHERE
+            id IN (
+              SELECT parent_id FROM blade_menu
+              WHERE ( category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+                <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+              ) ) )
+
+        UNION ALL
+
+        SELECT
+            id,
+            parent_id,
+            `code`,
+            `name`,
+            alias,
+            path,
+            source,
+            action,
+            sort
+        FROM
+            blade_menu
+        WHERE
+            ( category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>) )
+    </select>
+
+    <select id="grantTree" resultMap="treeNodeResultMap">
+        select id, parent_id, name as title, id as `value`, id as `key` from blade_menu where is_deleted = 0
+    </select>
+
+    <select id="authRoutes" resultType="org.springblade.system.dto.MenuDTO">
+        SELECT
+            GROUP_CONCAT(r.role_alias) as alias,
+            m.path
+        FROM
+            blade_role_menu rm
+            LEFT JOIN blade_menu m ON rm.menu_id = m.id
+            LEFT JOIN blade_role r ON rm.role_id = r.id
+        WHERE
+            rm.role_id IN
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            AND m.path IS NOT NULL
+        GROUP BY m.path
+    </select>
+
+</mapper>

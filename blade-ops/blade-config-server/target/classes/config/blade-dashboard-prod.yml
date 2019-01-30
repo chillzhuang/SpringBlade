@@ -1,0 +1,4 @@
+blade:
+  modules:
+    id: 1
+    name: dashboard-prod

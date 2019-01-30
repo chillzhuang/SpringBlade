@@ -1,0 +1,9 @@
+#数据源配置
+server:
+  port: 8103
+
+spring:
+  datasource:
+    url: ${blade.datasource.test.url}
+    username: ${blade.datasource.test.username}
+    password: ${blade.datasource.test.password}

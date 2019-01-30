@@ -1,0 +1,26 @@
+#set($params="$" + "{stringify" + "(params)" + "}")
+import { stringify } from 'qs';
+import func from '../utils/Func';
+import request from '../utils/request';
+
+export async function list(params) {
+  return request(`/api/$!{cfg.serviceName}/$!{table.entityPath}/list?$!{params}`);
+}
+
+export async function submit(params) {
+  return request('/api/$!{cfg.serviceName}/$!{table.entityPath}/submit', {
+    method: 'POST',
+    body: params,
+  });
+}
+
+export async function detail(params) {
+  return request(`/api/$!{cfg.serviceName}/$!{table.entityPath}/detail?$!{params}`);
+}
+
+export async function remove(params) {
+  return request('/api/$!{cfg.serviceName}/$!{table.entityPath}/remove', {
+    method: 'POST',
+    body: func.toFormData(params),
+  });
+}
