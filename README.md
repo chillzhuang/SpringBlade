@@ -2,8 +2,11 @@
 * SpringBlade 2.0 是如梦技术团队作品，是一个基于 Spring Boot 2 & Spring Cloud Finchley & Mybatis 等核心技术，用于快速构建中大型系统的基础框架。
 * SpringBlade 致力于创造新颖的开发模式，将开发中遇到的痛点、生产中所踩的坑整理归纳，并将解决方案都融合到框架中。
 
+## 官网
+官网地址: [https://bladex.vip](https://bladex.vip)
+
 ## 在线演示
-演示地址：[http://sword.bladex.vip](http://sword.bladex.vip)
+演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
 
 ## 主要特性&&变化
 * 采用前后端分离的模式，前端单独开源出一个框架：[Sword](https://gitee.com/smallc/Sword)，主要选型技术为React、Ant Design、Umi、Dva
