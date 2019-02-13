@@ -3,7 +3,7 @@
 * SpringBlade 致力于创造新颖的开发模式，将开发中遇到的痛点、生产中所踩的坑整理归纳，并将解决方案都融合到框架中。
 
 ## 官网
-官网地址: [https://bladex.vip](https://bladex.vip)
+官网地址：[https://bladex.vip](https://bladex.vip)
 
 ## 在线演示
 演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
@@ -12,13 +12,17 @@
 * 采用前后端分离的模式，前端单独开源出一个框架：[Sword](https://gitee.com/smallc/Sword)，主要选型技术为React、Ant Design、Umi、Dva
 * 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[Blade-Tool](https://github.com/chillzhuang/blade-tool.git)
 * [Blade-Tool](https://github.com/chillzhuang/blade-tool.git)已推送至Maven中央库，直接引入即可，减少了工程的臃肿，也可更注重于业务开发
-* 注册中心选型Consul
+* 集成Sentinel从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。
+* 注册中心、配置中心选型Nacos，为工程瘦身的同时加强各模块之间的联动。
+* 使用Traefik进行反向代理，监听后台变化自动化应用新的配置文件。
 * 部署使用Docker或K8s + Jenkins
-* 使用Traefik进行反向代理
 * 踩了踩Kong的坑，有个基本的使用方案，但不深入，因为涉及到OpenResty。
 * 封装了简单的Secure模块，采用JWT做Token认证，可拓展集成Redis等细颗粒度控制方案
 * 在2.0诞生之前，已经稳定生产了近一年，经历了从Camden -> Finchley的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构
 * 项目分包明确，规范微服务的开发模式，使包与包之间的分工清晰。
+
+## 会员计划及交流群
+* [会员计划及交流群](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
 
 ## 技术文档
 * [SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
@@ -32,7 +36,6 @@ SpringBlade
 ├── blade-ops -- 运维中心
 ├    ├── blade-admin -- spring-cloud后台管理
 ├    ├── blade-codegen -- 代码生成
-├    └── blade-config-server -- 配置中心
 ├── blade-service -- 业务模块
 ├    ├── blade-desk -- 工作台模块 
 ├    ├── blade-log -- 日志模块 
@@ -72,14 +75,6 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
 
 注意：若禁止条款被发现有权追讨19999的授权费。
 
-## 如何启动
-* 安装Lombok Plugin、idea可选装MyBatisX
-* [开启consul](https://gitee.com/smallc/SpringBlade/blob/master/doc/consul/consul.md)，redis，mysql
-* fork ([bladex-config](https://gitee.com/smallc/bladex-config))项目，修改数据库等相关链接
-* 修改 `blade-config-server` 工程 `bootstrap.yml中config.server.git.uri` 的值为新fork项目的地址
-* 先启动 `blade-config-server`
-* 再依次启动其余模块
-
 ## 注
 * SpringBlade前端UI项目地址：[Sword](https://gitee.com/smallc/Sword)
 * SpringBlade核心框架项目地址：[Blade-Tool](https://github.com/chillzhuang/blade-tool.git)
@@ -101,8 +96,8 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-traefik-health.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-consul.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-consul-nodes1.png"/></td>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-nacos.png"/></td>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-sentinel.png"/></td>
     </tr>
     <tr>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-admin1.png"/></td>

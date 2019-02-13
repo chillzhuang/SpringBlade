@@ -1,14 +1,14 @@
 
 #使用说明，用来提示输入参数
 usage() {
-	echo "Usage: sh 执行脚本.sh [port|base|modules|stop|rm|rmiNoneTag|services|health]"
+	echo "Usage: sh 执行脚本.sh [port|base|modules|stop|rm|rmiNoneTag]"
 	exit 1
 }
 
 #开启所需端口
 port(){
 	firewall-cmd --add-port=88/tcp --permanent
-	firewall-cmd --add-port=8500/tcp --permanent
+	firewall-cmd --add-port=8848/tcp --permanent
 	firewall-cmd --add-port=3306/tcp --permanent
 	firewall-cmd --add-port=3379/tcp --permanent
 	firewall-cmd --add-port=7002/tcp --permanent
@@ -21,24 +21,12 @@ base(){
 		mkdir /docker/nginx
 		cp nginx.conf /docker/nginx/nginx.conf
 	fi
-	docker-compose up -d consul-server1 consul-server2 consul-server3 consul-node1 consul-node2 consul-nginx blade-redis blade-gateway1 blade-gateway2 blade-gateway3 blade-config-server blade-admin
+	docker-compose up -d blade-nginx blade-redis blade-gateway1 blade-gateway2 blade-gateway3 blade-admin
 }
 
 #启动程序模块
 modules(){
 	docker-compose up -d blade-auth blade-user blade-desk blade-system blade-log
-}
-
-#获取注册服务
-services(){
-	RESULT=$(curl -s 127.0.0.1:8500/v1/catalog/services)
-	echo $RESULT
-}
-
-#获取检查健康
-health(){
-	RESULT=$(curl -s 127.0.0.1:8500/v1/health/checks/blade-config-server)
-	echo $RESULT
 }
 
 #关闭所有模块
@@ -75,12 +63,6 @@ case "$1" in
 ;;
 "rmiNoneTag")
 	rmiNoneTag
-;;
-"services")
-	services
-;;
-"health")
-	health
 ;;
 *)
 	usage

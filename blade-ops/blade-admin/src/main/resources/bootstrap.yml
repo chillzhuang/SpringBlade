@@ -11,20 +11,7 @@ server:
     direct-buffers: true
 
 spring:
-  cloud:
-    zookeeper:
-      discovery:
-        register: false
   boot:
     admin:
       discovery:
         ignored-services: consul
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always

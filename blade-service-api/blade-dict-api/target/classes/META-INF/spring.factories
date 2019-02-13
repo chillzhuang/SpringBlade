@@ -1,4 +1,0 @@
-net.dreamlu.mica.feign.MicaFeignAutoConfiguration=\
-  org.springblade.system.feign.IDictClient
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.springblade.system.config.DictFeignConfiguration

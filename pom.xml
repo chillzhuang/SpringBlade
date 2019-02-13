@@ -5,12 +5,12 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>2.0.0-RC3</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>1.0.0-RC6</blade.tool.version>
-        <blade.project.version>2.0.0-RC3</blade.project.version>
+        <blade.tool.version>2.0.0</blade.tool.version>
+        <blade.project.version>2.0.0</blade.project.version>
 
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
@@ -19,10 +19,11 @@
         <mybatis.plus.version>3.0.7.1</mybatis.plus.version>
         <curator.framework.version>4.0.1</curator.framework.version>
         <protostuff.version>1.6.0</protostuff.version>
-        <mica.auto.version>1.0.0</mica.auto.version>
+        <mica.auto.version>1.0.1</mica.auto.version>
+        <alibaba.cloud.version>0.2.1.RELEASE</alibaba.cloud.version>
         <spring.boot.admin.version>2.0.2</spring.boot.admin.version>
 
-        <spring.boot.version>2.0.7.RELEASE</spring.boot.version>
+        <spring.boot.version>2.0.8.RELEASE</spring.boot.version>
         <spring.cloud.version>Finchley.SR2</spring.cloud.version>
         <spring.platform.version>Cairo-SR5</spring.platform.version>
 
@@ -79,10 +80,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>net.dreamlu</groupId>
-            <artifactId>mica-auto</artifactId>
-            <version>${mica.auto.version}</version>
-            <scope>provided</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

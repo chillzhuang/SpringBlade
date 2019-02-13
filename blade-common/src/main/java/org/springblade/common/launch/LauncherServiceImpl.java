@@ -32,8 +32,9 @@ public class LauncherServiceImpl implements LauncherService {
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
-		props.setProperty("spring.cloud.consul.host", profile.equals(AppConstant.DEV_CDOE) ? CommonConstant.CONSUL_DEV_HOST : CommonConstant.CONSUL_PROD_HOST);
-		props.setProperty("spring.cloud.consul.port", CommonConstant.CONSUL_PORT);
+		props.setProperty("spring.cloud.nacos.discovery.server-addr", profile.equals(AppConstant.DEV_CDOE) ? CommonConstant.NACOS_DEV_ADDR : CommonConstant.NACOS_PROD_ADDR);
+		props.setProperty("spring.cloud.nacos.config.server-addr", profile.equals(AppConstant.DEV_CDOE) ? CommonConstant.NACOS_DEV_ADDR : CommonConstant.NACOS_PROD_ADDR);
+		props.setProperty("spring.cloud.sentinel.transport.dashboard", profile.equals(AppConstant.DEV_CDOE) ? CommonConstant.SENTINEL_DEV_ADDR : CommonConstant.SENTINEL_PROD_ADDR);
 	}
 
 }

@@ -10,13 +10,6 @@ blade:
 
 spring:
   cloud:
-    config:
-      label: master
-      profile: ${blade.env}
-      fail-fast: true
-      discovery:
-        enabled: true
-        service-id: blade-config-server
     gateway:
       routes:
       # 认证中心

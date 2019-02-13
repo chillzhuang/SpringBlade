@@ -1,71 +1,8 @@
 version: '3'
 services:
-  consul-server1:
-    image: consul:1.3.1
-    hostname: "consul-server1"
-    volumes:
-    - /docker/consul/data1:/consul/data
-    command: "agent -server -bootstrap-expect 3 -ui -disable-host-node-id -client 0.0.0.0"
-    privileged: true
-    restart: always
-    networks:
-      blade_net:
-        ipv4_address: 172.30.0.51
 
-  consul-server2:
-    image: consul:1.3.1
-    depends_on:
-    - consul-server1
-    hostname: "consul-server2"
-    volumes:
-    - /docker/consul/data2:/consul/data
-    command: "agent -server -ui -join consul-server1 -disable-host-node-id -client 0.0.0.0"
-    privileged: true
-    restart: always
-    networks:
-      blade_net:
-        ipv4_address: 172.30.0.52
-
-  consul-server3:
-    image: consul:1.3.1
-    depends_on:
-    - consul-server1
-    hostname: "consul-server3"
-    volumes:
-    - /docker/consul/data3:/consul/data
-    command: "agent -server -ui -join consul-server1 -disable-host-node-id -client 0.0.0.0"
-    privileged: true
-    restart: always
-    networks:
-      blade_net:
-        ipv4_address: 172.30.0.53
-
-  consul-node1:
-    image: consul:1.3.1
-    depends_on:
-    - consul-server1
-    hostname: "consul-node1"
-    command: "agent -join consul-server1 -disable-host-node-id"
-    privileged: true
-    restart: always
-    networks:
-    - blade_net
-
-  consul-node2:
-    image: consul:1.3.1
-    depends_on:
-    - consul-server1
-    hostname: "consul-node2"
-    command: "agent -join consul-server1 -disable-host-node-id"
-    privileged: true
-    restart: always
-    networks:
-    - blade_net
-
-  consul-nginx:
+  blade-nginx:
     image: nginx:stable-alpine-perl
-    depends_on:
-    - consul-server1
     hostname: "consul-nginx"
     ports:
     - 8500:8500
@@ -90,19 +27,8 @@ services:
     networks:
     - blade_net
 
-  blade-config-server:
-    image: "${REGISTER}/blade-config-server:${TAG}"
-    depends_on:
-    - consul-server1
-    privileged: true
-    restart: always
-    networks:
-    - blade_net
-
   blade-admin:
     image: "${REGISTER}/blade-admin:${TAG}"
-    depends_on:
-    - blade-config-server
     ports:
     - 7002:7002
     privileged: true
@@ -112,8 +38,6 @@ services:
 
   blade-gateway1:
     image: "${REGISTER}/blade-gateway:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -122,8 +46,6 @@ services:
 
   blade-gateway2:
     image: "${REGISTER}/blade-gateway:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -132,8 +54,6 @@ services:
 
   blade-gateway3:
     image: "${REGISTER}/blade-gateway:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -142,8 +62,6 @@ services:
 
   blade-auth:
     image: "${REGISTER}/blade-auth:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -151,8 +69,6 @@ services:
 
   blade-log:
     image: "${REGISTER}/blade-log:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -160,8 +76,6 @@ services:
 
   blade-desk:
     image: "${REGISTER}/blade-desk:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -169,8 +83,6 @@ services:
 
   blade-user:
     image: "${REGISTER}/blade-user:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:
@@ -178,8 +90,6 @@ services:
 
   blade-system:
     image: "${REGISTER}/blade-system:${TAG}"
-    depends_on:
-    - blade-config-server
     privileged: true
     restart: always
     networks:

@@ -1,12 +1,2 @@
 server:
   port: 8100
-
-spring:
-  cloud:
-    config:
-      label: master
-      profile: ${blade.env}
-      fail-fast: true
-      discovery:
-        enabled: true
-        service-id: blade-config-server

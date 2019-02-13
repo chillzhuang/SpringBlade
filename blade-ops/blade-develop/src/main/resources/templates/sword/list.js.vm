@@ -52,7 +52,7 @@ class $!{entity} extends PureComponent {
     const {
       form,
       loading,
-      param: { data },
+      $!{table.entityPath}: { data },
     } = this.props;
 
     const columns = [
