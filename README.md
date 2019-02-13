@@ -8,6 +8,10 @@
 ## 在线演示
 演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
 
+## 项目地址
+* [github](https://github.com/chillzhuang/SpringBlade)
+* [gitee](https://gitee.com/smallc/SpringBlade)
+
 ## 主要特性&&变化
 * 采用前后端分离的模式，前端单独开源出一个框架：[Sword](https://github.com/chillzhuang/Sword)，主要选型技术为React、Ant Design、Umi、Dva
 * 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://github.com/chillzhuang/blade-tool.git)
