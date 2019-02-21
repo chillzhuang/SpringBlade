@@ -30,6 +30,7 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.system.feign.IDictClient;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.service.IUserService;
+import org.springblade.system.user.vo.UserVO;
 import org.springblade.system.user.wrapper.UserWrapper;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -56,7 +57,7 @@ public class UserController {
 	 */
 	@ApiOperation(value = "查看详情", notes = "传入id", position = 1)
 	@GetMapping("/detail")
-	public R<User> detail(User user) {
+	public R<UserVO> detail(User user) {
 		User detail = userService.getOne(Condition.getQueryWrapper(user));
 		UserWrapper userWrapper = new UserWrapper(userService, dictClient);
 		return R.data(userWrapper.entityVO(detail));
@@ -71,9 +72,10 @@ public class UserController {
 		@ApiImplicitParam(name = "realName", value = "姓名", paramType = "query", dataType = "string")
 	})
 	@ApiOperation(value = "列表", notes = "传入account和realName", position = 2)
-	public R<IPage<User>> list(@ApiIgnore @RequestParam Map<String, Object> user, Query query) {
+	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam Map<String, Object> user, Query query) {
 		IPage<User> pages = userService.page(Condition.getPage(query), Condition.getQueryWrapper(user, User.class));
-		return R.data(pages);
+		UserWrapper userWrapper = new UserWrapper(userService, dictClient);
+		return R.data(userWrapper.pageVO(pages));
 	}
 
 	/**

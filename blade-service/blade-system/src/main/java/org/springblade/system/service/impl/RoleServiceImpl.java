@@ -69,8 +69,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 			roleMenus.add(roleMenu);
 		}));
 		// 新增配置
-		roleMenuService.saveBatch(roleMenus);
-		return true;
+		return roleMenuService.saveBatch(roleMenus);
 	}
 
 }

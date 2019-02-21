@@ -18,10 +18,10 @@ spring:
 
 #feign配置
 feign:
-  #hystrix:
-    #enabled: true
-  sentinel:
+  hystrix:
     enabled: true
+  #sentinel:
+    #enabled: true
   okhttp:
     enabled: true
   httpclient:
@@ -39,7 +39,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 720000
+            timeoutInMilliseconds: 5000
 
 #ribbon配置
 ribbon:

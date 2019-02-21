@@ -19,7 +19,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.node.ForestNodeMerger;
+import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.dto.MenuDTO;
 import org.springblade.system.entity.Menu;
@@ -31,10 +33,7 @@ import org.springblade.system.vo.MenuVO;
 import org.springblade.system.wrapper.MenuWrapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -98,8 +97,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	}
 
 	@Override
-	public List<MenuDTO> authRoutes(List<Integer> roleIds) {
-		return baseMapper.authRoutes(roleIds);
+	public List<Kv> authRoutes(BladeUser user) {
+		if (Func.isEmpty(user)) {
+			return null;
+		}
+		List<MenuDTO> routes = baseMapper.authRoutes(Func.toIntList(user.getRoleId()));
+		List<Kv> list = new ArrayList<>();
+		routes.forEach(route -> list.add(Kv.init().set(route.getPath(), Kv.init().set("authority", Func.toStrArray(route.getAlias())))));
+		return list;
 	}
 
 }

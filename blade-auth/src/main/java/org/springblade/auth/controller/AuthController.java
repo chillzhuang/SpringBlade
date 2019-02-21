@@ -62,7 +62,7 @@ public class AuthController {
 		User user = res.getData().getUser();
 
 		//验证用户
-		if (user == null) {
+		if (user == null || Func.isEmpty(user.getId())) {
 			return R.fail("用户名或密码不正确");
 		}
 

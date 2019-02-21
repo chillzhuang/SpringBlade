@@ -30,7 +30,7 @@ class $!{entity}View extends PureComponent {
         params: { id },
       },
     } = this.props;
-    router.push(`/$!{cfg.servicePackage}/$!{table.entityPath}/edit/${id}`);
+    router.push(`/$!{cfg.servicePackage}/$!{table.entityPath}/edit/$!{id}`);
   };
 
   render() {

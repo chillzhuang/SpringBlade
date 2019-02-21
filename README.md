@@ -6,17 +6,23 @@
 * 官网地址：[https://bladex.vip](https://bladex.vip)
 
 ## 在线演示
-* 演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
+* Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
+* Saber演示地址：[https://saber.avue.top](https://saber.avue.top)
 
-## 项目地址
-* [github](https://github.com/chillzhuang/SpringBlade)
-* [gitee](https://gitee.com/smallc/SpringBlade)
+## 后端项目地址
+* [Gitee地址](https://gitee.com/smallc/SpringBlade)
+* [Github地址](https://github.com/chillzhuang/SpringBlade)
+
+## 前端项目地址
+* [Sword--基于React](https://gitee.com/smallc/Sword)
+* [Saber--基于Vue](https://gitee.com/smallc/Saber)
 
 ## 主要特性&&变化
-* 采用前后端分离的模式，前端单独开源出一个框架：[Sword](https://github.com/chillzhuang/Sword)，主要选型技术为React、Ant Design、Umi、Dva
-* 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://github.com/chillzhuang/blade-tool.git)
-* [BladeTool](https://github.com/chillzhuang/blade-tool.git)已推送至Maven中央库，直接引入即可，减少了工程的臃肿，也可更注重于业务开发
-* 集成Sentinel从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。
+* 采用前后端分离的模式，前端开源出一个基于React的框架：[Sword](https://gitee.com/smallc/Sword)，主要选型技术为React、Ant Design、Umi、Dva
+* 采用前后端分离的模式，前端开源出一个基于Vue的框架：[Saber](https://gitee.com/smallc/Saber)，主要选型技术为Vue、VueX、Avue、Element-UI
+* 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://github.com/chillzhuang/blade-tool)
+* [BladeTool](https://github.com/chillzhuang/blade-tool)已推送至Maven中央库，直接引入即可，减少了工程的臃肿，也可更注重于业务开发
+* 集成Sentinel从流量控制、熔断降级、系统负载等多个维度保护服务的稳定性。
 * 注册中心、配置中心选型Nacos，为工程瘦身的同时加强各模块之间的联动。
 * 使用Traefik进行反向代理，监听后台变化自动化应用新的配置文件。
 * 部署使用Docker或K8s + Jenkins
@@ -31,6 +37,9 @@
 ## 技术文档
 * [SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
 
+## 单工程SpringBoot版
+* [SpringBoot版](https://gitee.com/smallc/SpringBlade/tree/2.0-boot/)
+
 ## 工程结构
 ``` 
 SpringBlade
@@ -39,7 +48,7 @@ SpringBlade
 ├── blade-gateway -- Spring Cloud 网关
 ├── blade-ops -- 运维中心
 ├    ├── blade-admin -- spring-cloud后台管理
-├    ├── blade-codegen -- 代码生成
+├    ├── blade-develop -- 代码生成
 ├── blade-service -- 业务模块
 ├    ├── blade-desk -- 工作台模块 
 ├    ├── blade-log -- 日志模块 
@@ -80,12 +89,14 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
 注意：若禁止条款被发现有权追讨19999的授权费。
 
 ## 注
-* SpringBlade前端UI项目地址：[Sword](https://gitee.com/smallc/Sword)
-* SpringBlade核心框架项目地址：[Blade-Tool](https://github.com/chillzhuang/blade-tool.git)
-* SpringBlade交流群：`477853168`
+* 前端UI项目地址(基于React)：[Sword](https://gitee.com/smallc/Sword)
+* 前端UI项目地址(基于Vue)：[Saber](https://gitee.com/smallc/Saber)
+* 核心框架项目地址：[BladeTool](https://github.com/chillzhuang/blade-tool.git)
+* 交流群：`477853168`
 
 
-# 界面一览
+# 界面
+## 监控界面一览
 <table>
     <tr>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-k8s1.png"/></td>
@@ -111,6 +122,10 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-swagger1.png"/></td>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-swagger2.png"/></td>
     </tr>
+</table>
+
+## Sword界面一览
+<table>
     <tr>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-main.png"/></td>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-menu.png"/></td>
@@ -130,5 +145,21 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
     <tr>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-locale-cn.png"/></td>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-locale-us.png"/></td>
+    </tr>
+</table>
+
+## Saber界面一览
+<table>
+    <tr>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-user.png"/></td>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-role.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-dict.png"/></td>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-dict-select.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-log.png"/></td>
+        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-code.png"/></td>
     </tr>
 </table>
