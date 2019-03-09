@@ -23,7 +23,6 @@ import org.springblade.system.entity.RoleMenu;
  * 数据传输对象实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -15,6 +15,8 @@ spring:
   devtools:
     restart:
       log-condition-evaluation-delta: false
+    livereload:
+      port: 23333
 
 #feign配置
 feign:
@@ -63,3 +65,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+# 租户表维护
+blade:
+  tenant:
+    column: tenant_code
+    tables:
+      - blade_notice

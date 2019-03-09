@@ -15,11 +15,14 @@
  */
 package org.springblade.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
+import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Dept;
@@ -37,7 +40,6 @@ import java.util.Map;
  * 控制器
  *
  * @author Chill
- * @since 2018-12-24
  */
 @RestController
 @AllArgsConstructor
@@ -67,8 +69,9 @@ public class DeptController extends BladeController {
 		@ApiImplicitParam(name = "fullName", value = "部门全称", paramType = "query", dataType = "string")
 	})
 	@ApiOperation(value = "列表", notes = "传入dept", position = 2)
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dept) {
-		List<Dept> list = deptService.list(Condition.getQueryWrapper(dept, Dept.class));
+	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dept, BladeUser bladeUser) {
+		QueryWrapper<Dept> queryWrapper = Condition.getQueryWrapper(dept, Dept.class);
+		List<Dept> list = deptService.list((!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Dept::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
 		DeptWrapper deptWrapper = new DeptWrapper();
 		return R.data(deptWrapper.listNodeVO(list));
 	}
@@ -80,8 +83,8 @@ public class DeptController extends BladeController {
 	 */
 	@GetMapping("/tree")
 	@ApiOperation(value = "树形结构", notes = "树形结构", position = 3)
-	public R<List<DeptVO>> tree() {
-		List<DeptVO> tree = deptService.tree();
+	public R<List<DeptVO>> tree(String tenantCode, BladeUser bladeUser) {
+		List<DeptVO> tree = deptService.tree(Func.toStr(tenantCode, bladeUser.getTenantCode()));
 		return R.data(tree);
 	}
 
@@ -90,16 +93,18 @@ public class DeptController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入dept", position = 6)
-	public R submit(@Valid @RequestBody Dept dept) {
+	public R submit(@Valid @RequestBody Dept dept, BladeUser user) {
+		if (Func.isEmpty(dept.getId())) {
+			dept.setTenantCode(user.getTenantCode());
+		}
 		return R.status(deptService.saveOrUpdate(dept));
 	}
-
 
 	/**
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "物理删除", notes = "传入ids", position = 7)
+	@ApiOperation(value = "删除", notes = "传入ids", position = 7)
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(deptService.removeByIds(Func.toIntList(ids)));
 	}

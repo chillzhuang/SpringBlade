@@ -27,7 +27,6 @@ import java.util.List;
  * 服务类
  *
  * @author Chill
- * @since 2018-12-24
  */
 public interface IRoleService extends IService<Role> {
 
@@ -43,9 +42,10 @@ public interface IRoleService extends IService<Role> {
 	/**
 	 * 树形结构
 	 *
+	 * @param tenantCode
 	 * @return
 	 */
-	List<RoleVO> tree();
+	List<RoleVO> tree(String tenantCode);
 
 	/**
 	 * 权限配置

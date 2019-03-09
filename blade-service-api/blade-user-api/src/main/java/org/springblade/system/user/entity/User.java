@@ -18,7 +18,7 @@ package org.springblade.system.user.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springblade.core.mp.base.BaseEntity;
+import org.springblade.core.mp.base.TenantEntity;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @Data
 @TableName("blade_user")
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity {
+public class User extends TenantEntity {
 
 	private static final long serialVersionUID = 1L;
 

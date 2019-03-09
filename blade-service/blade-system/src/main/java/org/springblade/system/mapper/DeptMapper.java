@@ -26,7 +26,6 @@ import java.util.List;
  * Mapper 接口
  *
  * @author Chill
- * @since 2018-12-24
  */
 public interface DeptMapper extends BaseMapper<Dept> {
 
@@ -42,8 +41,9 @@ public interface DeptMapper extends BaseMapper<Dept> {
 	/**
 	 * 获取树形节点
 	 *
+	 * @param tenantCode
 	 * @return
 	 */
-	List<DeptVO> tree();
+	List<DeptVO> tree(String tenantCode);
 
 }

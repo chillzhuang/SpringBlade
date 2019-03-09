@@ -24,7 +24,6 @@ import org.springblade.system.vo.ParamVO;
  * 服务类
  *
  * @author Chill
- * @since 2018-12-28
  */
 public interface IParamService extends BaseService<Param> {
 

@@ -8,6 +8,7 @@ usage() {
 #开启所需端口
 port(){
 	firewall-cmd --add-port=88/tcp --permanent
+	firewall-cmd --add-port=8000/tcp --permanent
 	firewall-cmd --add-port=8848/tcp --permanent
 	firewall-cmd --add-port=3306/tcp --permanent
 	firewall-cmd --add-port=3379/tcp --permanent
@@ -17,9 +18,14 @@ port(){
 
 #启动基础模块
 base(){
-	if test ! -f "/docker/nginx/nginx.conf" ;then
-		mkdir /docker/nginx
-		cp nginx.conf /docker/nginx/nginx.conf
+	if test ! -f "/docker/nginx/gateway/nginx.conf" ;then
+		mkdir /docker/nginx/gateway
+		cp /nginx/gateway/nginx.conf /docker/nginx/gateway/nginx.conf
+	fi
+	if test ! -f "/docker/nginx/web/nginx.conf" ;then
+		mkdir /docker/nginx/web
+		cp /nginx/web/nginx.conf /docker/nginx/web/nginx.conf
+		cp /nginx/web/html /docker/nginx/web/html
 	fi
 	docker-compose up -d blade-nginx blade-redis blade-gateway1 blade-gateway2 blade-gateway3 blade-admin
 }

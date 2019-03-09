@@ -24,7 +24,6 @@ import org.springblade.system.entity.Param;
  * 视图实体类
  *
  * @author Chill
- * @since 2018-12-28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

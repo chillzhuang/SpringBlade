@@ -51,7 +51,7 @@ public class Notice extends BaseEntity {
 	 * 发布日期
 	 */
 	@ApiModelProperty(value = "发布日期")
-	private Date date;
+	private Date releaseTime;
 
 	/**
 	 * 内容

@@ -1,0 +1,37 @@
+#set($upperEntityPath=$table.entityPath.toUpperCase())
+export const $!{upperEntityPath}_NAMESPACE = '$!{table.entityPath}';
+
+export function $!{upperEntityPath}_LIST(payload) {
+  return {
+    type: `${$!{upperEntityPath}_NAMESPACE}/fetchList`,
+    payload,
+  };
+}
+
+export function $!{upperEntityPath}_DETAIL(id) {
+  return {
+    type: `${$!{upperEntityPath}_NAMESPACE}/fetchDetail`,
+    payload: { id },
+  };
+}
+
+export function $!{upperEntityPath}_CLEAR_DETAIL() {
+  return {
+    type: `${$!{upperEntityPath}_NAMESPACE}/clearDetail`,
+    payload: {},
+  };
+}
+
+export function $!{upperEntityPath}_SUBMIT(payload) {
+  return {
+    type: `${$!{upperEntityPath}_NAMESPACE}/submit`,
+    payload,
+  };
+}
+
+export function $!{upperEntityPath}_REMOVE(payload) {
+  return {
+    type: `${$!{upperEntityPath}_NAMESPACE}/remove`,
+    payload,
+  };
+}

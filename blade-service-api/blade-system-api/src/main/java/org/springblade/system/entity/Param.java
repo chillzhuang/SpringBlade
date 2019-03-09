@@ -26,7 +26,6 @@ import org.springblade.core.mp.base.BaseEntity;
  * 实体类
  *
  * @author Chill
- * @since 2018-12-28
  */
 @Data
 @TableName("blade_param")

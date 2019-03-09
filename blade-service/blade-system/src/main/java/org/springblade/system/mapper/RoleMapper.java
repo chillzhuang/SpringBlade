@@ -26,7 +26,6 @@ import java.util.List;
  * Mapper 接口
  *
  * @author Chill
- * @since 2018-12-24
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
@@ -42,8 +41,9 @@ public interface RoleMapper extends BaseMapper<Role> {
 	/**
 	 * 获取树形节点
 	 *
+	 * @param tenantCode
 	 * @return
 	 */
-	List<RoleVO> tree();
+	List<RoleVO> tree(String tenantCode);
 
 }

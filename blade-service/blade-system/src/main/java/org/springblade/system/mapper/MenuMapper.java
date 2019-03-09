@@ -27,7 +27,6 @@ import java.util.List;
  * Mapper 接口
  *
  * @author Chill
- * @since 2018-12-24
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
@@ -53,6 +52,13 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @return
 	 */
 	List<MenuVO> grantTree();
+
+	/**
+	 * 授权树形结构
+	 *
+	 * @return
+	 */
+	List<MenuVO> grantTreeByRole(List<Integer> roleId);
 
 	/**
 	 * 所有菜单

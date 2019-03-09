@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
  * 包装类,返回视图层所需的字段
  *
  * @author Chill
- * @since 2018-12-24
  */
 @AllArgsConstructor
 public class DictWrapper extends BaseEntityWrapper<Dict, DictVO> {

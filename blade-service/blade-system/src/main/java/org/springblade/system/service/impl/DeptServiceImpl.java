@@ -30,7 +30,6 @@ import java.util.List;
  * 服务实现类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
@@ -41,8 +40,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
 	}
 
 	@Override
-	public List<DeptVO> tree() {
-		return ForestNodeMerger.merge(baseMapper.tree());
+	public List<DeptVO> tree(String tenantCode) {
+		return ForestNodeMerger.merge(baseMapper.tree(tenantCode));
 	}
 
 }

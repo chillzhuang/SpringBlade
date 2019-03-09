@@ -26,7 +26,6 @@ import java.util.List;
  * 服务类
  *
  * @author Chill
- * @since 2018-12-24
  */
 public interface IDeptService extends IService<Dept> {
 
@@ -42,8 +41,9 @@ public interface IDeptService extends IService<Dept> {
 	/**
 	 * 树形结构
 	 *
+	 * @param tenantCode
 	 * @return
 	 */
-	List<DeptVO> tree();
+	List<DeptVO> tree(String tenantCode);
 
 }

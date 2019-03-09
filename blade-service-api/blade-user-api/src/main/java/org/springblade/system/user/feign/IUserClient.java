@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * User Feign接口类
+ *
  * @author Chill
  */
 @FeignClient(
@@ -37,11 +38,12 @@ public interface IUserClient {
 	/**
 	 * 获取用户信息
 	 *
+	 * @param tenantCode     租户编号
 	 * @param account  账号
 	 * @param password 密码
 	 * @return
 	 */
-	@GetMapping(API_PREFIX + "/userInfo")
-	R<UserInfo> userInfo(@RequestParam("account") String account, @RequestParam("password") String password);
+	@GetMapping(API_PREFIX + "/user-info")
+	R<UserInfo> userInfo(@RequestParam("tenantCode") String tenantCode, @RequestParam("account") String account, @RequestParam("password") String password);
 
 }

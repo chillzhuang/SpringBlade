@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="userResultMap" type="org.springblade.system.user.entity.User">
         <result column="id" property="id"/>
+        <result column="tenant_code" property="tenantCode"/>
         <result column="create_user" property="createUser"/>
         <result column="create_time" property="createTime"/>
         <result column="update_user" property="updateUser"/>
@@ -45,7 +46,7 @@
         FROM
             blade_user
         WHERE
-            account = #{param1} AND password = #{param2}
+            tenant_code = #{param1} and account = #{param2} AND password = #{param3}
     </select>
 
     <select id="getRoleName" resultType="java.lang.String">

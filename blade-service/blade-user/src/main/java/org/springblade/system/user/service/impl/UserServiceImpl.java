@@ -22,12 +22,13 @@ import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.base.BaseServiceImpl;
 import org.springblade.core.tool.utils.DigestUtil;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.system.user.mapper.UserMapper;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
+import org.springblade.system.user.mapper.UserMapper;
 import org.springblade.system.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,9 +45,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	}
 
 	@Override
-	public UserInfo userInfo(String account, String password) {
+	public UserInfo userInfo(String tenantCode, String account, String password) {
 		UserInfo userInfo = new UserInfo();
-		User user = baseMapper.getUser(account, password);
+		User user = baseMapper.getUser(tenantCode, account, password);
 		userInfo.setUser(user);
 		if (Func.isNotEmpty(user)) {
 			List<String> roleAlias = baseMapper.getRoleAlias(Func.toStrArray(user.getRoleId()));
@@ -66,6 +67,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	public boolean resetPassword(String userIds) {
 		User user = new User();
 		user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
+		user.setUpdateTime(LocalDateTime.now());
 		return this.update(user, Wrappers.<User>update().lambda().in(User::getId, Func.toIntList(userIds)));
 	}
 

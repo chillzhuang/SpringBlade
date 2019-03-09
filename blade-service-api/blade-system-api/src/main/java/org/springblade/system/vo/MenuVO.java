@@ -29,7 +29,6 @@ import java.util.List;
  * 视图实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

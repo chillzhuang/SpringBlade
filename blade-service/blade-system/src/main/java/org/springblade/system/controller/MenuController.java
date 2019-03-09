@@ -39,7 +39,6 @@ import java.util.Map;
  * 控制器
  *
  * @author Chill
- * @since 2018-12-24
  */
 @RestController
 @AllArgsConstructor
@@ -113,8 +112,8 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/grant-tree")
 	@ApiOperation(value = "权限分配树形结构", notes = "权限分配树形结构", position = 6)
-	public R<List<MenuVO>> grantTree() {
-		return R.data(menuService.grantTree());
+	public R<List<MenuVO>> grantTree(BladeUser user) {
+		return R.data(menuService.grantTree(user));
 	}
 
 	/**
@@ -140,14 +139,13 @@ public class MenuController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "物理删除", notes = "传入ids", position = 9)
+	@ApiOperation(value = "删除", notes = "传入ids", position = 9)
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(menuService.removeByIds(Func.toIntList(ids)));
 	}
 
 	/**
 	 * 获取配置的角色权限
-	 * @return
 	 */
 	@GetMapping("auth-routes")
 	@ApiOperation(value = "菜单的角色权限", position = 8)

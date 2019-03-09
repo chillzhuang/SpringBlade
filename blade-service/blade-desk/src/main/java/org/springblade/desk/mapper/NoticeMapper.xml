@@ -11,6 +11,7 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="is_deleted" property="isDeleted"/>
+        <result column="release_time" property="releaseTime"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
     </resultMap>

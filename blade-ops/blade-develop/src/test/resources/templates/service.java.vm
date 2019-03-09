@@ -1,0 +1,45 @@
+/**
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package $!{package.Service};
+
+import $!{package.Entity}.$!{entity};
+#set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
+import $!{superServiceClassPackage};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
+/**
+ * $!{table.comment} 服务类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{kotlin})
+interface $!{table.serviceName} : $!{superServiceClass}<$!{entity}>
+#else
+public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+
+	/**
+	 * 自定义分页
+	 *
+	 * @param page
+	 * @param $!{table.entityPath}
+	 * @return
+	 */
+	IPage<$!{entity}VO> select$!{entity}Page(IPage<$!{entity}VO> page, $!{entity}VO $!{table.entityPath});
+
+}
+#end

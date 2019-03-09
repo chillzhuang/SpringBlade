@@ -13,23 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.config;
+package org.springblade.system.feign;
 
-import org.springblade.system.feign.IDictClientFallback;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springblade.system.entity.Dept;
+import org.springblade.system.entity.Role;
+import org.springframework.stereotype.Component;
 
 /**
- * 字典feign失败配置
+ * Feign失败配置
  *
  * @author Chill
  */
-@Configuration
-public class DictFeignConfiguration {
-
-	@Bean
-	public IDictClientFallback dictClientFallback() {
-		return new IDictClientFallback();
+@Component
+public class ISysClientFallback implements ISysClient {
+	@Override
+	public String getDeptName(Integer id) {
+		return null;
 	}
 
+	@Override
+	public Dept getDept(Integer id) {
+		return null;
+	}
+
+	@Override
+	public String getRoleName(Integer id) {
+		return null;
+	}
+
+	@Override
+	public String getRoleAlias(Integer id) {
+		return null;
+	}
+
+	@Override
+	public Role getRole(Integer id) {
+		return null;
+	}
 }

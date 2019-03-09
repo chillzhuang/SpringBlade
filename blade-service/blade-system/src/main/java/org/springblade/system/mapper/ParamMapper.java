@@ -26,7 +26,6 @@ import java.util.List;
  * Mapper 接口
  *
  * @author Chill
- * @since 2018-12-28
  */
 public interface ParamMapper extends BaseMapper<Param> {
 

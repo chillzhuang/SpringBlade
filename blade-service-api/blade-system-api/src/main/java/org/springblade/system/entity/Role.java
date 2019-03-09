@@ -29,7 +29,6 @@ import java.io.Serializable;
  * 实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @TableName("blade_role")
@@ -44,6 +43,12 @@ public class Role implements Serializable {
 	@ApiModelProperty(value = "主键")
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
+
+	/**
+	 * 租户编号
+	 */
+	@ApiModelProperty(value = "租户编号")
+	private String tenantCode;
 
 	/**
 	 * 父主键

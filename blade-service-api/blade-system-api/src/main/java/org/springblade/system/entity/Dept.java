@@ -29,7 +29,6 @@ import java.io.Serializable;
  * 实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @TableName("blade_dept")
@@ -46,6 +45,12 @@ public class Dept implements Serializable {
 	private Integer id;
 
 	/**
+	 * 租户编号
+	 */
+	@ApiModelProperty(value = "租户编号")
+	private String tenantCode;
+
+	/**
 	 * 父主键
 	 */
 	@ApiModelProperty(value = "父主键")
@@ -58,9 +63,9 @@ public class Dept implements Serializable {
 	private String deptName;
 
 	/**
-	 * 部门全程
+	 * 部门全称
 	 */
-	@ApiModelProperty(value = "部门全程")
+	@ApiModelProperty(value = "部门全称")
 	private String fullName;
 
 	/**

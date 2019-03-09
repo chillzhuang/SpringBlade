@@ -3,16 +3,28 @@ services:
 
   blade-nginx:
     image: nginx:stable-alpine-perl
-    hostname: "consul-nginx"
+    hostname: "blade-nginx"
     ports:
-    - 8500:8500
     - 88:88
     volumes:
-    - /docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - /docker/nginx/gateway/nginx.conf:/etc/nginx/nginx.conf
     privileged: true
     restart: always
     networks:
     - blade_net
+
+  web-nginx:
+    image: nginx:stable-alpine-perl
+    hostname: "web-nginx"
+    ports:
+      - 8000:8000
+    volumes:
+      - /docker/nginx/web/html:/usr/share/nginx/html
+      - /docker/nginx/web/nginx.conf:/etc/nginx/nginx.conf
+    privileged: true
+    restart: always
+    networks:
+      - blade_net
 
   blade-redis:
     image: redis:5.0.2-alpine

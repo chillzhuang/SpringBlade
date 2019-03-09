@@ -37,7 +37,6 @@ import java.util.List;
  * 服务实现类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Service
 @Validated
@@ -52,8 +51,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	}
 
 	@Override
-	public List<RoleVO> tree() {
-		return ForestNodeMerger.merge(baseMapper.tree());
+	public List<RoleVO> tree(String tenantCode) {
+		return ForestNodeMerger.merge(baseMapper.tree(tenantCode));
 	}
 
 	@Override

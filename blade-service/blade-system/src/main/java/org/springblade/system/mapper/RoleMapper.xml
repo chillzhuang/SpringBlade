@@ -31,7 +31,10 @@
     </select>
 
     <select id="tree" resultMap="treeNodeResultMap">
-        select id, parent_id, role_name as title, id as `value`, id as `key` from blade_role where is_deleted = 0
+        select id, parent_id, role_name as title, id as 'value', id as 'key' from blade_role where is_deleted = 0
+        <if test="_parameter!=null">
+            and tenant_code = #{_parameter}
+        </if>
     </select>
 
 </mapper>

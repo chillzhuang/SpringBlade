@@ -28,6 +28,16 @@ public interface CommonConstant {
 	String SENTINEL_PROD_ADDR = "192.168.186.129:8858";
 
 	/**
+	 * sword 系统名
+	 */
+	String SWORD_NAME = "sword";
+
+	/**
+	 * saber 系统名
+	 */
+	String SABER_NAME = "saber";
+
+	/**
 	 * 顶级父节点id
 	 */
 	Integer TOP_PARENT_ID = 0;
