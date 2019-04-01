@@ -1,5 +1,28 @@
 version: '3'
 services:
+  nacos:
+    image: nacos/nacos-server:0.9.0
+    hostname: "nacos-standalone"
+    environment:
+      - MODE=standalone
+    volumes:
+      - /docker/nacos/standalone-logs/:/home/nacos/logs
+      - /docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - 8848:8848
+    networks:
+      blade_net:
+        ipv4_address: 172.30.0.48
+
+  sentinel:
+    image: bladex/sentinel-dashboard:1.5.0
+    hostname: "sentinel"
+    ports:
+      - 8858:8858
+    restart: on-failure
+    networks:
+      blade_net:
+        ipv4_address: 172.30.0.58
 
   blade-nginx:
     image: nginx:stable-alpine-perl
@@ -30,7 +53,7 @@ services:
     image: redis:5.0.2-alpine
     hostname: "blade-redis"
     ports:
-    - "3379:6379"
+    - 3379:6379
     volumes:
     - /docker/redis/data:/data
     command: "redis-server --appendonly yes"
@@ -40,7 +63,7 @@ services:
     - blade_net
 
   blade-admin:
-    image: "${REGISTER}/blade-admin:${TAG}"
+    image: "${REGISTER}/blade/blade-admin:${TAG}"
     ports:
     - 7002:7002
     privileged: true
@@ -49,7 +72,7 @@ services:
     - blade_net
 
   blade-gateway1:
-    image: "${REGISTER}/blade-gateway:${TAG}"
+    image: "${REGISTER}/blade/blade-gateway:${TAG}"
     privileged: true
     restart: always
     networks:
@@ -57,51 +80,52 @@ services:
         ipv4_address: 172.30.0.81
 
   blade-gateway2:
-    image: "${REGISTER}/blade-gateway:${TAG}"
+    image: "${REGISTER}/blade/blade-gateway:${TAG}"
     privileged: true
     restart: always
     networks:
       blade_net:
         ipv4_address: 172.30.0.82
 
-  blade-gateway3:
-    image: "${REGISTER}/blade-gateway:${TAG}"
+  blade-auth1:
+    image: "${REGISTER}/blade/blade-auth:${TAG}"
     privileged: true
     restart: always
     networks:
       blade_net:
-        ipv4_address: 172.30.0.83
+        ipv4_address: 172.30.0.91
 
-  blade-auth:
-    image: "${REGISTER}/blade-auth:${TAG}"
+  blade-auth2:
+    image: "${REGISTER}/blade/blade-auth:${TAG}"
     privileged: true
     restart: always
     networks:
-    - blade_net
+      blade_net:
+        ipv4_address: 172.30.0.92
 
   blade-log:
-    image: "${REGISTER}/blade-log:${TAG}"
+    image: "${REGISTER}/blade/blade-log:${TAG}"
     privileged: true
     restart: always
     networks:
     - blade_net
 
   blade-desk:
-    image: "${REGISTER}/blade-desk:${TAG}"
+    image: "${REGISTER}/blade/blade-desk:${TAG}"
     privileged: true
     restart: always
     networks:
     - blade_net
 
   blade-user:
-    image: "${REGISTER}/blade-user:${TAG}"
+    image: "${REGISTER}/blade/blade-user:${TAG}"
     privileged: true
     restart: always
     networks:
     - blade_net
 
   blade-system:
-    image: "${REGISTER}/blade-system:${TAG}"
+    image: "${REGISTER}/blade/blade-system:${TAG}"
     privileged: true
     restart: always
     networks:

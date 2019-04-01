@@ -31,6 +31,13 @@ import java.util.List;
 public interface IUserService extends BaseService<User> {
 
 	/**
+	 * 新增或修改用户
+	 * @param user
+	 * @return
+	 */
+	boolean submit(User user);
+
+	/**
 	 * 自定义分页
 	 *
 	 * @param page

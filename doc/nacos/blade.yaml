@@ -66,9 +66,21 @@ management:
     health:
       show-details: always
 
-# 租户表维护
+#blade配置
 blade:
+  secure:
+    url:
+      exclude-patterns:
+        - /test/**
+    client:
+      - client-id: sword
+        path-patterns:
+          - /sword/**
+      - client-id: saber
+        path-patterns:
+          - /saber/**
   tenant:
     column: tenant_code
     tables:
       - blade_notice
+

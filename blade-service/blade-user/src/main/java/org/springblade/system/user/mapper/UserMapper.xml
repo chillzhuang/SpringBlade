@@ -46,7 +46,7 @@
         FROM
             blade_user
         WHERE
-            tenant_code = #{param1} and account = #{param2} AND password = #{param3}
+            tenant_code = #{param1} and account = #{param2} and password = #{param3} and is_deleted = 0
     </select>
 
     <select id="getRoleName" resultType="java.lang.String">
@@ -59,6 +59,7 @@
         <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
             #{ids}
         </foreach>
+        and is_deleted = 0
     </select>
 
     <select id="getRoleAlias" resultType="java.lang.String">
@@ -71,6 +72,7 @@
         <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
             #{ids}
         </foreach>
+        and is_deleted = 0
     </select>
 
     <select id="getDeptName" resultType="java.lang.String">
@@ -83,6 +85,7 @@
         <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
             #{ids}
         </foreach>
+        and is_deleted = 0
     </select>
 
 </mapper>

@@ -5,12 +5,12 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>2.1.0</blade.tool.version>
-        <blade.project.version>2.1.0</blade.project.version>
+        <blade.tool.version>2.2.0</blade.tool.version>
+        <blade.project.version>2.2.0</blade.project.version>
 
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
@@ -28,7 +28,7 @@
         <spring.platform.version>Cairo-SR7</spring.platform.version>
 
         <!-- 推荐使用Harbor -->
-        <docker.registry.url>192.168.186.129</docker.registry.url>
+        <docker.registry.url>10.211.55.5</docker.registry.url>
         <docker.registry.host>http://${docker.registry.url}:2375</docker.registry.host>
         <docker.plugin.version>1.2.0</docker.plugin.version>
     </properties>

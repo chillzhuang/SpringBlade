@@ -13,38 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.mapper;
+package org.springblade.system.service.impl;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.system.entity.Role;
-import org.springblade.system.vo.RoleVO;
-
-import java.util.List;
+import org.springblade.core.mp.base.BaseServiceImpl;
+import org.springblade.system.entity.AuthClient;
+import org.springblade.system.mapper.AuthClientMapper;
+import org.springblade.system.service.IAuthClientService;
+import org.springframework.stereotype.Service;
 
 /**
- * Mapper 接口
+ *  服务实现类
  *
  * @author Chill
  */
-public interface RoleMapper extends BaseMapper<Role> {
-
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param role
-	 * @return
-	 */
-	List<RoleVO> selectRolePage(IPage page, RoleVO role);
-
-	/**
-	 * 获取树形节点
-	 *
-	 * @param tenantCode
-	 * @param excludeRole
-	 * @return
-	 */
-	List<RoleVO> tree(String tenantCode, String excludeRole);
+@Service
+public class AuthClientServiceImpl extends BaseServiceImpl<AuthClientMapper, AuthClient> implements IAuthClientService {
 
 }

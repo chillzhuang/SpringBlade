@@ -1,7 +1,7 @@
 
 #使用说明，用来提示输入参数
 usage() {
-	echo "Usage: sh 执行脚本.sh [port|base|modules|stop|rm|rmiNoneTag]"
+	echo "Usage: sh 执行脚本.sh [port|mount|base|modules|stop|rm|rmiNoneTag]"
 	exit 1
 }
 
@@ -10,29 +10,38 @@ port(){
 	firewall-cmd --add-port=88/tcp --permanent
 	firewall-cmd --add-port=8000/tcp --permanent
 	firewall-cmd --add-port=8848/tcp --permanent
+	firewall-cmd --add-port=8858/tcp --permanent
 	firewall-cmd --add-port=3306/tcp --permanent
 	firewall-cmd --add-port=3379/tcp --permanent
 	firewall-cmd --add-port=7002/tcp --permanent
 	service firewalld restart
 }
 
-#启动基础模块
-base(){
-	if test ! -f "/docker/nginx/gateway/nginx.conf" ;then
-		mkdir /docker/nginx/gateway
-		cp /nginx/gateway/nginx.conf /docker/nginx/gateway/nginx.conf
+##放置挂载文件
+mount(){
+	if test ! -f "/docker/nginx/api/nginx.conf" ;then
+		mkdir -p /docker/nginx/api
+		cp nginx/api/nginx.conf /docker/nginx/api/nginx.conf
 	fi
 	if test ! -f "/docker/nginx/web/nginx.conf" ;then
-		mkdir /docker/nginx/web
-		cp /nginx/web/nginx.conf /docker/nginx/web/nginx.conf
-		cp /nginx/web/html /docker/nginx/web/html
+		mkdir -p /docker/nginx/web
+		cp nginx/web/nginx.conf /docker/nginx/web/nginx.conf
+		cp -r nginx/web/html /docker/nginx/web/html
 	fi
-	docker-compose up -d blade-nginx blade-redis blade-gateway1 blade-gateway2 blade-gateway3 blade-admin
+	if test ! -f "/docker/nacos/init.d/custom.properties" ;then
+		mkdir -p /docker/nacos/init.d
+		cp nacos/init.d/custom.properties /docker/nacos/init.d/custom.properties
+	fi
+}
+
+#启动基础模块
+base(){
+	docker-compose up -d nacos sentinel web-nginx blade-nginx blade-redis
 }
 
 #启动程序模块
 modules(){
-	docker-compose up -d blade-auth blade-user blade-desk blade-system blade-log
+	docker-compose up -d blade-gateway1 blade-gateway2 blade-admin blade-auth1 blade-auth2 blade-user blade-desk blade-system blade-log
 }
 
 #关闭所有模块
@@ -54,6 +63,9 @@ rmiNoneTag(){
 case "$1" in
 "port")
 	port
+;;
+"mount")
+	mount
 ;;
 "base")
 	base

@@ -35,18 +35,18 @@
     <select id="getValue" resultType="java.lang.String">
         select
             dict_value
-        from blade_dict where code = #{param1} and dict_key = #{param2} limit 1
+        from blade_dict where code = #{param1} and dict_key = #{param2} and is_deleted = 0 limit 1
     </select>
 
     <!-- oracle 版本 -->
     <!--<select id="getValue" resultType="java.lang.String">
         select
             dict_value
-        from blade_dict where code = #{param1, jdbcType=VARCHAR} and dict_key = #{param2} rownum 1
+        from blade_dict where code = #{param1, jdbcType=VARCHAR} and dict_key = #{param2} and dict_value >= 0 rownum 1
     </select>-->
 
     <select id="getList" resultMap="dictResultMap">
-        select code, dict_key, dict_value, sort, remark from blade_dict where code = #{param1}
+        select code, dict_key, dict_value, sort, remark from blade_dict where code = #{param1} and dict_key >= 0 and is_deleted = 0
     </select>
 
     <select id="tree" resultMap="treeNodeResultMap">

@@ -4,7 +4,7 @@
 ```
 <servers>
   <server>
-    <id>192.168.186.129</id>
+    <id>10.211.55.5</id>
     <username>admin</username>
     <password>Harbor12345</password>
     <configuration>
@@ -20,7 +20,7 @@
 
 ###2. docker开启远程访问
 
-如果没有远程访问,会报 `Connect to 192.168.186.129:2375 [/192.168.186.129] failed: Connection refused: connect`
+如果没有远程访问,会报 `Connect to 10.211.55.5:2375 [/10.211.55.5] failed: Connection refused: connect`
 
 在`/usr/lib/systemd/system/docker.service`,配置远程访问。主要是在[Service]这个部分，加上下面两个参数：
 

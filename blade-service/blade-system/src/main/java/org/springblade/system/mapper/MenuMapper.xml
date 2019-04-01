@@ -30,7 +30,7 @@
     <!-- 通用查询结果列 -->
     <sql id="baseColumnList">
         select
-        id, code, parent_code, name, alias, path, source, sort, category, action, is_open, remark, is_deleted
+            id, code, parent_code, name, alias, path, source, sort, category, action, is_open, remark, is_deleted
     </sql>
 
     <select id="selectMenuPage" resultMap="menuResultMap">
@@ -46,7 +46,7 @@
     </select>
 
     <select id="roleMenu" resultMap="menuResultMap">
-        select * from blade_menu where is_deleted = 0 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+        select * from blade_menu where is_deleted = 0 and id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach> )
@@ -54,58 +54,58 @@
 
     <select id="routes" resultMap="menuResultMap">
         SELECT
-            *
+        *
         FROM
-            blade_menu
+        blade_menu
         WHERE
-            category = 1
-            AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
-                        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-                            #{item}
-                        </foreach> )
+        is_deleted = 0 and category = 1
+        and id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach> )
     </select>
 
     <select id="buttons" resultMap="menuResultMap">
         SELECT
-            id,
-            parent_id,
-            `code`,
-            `name`,
-            alias,
-            path,
-            source,
-            action,
-            sort
+        id,
+        parent_id,
+        `code`,
+        `name`,
+        alias,
+        path,
+        source,
+        action,
+        sort
         FROM
-            blade_menu
+        blade_menu
         WHERE
-            id IN (
-              SELECT parent_id FROM blade_menu
-              WHERE ( category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
-                <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-              ) ) )
+        is_deleted = 0 and id IN (
+        SELECT parent_id FROM blade_menu
+        WHERE ( category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) ) )
 
         UNION ALL
 
         SELECT
-            id,
-            parent_id,
-            `code`,
-            `name`,
-            alias,
-            path,
-            source,
-            action,
-            sort
+        id,
+        parent_id,
+        `code`,
+        `name`,
+        alias,
+        path,
+        source,
+        action,
+        sort
         FROM
-            blade_menu
+        blade_menu
         WHERE
-            ( category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
-            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-                #{item}
-            </foreach>) )
+        is_deleted = 0 and  category = 2 AND id IN ( SELECT menu_id FROM blade_role_menu WHERE role_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>)
     </select>
 
     <select id="grantTree" resultMap="treeNodeResultMap">
@@ -129,19 +129,20 @@
 
     <select id="authRoutes" resultType="org.springblade.system.dto.MenuDTO">
         SELECT
-            GROUP_CONCAT(r.role_alias) as alias,
-            m.path
+        GROUP_CONCAT(r.role_alias) as alias,
+        m.path
         FROM
-            blade_role_menu rm
-            LEFT JOIN blade_menu m ON rm.menu_id = m.id
-            LEFT JOIN blade_role r ON rm.role_id = r.id
+        blade_role_menu rm
+        LEFT JOIN blade_menu m ON rm.menu_id = m.id
+        LEFT JOIN blade_role r ON rm.role_id = r.id
         WHERE
-            rm.role_id IN
-            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-            AND m.path IS NOT NULL
+        rm.role_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND m.path IS NOT NULL and m.is_deleted = 0
         GROUP BY m.path
     </select>
+
 
 </mapper>

@@ -2,7 +2,7 @@
 spring:
   redis:
     ##redis 单机环境配置
-    host: 192.168.186.129
+    host: 10.211.55.5
     port: 3379
     password:
     database: 0
@@ -17,6 +17,6 @@ blade:
   #通用开发生产环境数据库地址(特殊情况可在对应的子工程里配置覆盖)
   datasource:
     prod:
-      url: jdbc:mysql://192.168.186.129:3306/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+      url: jdbc:mysql://10.211.55.5:3306/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
       username: root
       password: root

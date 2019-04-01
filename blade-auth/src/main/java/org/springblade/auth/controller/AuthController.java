@@ -19,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.secure.AuthInfo;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
@@ -48,7 +49,7 @@ public class AuthController {
 
 	@PostMapping("token")
 	@ApiOperation(value = "获取认证token", notes = "传入租户编号:tenantCode,账号:account,密码:password")
-	public R<AuthInfo> token(@ApiParam(value = "租户编号", required = true) @RequestParam String tenantCode,
+	public R<AuthInfo> token(@ApiParam(value = "租户编号", required = true) @RequestParam(defaultValue = "000000", required = false) String tenantCode,
 							 @ApiParam(value = "账号", required = true) @RequestParam String account,
 							 @ApiParam(value = "密码", required = true) @RequestParam String password) {
 
@@ -67,12 +68,12 @@ public class AuthController {
 
 		//设置jwt参数
 		Map<String, String> param = new HashMap<>(16);
-		param.put(SecureUtil.USER_ID, Func.toStr(user.getId()));
-		param.put(SecureUtil.ROLE_ID, user.getRoleId());
-		param.put(SecureUtil.TENANT_CODE, user.getTenantCode());
-		param.put(SecureUtil.ACCOUNT, user.getAccount());
-		param.put(SecureUtil.USER_NAME, user.getRealName());
-		param.put(SecureUtil.ROLE_NAME, Func.join(res.getData().getRoles()));
+		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
+		param.put(TokenConstant.ROLE_ID, user.getRoleId());
+		param.put(TokenConstant.TENANT_CODE, user.getTenantCode());
+		param.put(TokenConstant.ACCOUNT, user.getAccount());
+		param.put(TokenConstant.USER_NAME, user.getRealName());
+		param.put(TokenConstant.ROLE_NAME, Func.join(res.getData().getRoles()));
 
 		//拼装accessToken
 		String accessToken = SecureUtil.createJWT(param, "audience", "issuser", true);
@@ -83,7 +84,7 @@ public class AuthController {
 		authInfo.setUserName(user.getRealName());
 		authInfo.setAuthority(Func.join(res.getData().getRoles()));
 		authInfo.setAccessToken(accessToken);
-		authInfo.setTokenType(SecureUtil.BEARER);
+		authInfo.setTokenType(TokenConstant.BEARER);
 		//设置token过期时间
 		authInfo.setExpiresIn(SecureUtil.getExpire());
 		return R.data(authInfo);

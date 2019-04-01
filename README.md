@@ -7,7 +7,7 @@
 
 ## 在线演示
 * Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
-* Saber演示地址：[https://saber.avue.top](https://saber.avue.top)
+* Saber演示地址：[https://saber.bladex.vip](https://saber.bladex.vip)
 
 ## 后端项目地址
 * [Gitee地址](https://gitee.com/smallc/SpringBlade)

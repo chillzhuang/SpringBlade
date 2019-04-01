@@ -28,7 +28,6 @@ import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.utils.DigestUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.feign.IDictClient;
 import org.springblade.system.user.entity.User;
@@ -88,10 +87,7 @@ public class UserController {
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入User", position = 3)
 	public R submit(@Valid @RequestBody User user) {
-		if (Func.isNotEmpty(user.getPassword())) {
-			user.setPassword(DigestUtil.encrypt(user.getPassword()));
-		}
-		return R.status(userService.saveOrUpdate(user));
+		return R.status(userService.submit(user));
 	}
 
 	/**
