@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-ops</artifactId>
-        <version>2.2.0</version>
+        <version>2.2.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -29,15 +29,9 @@
             <version>${blade.project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis.plus.version}</version>
-        </dependency>
-        <!--Velocity-->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-develop</artifactId>
+            <version>${blade.tool.version}</version>
         </dependency>
         <!--Swagger-->
         <dependency>
