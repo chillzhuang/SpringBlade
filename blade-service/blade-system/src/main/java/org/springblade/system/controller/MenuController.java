@@ -20,7 +20,9 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Menu;
@@ -54,6 +56,7 @@ public class MenuController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperation(value = "详情", notes = "传入menu", position = 1)
 	public R<MenuVO> detail(Menu menu) {
 		Menu detail = menuService.getOne(Condition.getQueryWrapper(menu));
@@ -69,12 +72,34 @@ public class MenuController extends BladeController {
 		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
 	})
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperation(value = "列表", notes = "传入menu", position = 2)
 	public R<List<MenuVO>> list(@ApiIgnore @RequestParam Map<String, Object> menu) {
 		@SuppressWarnings("unchecked")
 		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().orderByAsc(Menu::getSort));
 		MenuWrapper menuWrapper = new MenuWrapper(menuService, dictClient);
 		return R.data(menuWrapper.listNodeVO(list));
+	}
+
+	/**
+	 * 新增或修改
+	 */
+	@PostMapping("/submit")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	@ApiOperation(value = "新增或修改", notes = "传入menu", position = 8)
+	public R submit(@Valid @RequestBody Menu menu) {
+		return R.status(menuService.saveOrUpdate(menu));
+	}
+
+
+	/**
+	 * 删除
+	 */
+	@PostMapping("/remove")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	@ApiOperation(value = "删除", notes = "传入ids", position = 9)
+	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+		return R.status(menuService.removeByIds(Func.toIntList(ids)));
 	}
 
 	/**
@@ -123,25 +148,6 @@ public class MenuController extends BladeController {
 	@ApiOperation(value = "角色所分配的树", notes = "角色所分配的树", position = 7)
 	public R<List<String>> roleTreeKeys(String roleIds) {
 		return R.data(menuService.roleTreeKeys(roleIds));
-	}
-
-	/**
-	 * 新增或修改
-	 */
-	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入menu", position = 8)
-	public R submit(@Valid @RequestBody Menu menu) {
-		return R.status(menuService.saveOrUpdate(menu));
-	}
-
-
-	/**
-	 * 删除
-	 */
-	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入ids", position = 9)
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(menuService.removeByIds(Func.toIntList(ids)));
 	}
 
 	/**
