@@ -5,7 +5,7 @@ server:
 #数据源配置
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${blade.datasource.prod.url}
     username: ${blade.datasource.prod.username}
     password: ${blade.datasource.prod.password}
