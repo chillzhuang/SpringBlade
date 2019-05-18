@@ -17,6 +17,9 @@
 * 稳定生产了一年，经历了从Camden -> Greenwich的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构
 * 项目分包明确，规范微服务的开发模式，使包与包之间的分工清晰。
 
+## 架构图
+<img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-framework.png"/>
+
 ## 工程结构
 ``` 
 SpringBlade

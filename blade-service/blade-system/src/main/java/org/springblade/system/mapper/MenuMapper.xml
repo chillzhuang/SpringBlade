@@ -30,7 +30,7 @@
     <!-- 通用查询结果列 -->
     <sql id="baseColumnList">
         select
-            id, code, parent_code, name, alias, path, source, sort, category, action, is_open, remark, is_deleted
+            id, code, parent_id, name, alias, path, source, sort, category, action, is_open, remark, is_deleted
     </sql>
 
     <select id="selectMenuPage" resultMap="menuResultMap">

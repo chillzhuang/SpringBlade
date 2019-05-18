@@ -15,7 +15,10 @@
  */
 package org.springblade.system.user.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.mp.base.TenantEntity;
@@ -33,6 +36,13 @@ import java.time.LocalDateTime;
 public class User extends TenantEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
+	@ApiModelProperty(value = "主键id")
+	private Integer id;
 
 	/**
 	 * 账号

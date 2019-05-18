@@ -68,6 +68,10 @@ management:
 
 #blade配置
 blade:
+  xss:
+    url:
+      exclude-patterns:
+        - /weixin
   secure:
     url:
       exclude-patterns:
