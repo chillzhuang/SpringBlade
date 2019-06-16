@@ -30,7 +30,7 @@ services:
     ports:
     - 88:88
     volumes:
-    - /docker/nginx/gateway/nginx.conf:/etc/nginx/nginx.conf
+    - /docker/nginx/api/nginx.conf:/etc/nginx/nginx.conf
     privileged: true
     restart: always
     networks:
@@ -130,6 +130,13 @@ services:
     restart: always
     networks:
     - blade_net
+
+  blade-resource:
+    image: "${REGISTER}/blade/blade-resource:${TAG}"
+    privileged: true
+    restart: always
+    networks:
+      - blade_net
 
 networks:
   blade_net:

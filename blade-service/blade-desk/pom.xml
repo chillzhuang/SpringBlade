@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-service</artifactId>
-        <version>2.3.1</version>
+        <version>2.3.2</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -36,6 +36,12 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-dict-api</artifactId>
             <version>${blade.project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-test</artifactId>
+            <version>${blade.tool.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
