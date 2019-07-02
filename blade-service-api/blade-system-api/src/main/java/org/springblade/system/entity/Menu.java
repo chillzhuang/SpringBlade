@@ -139,6 +139,4 @@ public class Menu implements Serializable {
 		return false;
 	}
 
-
-
 }
