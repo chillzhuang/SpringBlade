@@ -28,7 +28,6 @@ import org.springblade.desk.entity.Notice;
 import org.springblade.desk.service.INoticeService;
 import org.springblade.desk.vo.NoticeVO;
 import org.springblade.desk.wrapper.NoticeWrapper;
-import org.springblade.system.feign.IDictClient;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -51,17 +50,15 @@ public class NoticeController extends BladeController implements CacheNames {
 
 	private INoticeService noticeService;
 
-	private IDictClient dictClient;
-
 	/**
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入notice", position = 2)
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "详情", notes = "传入notice")
 	public R<NoticeVO> detail(Notice notice) {
 		Notice detail = noticeService.getOne(Condition.getQueryWrapper(notice));
-		NoticeWrapper noticeWrapper = new NoticeWrapper(dictClient);
-		return R.data(noticeWrapper.entityVO(detail));
+		return R.data(NoticeWrapper.build().entityVO(detail));
 	}
 
 	/**
@@ -72,18 +69,19 @@ public class NoticeController extends BladeController implements CacheNames {
 		@ApiImplicitParam(name = "category", value = "公告类型", paramType = "query", dataType = "integer"),
 		@ApiImplicitParam(name = "title", value = "公告标题", paramType = "query", dataType = "string")
 	})
-	@ApiOperation(value = "分页", notes = "传入notice", position = 3)
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "分页", notes = "传入notice")
 	public R<IPage<NoticeVO>> list(@ApiIgnore @RequestParam Map<String, Object> notice, Query query) {
 		IPage<Notice> pages = noticeService.page(Condition.getPage(query), Condition.getQueryWrapper(notice, Notice.class));
-		NoticeWrapper noticeWrapper = new NoticeWrapper(dictClient);
-		return R.data(noticeWrapper.pageVO(pages));
+		return R.data(NoticeWrapper.build().pageVO(pages));
 	}
 
 	/**
 	 * 新增
 	 */
 	@PostMapping("/save")
-	@ApiOperation(value = "新增", notes = "传入notice", position = 4)
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "新增", notes = "传入notice")
 	public R save(@RequestBody Notice notice) {
 		return R.status(noticeService.save(notice));
 	}
@@ -92,7 +90,8 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入notice", position = 5)
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "修改", notes = "传入notice")
 	public R update(@RequestBody Notice notice) {
 		return R.status(noticeService.updateById(notice));
 	}
@@ -101,7 +100,8 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入notice", position = 6)
+	@ApiOperationSupport(order = 5)
+	@ApiOperation(value = "新增或修改", notes = "传入notice")
 	public R submit(@RequestBody Notice notice) {
 		return R.status(noticeService.saveOrUpdate(notice));
 	}
@@ -110,7 +110,8 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入notice", position = 7)
+	@ApiOperationSupport(order = 6)
+	@ApiOperation(value = "逻辑删除", notes = "传入notice")
 	public R remove(@ApiParam(value = "主键集合") @RequestParam String ids) {
 		boolean temp = noticeService.deleteLogic(Func.toIntList(ids));
 		return R.status(temp);
@@ -122,7 +123,8 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * @return
 	 */
 	@GetMapping("/notices")
-	@ApiOperation(value = "消息", notes = "消息", position = 8)
+	@ApiOperationSupport(order = 7)
+	@ApiOperation(value = "消息", notes = "消息")
 	public R notices() {
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, String> map1 = new HashMap<>(16);
@@ -182,7 +184,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * @return
 	 */
 	@GetMapping("/my-notices")
-	@ApiOperation(value = "消息", notes = "消息", position = 9)
+	@ApiOperation(value = "消息", notes = "消息")
 	public R myNotices() {
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, String> map1 = new HashMap<>(16);

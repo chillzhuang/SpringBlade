@@ -15,10 +15,10 @@
  */
 package org.springblade.desk.wrapper;
 
-import lombok.AllArgsConstructor;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.BeanUtil;
+import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.desk.entity.Notice;
 import org.springblade.desk.vo.NoticeVO;
 import org.springblade.system.feign.IDictClient;
@@ -28,10 +28,17 @@ import org.springblade.system.feign.IDictClient;
  *
  * @author Chill
  */
-@AllArgsConstructor
 public class NoticeWrapper extends BaseEntityWrapper<Notice, NoticeVO> {
 
-	private IDictClient dictClient;
+	private static IDictClient dictClient;
+
+	static {
+		dictClient = SpringUtil.getBean(IDictClient.class);
+	}
+
+	public static NoticeWrapper build() {
+		return new NoticeWrapper();
+	}
 
 	@Override
 	public NoticeVO entityVO(Notice notice) {

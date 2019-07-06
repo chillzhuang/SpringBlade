@@ -54,11 +54,11 @@ public class DictController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入dict", position = 1)
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "详情", notes = "传入dict")
 	public R<DictVO> detail(Dict dict) {
 		Dict detail = dictService.getOne(Condition.getQueryWrapper(dict));
-		DictWrapper dictWrapper = new DictWrapper(dictService);
-		return R.data(dictWrapper.entityVO(detail));
+		return R.data(DictWrapper.build().entityVO(detail));
 	}
 
 	/**
@@ -69,12 +69,12 @@ public class DictController extends BladeController {
 		@ApiImplicitParam(name = "code", value = "字典编号", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "dictValue", value = "字典名称", paramType = "query", dataType = "string")
 	})
-	@ApiOperation(value = "列表", notes = "传入dict", position = 2)
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "列表", notes = "传入dict")
 	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dict) {
 		@SuppressWarnings("unchecked")
 		List<Dict> list = dictService.list(Condition.getQueryWrapper(dict, Dict.class).lambda().orderByAsc(Dict::getSort));
-		DictWrapper dictWrapper = new DictWrapper();
-		return R.data(dictWrapper.listNodeVO(list));
+		return R.data(DictWrapper.build().listNodeVO(list));
 	}
 
 	/**
@@ -83,7 +83,8 @@ public class DictController extends BladeController {
 	 * @return
 	 */
 	@GetMapping("/tree")
-	@ApiOperation(value = "树形结构", notes = "树形结构", position = 3)
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public R<List<DictVO>> tree() {
 		List<DictVO> tree = dictService.tree();
 		return R.data(tree);
@@ -93,7 +94,8 @@ public class DictController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入dict", position = 6)
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "新增或修改", notes = "传入dict")
 	public R submit(@Valid @RequestBody Dict dict) {
 		return R.status(dictService.submit(dict));
 	}
@@ -103,8 +105,9 @@ public class DictController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE})
-	@ApiOperation(value = "删除", notes = "传入ids", position = 7)
+	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
+	@ApiOperationSupport(order = 5)
+	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(dictService.removeByIds(Func.toIntList(ids)));
 	}
@@ -115,7 +118,8 @@ public class DictController extends BladeController {
 	 * @return
 	 */
 	@GetMapping("/dictionary")
-	@ApiOperation(value = "获取字典", notes = "获取字典", position = 8)
+	@ApiOperationSupport(order = 6)
+	@ApiOperation(value = "获取字典", notes = "获取字典")
 	public R<List<Dict>> dictionary(String code) {
 		List<Dict> tree = dictService.getList(code);
 		return R.data(tree);

@@ -13,18 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.common.cache;
+package org.springblade.gateway.props;
+
+import lombok.Data;
+import org.springblade.core.launch.constant.AppConstant;
 
 /**
- * 缓存名
+ * Swagger聚合文档属性
  *
  * @author Chill
  */
-public interface CacheNames {
+@Data
+public class RouteResource {
 
-	String NOTICE_ONE = "notice:one";
+	/**
+	 * 文档名
+	 */
+	private String name;
 
-	String DICT_VALUE = "dict:value";
-	String DICT_LIST = "dict:list";
+	/**
+	 * 文档所在服务地址
+	 */
+	private String location;
+
+	/**
+	 * 文档版本
+	 */
+	private String version = AppConstant.APPLICATION_VERSION;
 
 }

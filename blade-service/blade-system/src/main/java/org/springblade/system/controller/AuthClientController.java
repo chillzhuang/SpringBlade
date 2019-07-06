@@ -18,6 +18,7 @@ package org.springblade.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
@@ -53,7 +54,8 @@ public class AuthClientController extends BladeController {
 	* 详情
 	*/
 	@GetMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入client", position = 1)
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "详情", notes = "传入client")
 	public R<AuthClient> detail(AuthClient authClient) {
 		AuthClient detail = clientService.getOne(Condition.getQueryWrapper(authClient));
 		return R.data(detail);
@@ -63,7 +65,8 @@ public class AuthClientController extends BladeController {
 	* 分页 
 	*/
 	@GetMapping("/list")
-	@ApiOperation(value = "分页", notes = "传入client", position = 2)
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "分页", notes = "传入client")
 	public R<IPage<AuthClient>> list(AuthClient authClient, Query query) {
 		IPage<AuthClient> pages = clientService.page(Condition.getPage(query), Condition.getQueryWrapper(authClient));
 		return R.data(pages);
@@ -73,7 +76,8 @@ public class AuthClientController extends BladeController {
 	* 新增 
 	*/
 	@PostMapping("/save")
-	@ApiOperation(value = "新增", notes = "传入client", position = 4)
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "新增", notes = "传入client")
 	public R save(@Valid @RequestBody AuthClient authClient) {
 		return R.status(clientService.save(authClient));
 	}
@@ -82,7 +86,8 @@ public class AuthClientController extends BladeController {
 	* 修改 
 	*/
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入client", position = 5)
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "修改", notes = "传入client")
 	public R update(@Valid @RequestBody AuthClient authClient) {
 		return R.status(clientService.updateById(authClient));
 	}
@@ -91,7 +96,8 @@ public class AuthClientController extends BladeController {
 	* 新增或修改 
 	*/
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入client", position = 6)
+	@ApiOperationSupport(order = 5)
+	@ApiOperation(value = "新增或修改", notes = "传入client")
 	public R submit(@Valid @RequestBody AuthClient authClient) {
 		return R.status(clientService.saveOrUpdate(authClient));
 	}
@@ -101,7 +107,8 @@ public class AuthClientController extends BladeController {
 	* 删除 
 	*/
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids", position = 7)
+	@ApiOperationSupport(order = 6)
+	@ApiOperation(value = "逻辑删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(clientService.deleteLogic(Func.toIntList(ids)));
 	}

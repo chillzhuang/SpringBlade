@@ -13,29 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.wrapper;
+#set($wrapperPackage=$package.Entity.replace("entity","wrapper"))
+package $!{wrapperPackage};
 
 import lombok.AllArgsConstructor;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.system.entity.RoleMenu;
-import org.springblade.system.feign.IDictClient;
-import org.springblade.system.vo.RoleMenuVO;
+import $!{package.Entity}.$!{entity};
+#set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
 
 /**
- * 包装类,返回视图层所需的字段
+ * $!{table.comment}包装类,返回视图层所需的字段
  *
- * @author Chill
+ * @author $!{author}
+ * @since $!{date}
  */
-@AllArgsConstructor
-public class RoleMenuWrapper extends BaseEntityWrapper<RoleMenu, RoleMenuVO> {
+public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO>  {
 
-	private IDictClient dictClient;
+    public static $!{entity}Wrapper build() {
+        return new $!{entity}Wrapper();
+    }
 
 	@Override
-	public RoleMenuVO entityVO(RoleMenu roleMenu) {
-		RoleMenuVO roleMenuVO = BeanUtil.copy(roleMenu, RoleMenuVO.class);
-		return roleMenuVO;
+	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {
+		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copy($!{table.entityPath}, $!{entity}VO.class);
+
+		return $!{table.entityPath}VO;
 	}
 
 }

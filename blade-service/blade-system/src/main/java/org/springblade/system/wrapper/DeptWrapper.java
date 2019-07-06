@@ -15,13 +15,13 @@
  */
 package org.springblade.system.wrapper;
 
-import lombok.AllArgsConstructor;
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.service.IDeptService;
 import org.springblade.system.vo.DeptVO;
@@ -34,12 +34,16 @@ import java.util.stream.Collectors;
  *
  * @author Chill
  */
-@AllArgsConstructor
 public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 
-	private IDeptService deptService;
+	private static IDeptService deptService;
 
-	public DeptWrapper() {
+	static {
+		deptService = SpringUtil.getBean(IDeptService.class);
+	}
+
+	public static DeptWrapper build() {
+		return new DeptWrapper();
 	}
 
 	@Override
@@ -53,7 +57,6 @@ public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 		}
 		return deptVO;
 	}
-
 
 	public List<INode> listNodeVO(List<Dept> list) {
 		List<INode> collect = list.stream().map(dept -> BeanUtil.copy(dept, DeptVO.class)).collect(Collectors.toList());

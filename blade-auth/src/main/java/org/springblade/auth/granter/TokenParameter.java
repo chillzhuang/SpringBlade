@@ -13,29 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.wrapper;
+package org.springblade.auth.granter;
 
-import lombok.AllArgsConstructor;
-import org.springblade.core.mp.support.BaseEntityWrapper;
-import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.system.entity.Param;
-import org.springblade.system.feign.IDictClient;
-import org.springblade.system.vo.ParamVO;
+import lombok.Data;
+import org.springblade.core.tool.support.Kv;
 
 /**
- * 包装类,返回视图层所需的字段
+ * TokenParameter
  *
  * @author Chill
  */
-@AllArgsConstructor
-public class ParamWrapper extends BaseEntityWrapper<Param, ParamVO> {
+@Data
+public class TokenParameter {
 
-	private IDictClient dictClient;
-
-	@Override
-	public ParamVO entityVO(Param param) {
-		ParamVO paramVO = BeanUtil.copy(param, ParamVO.class);
-		return paramVO;
-	}
+	private Kv args = Kv.init();
 
 }

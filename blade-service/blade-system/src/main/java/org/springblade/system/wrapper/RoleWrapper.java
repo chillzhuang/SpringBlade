@@ -15,13 +15,13 @@
  */
 package org.springblade.system.wrapper;
 
-import lombok.AllArgsConstructor;
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.system.entity.Role;
 import org.springblade.system.service.IRoleService;
 import org.springblade.system.vo.RoleVO;
@@ -34,12 +34,16 @@ import java.util.stream.Collectors;
  *
  * @author Chill
  */
-@AllArgsConstructor
 public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 
-	private IRoleService roleService;
+	private static IRoleService roleService;
 
-	public RoleWrapper() {
+	static {
+		roleService = SpringUtil.getBean(IRoleService.class);
+	}
+
+	public static RoleWrapper build() {
+		return new RoleWrapper();
 	}
 
 	@Override
@@ -53,7 +57,6 @@ public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 		}
 		return roleVO;
 	}
-
 
 	public List<INode> listNodeVO(List<Role> list) {
 		List<INode> collect = list.stream().map(this::entityVO).collect(Collectors.toList());

@@ -1,47 +1,25 @@
 server:
   port: 80
 
-# 需要配置的服务名
-blade:
-  service:
-    blade-auth: blade-auth
-    blade-desk: blade-desk
-    blade-system: blade-system
-
 spring:
   cloud:
     gateway:
-      routes:
-      # 认证中心
-      - id: ${blade.service.blade-auth}
-        uri: lb://${blade.service.blade-auth}
-        predicates:
-        - Path=/${blade.service.blade-auth}/**
-        filters:
-        - name: RequestRateLimiter
-          args:
-            # 使用SpEL按名称引用bean
-            key-resolver: '#{@remoteAddrKeyResolver}'
-            # 允许用户每秒处理多少个请求
-            redis-rate-limiter.replenishRate: 10
-            # 允许在一秒钟内完成的最大请求数
-            redis-rate-limiter.burstCapacity: 20
-        - StripPrefix=1
-      # 首页模块
-      - id: ${blade.service.blade-desk}
-        uri: lb://${blade.service.blade-desk}
-        predicates:
-        - Path=/${blade.service.blade-desk}/**
-      # 系统模块
-      - id: ${blade.service.blade-system}
-        uri: lb://${blade.service.blade-system}
-        predicates:
-        - Path=/${blade.service.blade-system}/**
       discovery:
         locator:
           enabled: true
     loadbalancer:
       retry:
         enabled: true
+
+# 聚合文档配置
+blade:
+  document:
+    resources:
+      - name: 授权模块
+        location: /blade-auth
+      - name: 工作台模块
+        location: /blade-desk
+      - name: 系统模块
+        location: /blade-system
 
 

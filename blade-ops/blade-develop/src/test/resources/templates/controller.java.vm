@@ -1,0 +1,154 @@
+/**
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package $!{package.Controller};
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiOperationSupport;
+import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
+import javax.validation.Valid;
+
+import org.springblade.core.mp.support.Condition;
+import org.springblade.core.mp.support.Query;
+import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.utils.Func;
+import org.springframework.web.bind.annotation.*;
+#if($!{superEntityClass})
+import org.springframework.web.bind.annotation.RequestParam;
+#end
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import $!{package.Entity}.$!{entity};
+#set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
+#set($wrapperPackage=$package.Entity.replace("entity","wrapper"))
+import $!{wrapperPackage}.$!{entity}Wrapper;
+import $!{package.Service}.$!{table.serviceName};
+#if($!{superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+#if(!$!{superEntityClass})
+#end
+import java.util.List;
+
+/**
+ * $!{table.comment} 控制器
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@RestController
+@AllArgsConstructor
+@RequestMapping("#if($!{package.ModuleName})/$!{package.ModuleName}#end/$!{cfg.entityKey}")
+@Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
+#if($!{superControllerClass})
+public class $!{table.controllerName} extends $!{superControllerClass} {
+#else
+public class $!{table.controllerName} {
+#end
+
+	private $!{table.serviceName} $!{table.entityPath}Service;
+
+	/**
+	* 详情
+	*/
+	@GetMapping("/detail")
+    @ApiOperationSupport(order = 1)
+	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}")
+	public R<$!{entity}VO> detail($!{entity} $!{table.entityPath}) {
+		$!{entity} detail = $!{table.entityPath}Service.getOne(Condition.getQueryWrapper($!{table.entityPath}));
+		return R.data($!{entity}Wrapper.build().entityVO(detail));
+	}
+
+	/**
+	* 分页 $!{table.comment}
+	*/
+	@GetMapping("/list")
+    @ApiOperationSupport(order = 2)
+	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	public R<IPage<$!{entity}VO>> list($!{entity} $!{table.entityPath}, Query query) {
+		IPage<$!{entity}> pages = $!{table.entityPath}Service.page(Condition.getPage(query), Condition.getQueryWrapper($!{table.entityPath}));
+		return R.data($!{entity}Wrapper.build().pageVO(pages));
+	}
+
+	/**
+	* 自定义分页 $!{table.comment}
+	*/
+	@GetMapping("/page")
+    @ApiOperationSupport(order = 3)
+	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	public R<IPage<$!{entity}VO>> page($!{entity}VO $!{table.entityPath}, Query query) {
+		IPage<$!{entity}VO> pages = $!{table.entityPath}Service.select$!{entity}Page(Condition.getPage(query), $!{table.entityPath});
+		return R.data(pages);
+	}
+
+	/**
+	* 新增 $!{table.comment}
+	*/
+	@PostMapping("/save")
+    @ApiOperationSupport(order = 4)
+	@ApiOperation(value = "新增", notes = "传入$!{table.entityPath}")
+	public R save(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
+		return R.status($!{table.entityPath}Service.save($!{table.entityPath}));
+	}
+
+	/**
+	* 修改 $!{table.comment}
+	*/
+	@PostMapping("/update")
+    @ApiOperationSupport(order = 5)
+	@ApiOperation(value = "修改", notes = "传入$!{table.entityPath}")
+	public R update(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
+		return R.status($!{table.entityPath}Service.updateById($!{table.entityPath}));
+	}
+
+	/**
+	* 新增或修改 $!{table.comment}
+	*/
+	@PostMapping("/submit")
+    @ApiOperationSupport(order = 6)
+	@ApiOperation(value = "新增或修改", notes = "传入$!{table.entityPath}")
+	public R submit(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
+		return R.status($!{table.entityPath}Service.saveOrUpdate($!{table.entityPath}));
+	}
+
+	#if($!{superEntityClass})
+
+	/**
+	* 删除 $!{table.comment}
+	*/
+	@PostMapping("/remove")
+    @ApiOperationSupport(order = 7)
+	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+		return R.status($!{table.entityPath}Service.deleteLogic(Func.toIntList(ids)));
+	}
+
+	#else
+
+	/**
+	* 删除 $!{table.comment}
+	*/
+	@PostMapping("/remove")
+    @ApiOperationSupport(order = 7)
+	@ApiOperation(value = "删除", notes = "传入ids")
+	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+		return R.status($!{table.entityPath}Service.removeByIds(Func.toIntList(ids)));
+	}
+
+	#end
+
+}

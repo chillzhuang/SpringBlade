@@ -18,10 +18,7 @@ package org.springblade.system.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
@@ -29,7 +26,6 @@ import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.system.feign.IDictClient;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.service.IUserService;
 import org.springblade.system.user.vo.UserVO;
@@ -52,17 +48,15 @@ public class UserController {
 
 	private IUserService userService;
 
-	private IDictClient dictClient;
-
 	/**
 	 * 查询单条
 	 */
-	@ApiOperation(value = "查看详情", notes = "传入id", position = 1)
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "查看详情", notes = "传入id")
 	@GetMapping("/detail")
 	public R<UserVO> detail(User user) {
 		User detail = userService.getOne(Condition.getQueryWrapper(user));
-		UserWrapper userWrapper = new UserWrapper(userService, dictClient);
-		return R.data(userWrapper.entityVO(detail));
+		return R.data(UserWrapper.build().entityVO(detail));
 	}
 
 	/**
@@ -73,19 +67,20 @@ public class UserController {
 		@ApiImplicitParam(name = "account", value = "账号名", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "realName", value = "姓名", paramType = "query", dataType = "string")
 	})
-	@ApiOperation(value = "列表", notes = "传入account和realName", position = 2)
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "列表", notes = "传入account和realName")
 	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam Map<String, Object> user, Query query, BladeUser bladeUser) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
 		IPage<User> pages = userService.page(Condition.getPage(query), (!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(User::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
-		UserWrapper userWrapper = new UserWrapper(userService, dictClient);
-		return R.data(userWrapper.pageVO(pages));
+		return R.data(UserWrapper.build().pageVO(pages));
 	}
 
 	/**
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入User", position = 3)
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "新增或修改", notes = "传入User")
 	public R submit(@Valid @RequestBody User user) {
 		return R.status(userService.submit(user));
 	}
@@ -94,7 +89,8 @@ public class UserController {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入User", position = 3)
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "修改", notes = "传入User")
 	public R update(@Valid @RequestBody User user) {
 		return R.status(userService.updateById(user));
 	}
@@ -103,7 +99,8 @@ public class UserController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入地基和", position = 4)
+	@ApiOperationSupport(order = 5)
+	@ApiOperation(value = "删除", notes = "传入地基和")
 	public R remove(@RequestParam String ids) {
 		return R.status(userService.deleteLogic(Func.toIntList(ids)));
 	}
@@ -117,7 +114,8 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/grant")
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合", position = 5)
+	@ApiOperationSupport(order = 6)
+	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
 	public R grant(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds,
 				   @ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds) {
 		boolean temp = userService.grant(userIds, roleIds);
@@ -125,7 +123,8 @@ public class UserController {
 	}
 
 	@PostMapping("/reset-password")
-	@ApiOperation(value = "初始化密码", notes = "传入userId集合", position = 5)
+	@ApiOperationSupport(order = 7)
+	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
 	public R resetPassword(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds) {
 		boolean temp = userService.resetPassword(userIds);
 		return R.status(temp);

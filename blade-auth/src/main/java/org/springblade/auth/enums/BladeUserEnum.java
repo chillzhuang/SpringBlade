@@ -13,25 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.springblade.auth.enums;
 
-package org.springblade.gateway.config;
-
-import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import reactor.core.publisher.Mono;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * 路由限流配置
+ * 用户类型枚举
  *
  * @author Chill
  */
-@Configuration
-public class RateLimiterConfiguration {
+@Getter
+@AllArgsConstructor
+public enum BladeUserEnum {
 
-	@Bean(value = "remoteAddrKeyResolver")
-	public KeyResolver remoteAddrKeyResolver() {
-		return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
-	}
+	/**
+	 * web
+	 */
+	WEB("web", 1),
+
+	/**
+	 * app
+	 */
+	APP("app", 2),
+	;
+
+	final String name;
+	final int category;
 
 }

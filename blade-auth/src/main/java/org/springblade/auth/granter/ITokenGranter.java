@@ -13,18 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.common.cache;
+package org.springblade.auth.granter;
+
+
+import org.springblade.system.user.entity.UserInfo;
 
 /**
- * 缓存名
+ * 授权认证统一接口.
  *
  * @author Chill
  */
-public interface CacheNames {
+public interface ITokenGranter {
 
-	String NOTICE_ONE = "notice:one";
-
-	String DICT_VALUE = "dict:value";
-	String DICT_LIST = "dict:list";
+	/**
+	 * 获取用户信息
+	 *
+	 * @param tokenParameter 授权参数
+	 * @return UserInfo
+	 */
+	UserInfo grant(TokenParameter tokenParameter);
 
 }

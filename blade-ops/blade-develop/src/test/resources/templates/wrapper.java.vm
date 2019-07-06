@@ -1,0 +1,45 @@
+/**
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#set($wrapperPackage=$package.Entity.replace("entity","wrapper"))
+package $!{wrapperPackage};
+
+import lombok.AllArgsConstructor;
+import org.springblade.core.mp.support.BaseEntityWrapper;
+import org.springblade.core.tool.utils.BeanUtil;
+import $!{package.Entity}.$!{entity};
+#set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
+
+/**
+ * $!{table.comment}包装类,返回视图层所需的字段
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO>  {
+
+    public static $!{entity}Wrapper build() {
+        return new $!{entity}Wrapper();
+    }
+
+	@Override
+	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {
+		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copy($!{table.entityPath}, $!{entity}VO.class);
+
+		return $!{table.entityPath}VO;
+	}
+
+}

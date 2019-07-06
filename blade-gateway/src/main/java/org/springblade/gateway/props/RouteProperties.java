@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.common.cache;
+package org.springblade.gateway.props;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 缓存名
+ * 路由配置类
  *
  * @author Chill
  */
-public interface CacheNames {
+@Data
+@RefreshScope
+@ConfigurationProperties("blade.document")
+public class RouteProperties {
 
-	String NOTICE_ONE = "notice:one";
-
-	String DICT_VALUE = "dict:value";
-	String DICT_LIST = "dict:list";
+	private final List<RouteResource> resources = new ArrayList<>();
 
 }

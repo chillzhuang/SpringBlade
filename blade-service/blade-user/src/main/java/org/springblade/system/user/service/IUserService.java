@@ -32,6 +32,7 @@ public interface IUserService extends BaseService<User> {
 
 	/**
 	 * 新增或修改用户
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -45,6 +46,14 @@ public interface IUserService extends BaseService<User> {
 	 * @return
 	 */
 	IPage<User> selectUserPage(IPage<User> page, User user);
+
+	/**
+	 * 用户信息
+	 *
+	 * @param userId
+	 * @return
+	 */
+	UserInfo userInfo(Long userId);
 
 	/**
 	 * 用户信息

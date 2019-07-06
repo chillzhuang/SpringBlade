@@ -15,13 +15,13 @@
  */
 package org.springblade.system.wrapper;
 
-import lombok.AllArgsConstructor;
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.system.entity.Dict;
 import org.springblade.system.service.IDictService;
 import org.springblade.system.vo.DictVO;
@@ -34,12 +34,16 @@ import java.util.stream.Collectors;
  *
  * @author Chill
  */
-@AllArgsConstructor
 public class DictWrapper extends BaseEntityWrapper<Dict, DictVO> {
 
-	private IDictService dictService;
+	private static IDictService dictService;
 
-	public DictWrapper() {
+	static {
+		dictService = SpringUtil.getBean(IDictService.class);
+	}
+
+	public static DictWrapper build() {
+		return new DictWrapper();
 	}
 
 	@Override

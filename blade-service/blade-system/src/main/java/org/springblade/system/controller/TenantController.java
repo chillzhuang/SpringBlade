@@ -53,7 +53,7 @@ public class TenantController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入tenant", position = 1)
+	@ApiOperation(value = "详情", notes = "传入tenant")
 	public R<Tenant> detail(Tenant tenant) {
 		Tenant detail = tenantService.getOne(Condition.getQueryWrapper(tenant));
 		return R.data(detail);
@@ -68,7 +68,7 @@ public class TenantController extends BladeController {
 		@ApiImplicitParam(name = "tenantName", value = "角色别名", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "contactNumber", value = "联系电话", paramType = "query", dataType = "string")
 	})
-	@ApiOperation(value = "分页", notes = "传入tenant", position = 2)
+	@ApiOperation(value = "分页", notes = "传入tenant")
 	public R<IPage<Tenant>> list(@ApiIgnore @RequestParam Map<String, Object> tenant, Query query, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant, Tenant.class);
 		IPage<Tenant> pages = tenantService.page(Condition.getPage(query), (!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Tenant::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
@@ -79,7 +79,7 @@ public class TenantController extends BladeController {
 	 * 下拉数据源
 	 */
 	@GetMapping("/select")
-	@ApiOperation(value = "下拉数据源", notes = "传入tenant", position = 3)
+	@ApiOperation(value = "下拉数据源", notes = "传入tenant")
 	public R<List<Tenant>> select(Tenant tenant, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant);
 		List<Tenant> list = tenantService.list((!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Tenant::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
@@ -90,7 +90,7 @@ public class TenantController extends BladeController {
 	 * 自定义分页
 	 */
 	@GetMapping("/page")
-	@ApiOperation(value = "分页", notes = "传入tenant", position = 4)
+	@ApiOperation(value = "分页", notes = "传入tenant")
 	public R<IPage<Tenant>> page(Tenant tenant, Query query) {
 		IPage<Tenant> pages = tenantService.selectTenantPage(Condition.getPage(query), tenant);
 		return R.data(pages);
@@ -100,7 +100,7 @@ public class TenantController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入tenant", position = 7)
+	@ApiOperation(value = "新增或修改", notes = "传入tenant")
 	public R submit(@Valid @RequestBody Tenant tenant) {
 		return R.status(tenantService.saveTenant(tenant));
 	}
@@ -110,7 +110,7 @@ public class TenantController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids", position = 8)
+	@ApiOperation(value = "逻辑删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(tenantService.deleteLogic(Func.toIntList(ids)));
 	}
