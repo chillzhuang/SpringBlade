@@ -58,7 +58,7 @@ public class AuthController {
 		ITokenGranter granter = TokenGranterBuilder.getGranter(grantType);
 		UserInfo userInfo = granter.grant(tokenParameter);
 
-		if (userInfo == null || userInfo.getUser() == null) {
+		if (userInfo == null || userInfo.getUser() == null || userInfo.getUser().getId() == null) {
 			return R.fail(TokenUtil.USER_NOT_FOUND);
 		}
 
