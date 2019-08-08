@@ -72,7 +72,7 @@ public class RoleController extends BladeController {
 	@ApiOperation(value = "列表", notes = "传入role")
 	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> role, BladeUser bladeUser) {
 		QueryWrapper<Role> queryWrapper = Condition.getQueryWrapper(role, Role.class);
-		List<Role> list = roleService.list((!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Role::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
+		List<Role> list = roleService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Role::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(RoleWrapper.build().listNodeVO(list));
 	}
 
@@ -82,8 +82,8 @@ public class RoleController extends BladeController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<RoleVO>> tree(String tenantCode, BladeUser bladeUser) {
-		List<RoleVO> tree = roleService.tree(Func.toStr(tenantCode, bladeUser.getTenantCode()));
+	public R<List<RoleVO>> tree(String tenantId, BladeUser bladeUser) {
+		List<RoleVO> tree = roleService.tree(Func.toStr(tenantId, bladeUser.getTenantId()));
 		return R.data(tree);
 	}
 
@@ -95,7 +95,7 @@ public class RoleController extends BladeController {
 	@ApiOperation(value = "新增或修改", notes = "传入role")
 	public R submit(@Valid @RequestBody Role role, BladeUser user) {
 		if (Func.isEmpty(role.getId())) {
-			role.setTenantCode(user.getTenantCode());
+			role.setTenantId(user.getTenantId());
 		}
 		return R.status(roleService.saveOrUpdate(role));
 	}

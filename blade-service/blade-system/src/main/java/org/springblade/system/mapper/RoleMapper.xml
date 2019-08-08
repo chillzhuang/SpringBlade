@@ -33,7 +33,7 @@
     <select id="tree" resultMap="treeNodeResultMap">
         select id, parent_id, role_name as title, id as 'value', id as 'key' from blade_role where is_deleted = 0
         <if test="param1!=null">
-            and tenant_code = #{param1}
+            and tenant_id = #{param1}
         </if>
         <if test="param2!=null">
             and role_alias &lt;&gt; #{param2}

@@ -40,8 +40,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
 	}
 
 	@Override
-	public List<DeptVO> tree(String tenantCode) {
-		return ForestNodeMerger.merge(baseMapper.tree(tenantCode));
+	public List<DeptVO> tree(String tenantId) {
+		return ForestNodeMerger.merge(baseMapper.tree(tenantId));
 	}
 
 }

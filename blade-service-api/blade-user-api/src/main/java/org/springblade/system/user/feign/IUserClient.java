@@ -48,12 +48,12 @@ public interface IUserClient {
 	/**
 	 * 获取用户信息
 	 *
-	 * @param tenantCode 租户编号
+	 * @param tenantId 租户ID
 	 * @param account    账号
 	 * @param password   密码
 	 * @return
 	 */
 	@GetMapping(API_PREFIX + "/user-info")
-	R<UserInfo> userInfo(@RequestParam("tenantCode") String tenantCode, @RequestParam("account") String account, @RequestParam("password") String password);
+	R<UserInfo> userInfo(@RequestParam("tenantId") String tenantId, @RequestParam("account") String account, @RequestParam("password") String password);
 
 }

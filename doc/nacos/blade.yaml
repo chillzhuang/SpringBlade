@@ -84,7 +84,7 @@ blade:
         path-patterns:
           - /saber/**
   tenant:
-    column: tenant_code
+    column: tenant_id
     tables:
       - blade_notice
 

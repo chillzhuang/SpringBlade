@@ -42,10 +42,10 @@ public interface IRoleService extends IService<Role> {
 	/**
 	 * 树形结构
 	 *
-	 * @param tenantCode
+	 * @param tenantId
 	 * @return
 	 */
-	List<RoleVO> tree(String tenantCode);
+	List<RoleVO> tree(String tenantId);
 
 	/**
 	 * 权限配置

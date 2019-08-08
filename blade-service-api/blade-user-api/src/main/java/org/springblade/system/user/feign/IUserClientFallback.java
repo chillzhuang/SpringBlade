@@ -33,7 +33,7 @@ public class IUserClientFallback implements IUserClient {
 	}
 
 	@Override
-	public R<UserInfo> userInfo(String tenantCode, String account, String password) {
+	public R<UserInfo> userInfo(String tenantId, String account, String password) {
 		return R.fail("未获取到账号信息");
 	}
 }

@@ -41,8 +41,8 @@ public class UserClient implements IUserClient {
 
 	@Override
 	@GetMapping(API_PREFIX + "/user-info")
-	public R<UserInfo> userInfo(String tenantCode, String account, String password) {
-		return R.data(service.userInfo(tenantCode, account, password));
+	public R<UserInfo> userInfo(String tenantId, String account, String password) {
+		return R.data(service.userInfo(tenantId, account, password));
 	}
 
 }

@@ -45,10 +45,10 @@ public class Dept implements Serializable {
 	private Integer id;
 
 	/**
-	 * 租户编号
+	 * 租户ID
 	 */
-	@ApiModelProperty(value = "租户编号")
-	private String tenantCode;
+	@ApiModelProperty(value = "租户ID")
+	private String tenantId;
 
 	/**
 	 * 父主键

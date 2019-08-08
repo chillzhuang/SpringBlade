@@ -58,12 +58,12 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 	public boolean saveTenant(Tenant tenant) {
 		if (Func.isEmpty(tenant.getId())) {
 			List<Tenant> tenants = baseMapper.selectList(Wrappers.<Tenant>query().lambda().eq(Tenant::getIsDeleted, BladeConstant.DB_NOT_DELETED));
-			List<String> codes = tenants.stream().map(Tenant::getTenantCode).collect(Collectors.toList());
-			String tenantCode = getTenantCode(codes);
-			tenant.setTenantCode(tenantCode);
+			List<String> codes = tenants.stream().map(Tenant::getTenantId).collect(Collectors.toList());
+			String tenantId = getTenantId(codes);
+			tenant.setTenantId(tenantId);
 			// 新建租户对应的默认角色
 			Role role = new Role();
-			role.setTenantCode(tenantCode);
+			role.setTenantId(tenantId);
 			role.setParentId(0);
 			role.setRoleName("管理员");
 			role.setRoleAlias("admin");
@@ -72,7 +72,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			roleMapper.insert(role);
 			// 新建租户对应的默认部门
 			Dept dept = new Dept();
-			dept.setTenantCode(tenantCode);
+			dept.setTenantId(tenantId);
 			dept.setParentId(0);
 			dept.setDeptName(tenant.getTenantName());
 			dept.setFullName(tenant.getTenantName());
@@ -83,10 +83,10 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 		return super.saveOrUpdate(tenant);
 	}
 
-	private String getTenantCode(List<String> codes) {
+	private String getTenantId(List<String> codes) {
 		String code = tenantId.generate();
 		if (codes.contains(code)) {
-			return getTenantCode(codes);
+			return getTenantId(codes);
 		}
 		return code;
 	}

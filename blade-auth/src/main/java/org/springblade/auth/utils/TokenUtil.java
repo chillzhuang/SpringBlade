@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class TokenUtil {
 
-	public final static String TENANT_HEADER_KEY = "Tenant-Code";
+	public final static String TENANT_HEADER_KEY = "Tenant-Id";
 	public final static String DEFAULT_TENANT_ID = "000000";
 	public final static String USER_TYPE_HEADER_KEY = "User-Type";
 	public final static String DEFAULT_USER_TYPE = "web";
@@ -54,7 +54,7 @@ public class TokenUtil {
 		//设置jwt参数
 		Map<String, String> param = new HashMap<>(16);
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.ACCESS_TOKEN);
-		param.put(TokenConstant.TENANT_CODE, user.getTenantCode());
+		param.put(TokenConstant.TENANT_ID, user.getTenantId());
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		param.put(TokenConstant.ROLE_ID, user.getRoleId());
 		param.put(TokenConstant.ACCOUNT, user.getAccount());

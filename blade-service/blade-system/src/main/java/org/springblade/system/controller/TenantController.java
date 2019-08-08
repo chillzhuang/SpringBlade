@@ -64,14 +64,14 @@ public class TenantController extends BladeController {
 	 */
 	@GetMapping("/list")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "tenantCode", value = "参数名称", paramType = "query", dataType = "string"),
+		@ApiImplicitParam(name = "tenantId", value = "参数名称", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "tenantName", value = "角色别名", paramType = "query", dataType = "string"),
 		@ApiImplicitParam(name = "contactNumber", value = "联系电话", paramType = "query", dataType = "string")
 	})
 	@ApiOperation(value = "分页", notes = "传入tenant")
 	public R<IPage<Tenant>> list(@ApiIgnore @RequestParam Map<String, Object> tenant, Query query, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant, Tenant.class);
-		IPage<Tenant> pages = tenantService.page(Condition.getPage(query), (!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Tenant::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
+		IPage<Tenant> pages = tenantService.page(Condition.getPage(query), (!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Tenant::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(pages);
 	}
 
@@ -82,7 +82,7 @@ public class TenantController extends BladeController {
 	@ApiOperation(value = "下拉数据源", notes = "传入tenant")
 	public R<List<Tenant>> select(Tenant tenant, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant);
-		List<Tenant> list = tenantService.list((!bladeUser.getTenantCode().equals(BladeConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Tenant::getTenantCode, bladeUser.getTenantCode()) : queryWrapper);
+		List<Tenant> list = tenantService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Tenant::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(list);
 	}
 
