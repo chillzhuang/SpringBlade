@@ -29,7 +29,6 @@ import java.io.Serializable;
  * 实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @TableName("blade_code")
@@ -44,6 +43,12 @@ public class Code implements Serializable {
 	@ApiModelProperty(value = "主键")
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
+
+	/**
+	 * 数据源主键
+	 */
+	@ApiModelProperty(value = "数据源主键")
+	private Integer datasourceId;
 
 	/**
 	 * 模块名称
@@ -74,6 +79,18 @@ public class Code implements Serializable {
 	 */
 	@ApiModelProperty(value = "主键名")
 	private String pkName;
+
+	/**
+	 * 基础业务模式
+	 */
+	@ApiModelProperty(value = "基础业务模式")
+	private Integer baseMode;
+
+	/**
+	 * 包装器模式
+	 */
+	@ApiModelProperty(value = "包装器模式")
+	private Integer wrapMode;
 
 	/**
 	 * 后端包名

@@ -13,25 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.develop.service;
+package org.springblade.develop.mapper;
 
-
-import com.baomidou.mybatisplus.extension.service.IService;
-import org.springblade.develop.entity.Code;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springblade.develop.entity.Datasource;
 
 /**
- * 服务类
+ * 数据源配置表 Mapper 接口
  *
  * @author Chill
  */
-public interface ICodeService extends IService<Code> {
-
-	/**
-	 * 提交
-	 *
-	 * @param code
-	 * @return
-	 */
-	boolean submit(Code code);
+public interface DatasourceMapper extends BaseMapper<Datasource> {
 
 }

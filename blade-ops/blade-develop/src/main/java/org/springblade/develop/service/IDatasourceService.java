@@ -15,23 +15,14 @@
  */
 package org.springblade.develop.service;
 
-
-import com.baomidou.mybatisplus.extension.service.IService;
-import org.springblade.develop.entity.Code;
+import org.springblade.core.mp.base.BaseService;
+import org.springblade.develop.entity.Datasource;
 
 /**
- * 服务类
+ * 数据源配置表 服务类
  *
  * @author Chill
  */
-public interface ICodeService extends IService<Code> {
-
-	/**
-	 * 提交
-	 *
-	 * @param code
-	 * @return
-	 */
-	boolean submit(Code code);
+public interface IDatasourceService extends BaseService<Datasource> {
 
 }

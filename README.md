@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR2-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.6.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.7.RELEASE-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -45,7 +45,8 @@ SpringBlade
 * 官网地址：[https://bladex.vip](https://bladex.vip)
 * 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
 * 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
-* 交流群：`477853168`
+* 交流一群：`477853168`
+* 交流二群：`751253339`
 
 ## 在线演示
 * Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)

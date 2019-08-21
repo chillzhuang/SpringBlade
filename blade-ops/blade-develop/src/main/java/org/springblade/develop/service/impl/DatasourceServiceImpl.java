@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.develop.service;
+package org.springblade.develop.service.impl;
 
-
-import com.baomidou.mybatisplus.extension.service.IService;
-import org.springblade.develop.entity.Code;
+import org.springblade.core.mp.base.BaseServiceImpl;
+import org.springblade.develop.entity.Datasource;
+import org.springblade.develop.mapper.DatasourceMapper;
+import org.springblade.develop.service.IDatasourceService;
+import org.springframework.stereotype.Service;
 
 /**
- * 服务类
+ * 数据源配置表 服务实现类
  *
  * @author Chill
  */
-public interface ICodeService extends IService<Code> {
-
-	/**
-	 * 提交
-	 *
-	 * @param code
-	 * @return
-	 */
-	boolean submit(Code code);
+@Service
+public class DatasourceServiceImpl extends BaseServiceImpl<DatasourceMapper, Datasource> implements IDatasourceService {
 
 }
