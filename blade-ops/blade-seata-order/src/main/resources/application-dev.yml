@@ -1,0 +1,10 @@
+#服务器端口
+server:
+  port: 8501
+
+#数据源配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/seata_order?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root

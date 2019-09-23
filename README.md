@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR2-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.7.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.8.RELEASE-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -62,6 +62,7 @@ SpringBlade
 
 ## 技术文档
 * [SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
+* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
 
 # 开源协议
 Apache Licence 2.0 （[英文原文](http://www.apache.org/licenses/LICENSE-2.0.html)）
