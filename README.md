@@ -1,7 +1,15 @@
  <p align="center">
+      <img src="https://img.shields.io/badge/Release-V2.5.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue.svg" alt="Coverage Status">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.1.8.RELEASE-blue.svg" alt="Downloads">
+   <a target="_blank" href="https://bladex.vip">
+   <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
+ </a>
+ <a target="_blank" href="https://bladex.vip">
+   <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
+ </a>
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -29,6 +37,9 @@ SpringBlade
 ├── blade-ops -- 运维中心
 ├    ├── blade-admin -- spring-cloud后台管理
 ├    ├── blade-develop -- 代码生成
+├    ├── blade-resource -- 资源管理
+├    ├── blade-seata-order -- seata分布式事务demo
+├    ├── blade-seata-storage -- seata分布式事务demo
 ├── blade-service -- 业务模块
 ├    ├── blade-desk -- 工作台模块 
 ├    ├── blade-log -- 日志模块 
@@ -49,8 +60,13 @@ SpringBlade
 * 交流二群：`751253339`
 
 ## 在线演示
-* Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
-* Saber演示地址：[https://saber.bladex.vip](https://saber.bladex.vip)
+* Saber-基于Vue：[https://saber.bladex.vip](https://saber.bladex.vip)
+* Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
+* Archer-全能代码生成系统：[https://archer.bladex.vip](https://archer.bladex.vip)
+
+## 技术文档
+* [开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
+* [常见问题集锦](https://sns.bladex.vip/article-14966.html)
 
 ## 项目地址
 * 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)
@@ -59,10 +75,6 @@ SpringBlade
 * 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
 * 前端框架Saber(基于Vue)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
 * 核心框架项目地址：[https://github.com/chillzhuang/blade-tool](https://github.com/chillzhuang/blade-tool)
-
-## 技术文档
-* [SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
-* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
 
 # 开源协议
 Apache Licence 2.0 （[英文原文](http://www.apache.org/licenses/LICENSE-2.0.html)）

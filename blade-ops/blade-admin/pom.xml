@@ -28,8 +28,19 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
+            <artifactId>blade-core-tool</artifactId>
+            <version>${blade.tool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
             <artifactId>blade-core-cloud</artifactId>
             <version>${blade.tool.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springblade</groupId>
+                    <artifactId>blade-core-secure</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--Admin-Server-->
         <dependency>
