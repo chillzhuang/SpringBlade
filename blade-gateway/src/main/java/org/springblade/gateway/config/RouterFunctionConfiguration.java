@@ -19,6 +19,7 @@ package org.springblade.gateway.config;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.gateway.handler.SwaggerResourceHandler;
+import org.springblade.gateway.props.AuthProperties;
 import org.springblade.gateway.props.RouteProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +41,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Configuration
 @AllArgsConstructor
-@EnableConfigurationProperties(RouteProperties.class)
+@EnableConfigurationProperties({RouteProperties.class, AuthProperties.class})
 public class RouterFunctionConfiguration {
 
 	private final SwaggerResourceHandler swaggerResourceHandler;
@@ -48,7 +49,7 @@ public class RouterFunctionConfiguration {
 	@Bean
 	public RouterFunction routerFunction() {
 		return RouterFunctions.route(RequestPredicates.GET("/swagger-resources")
-				.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler);
+			.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler);
 
 	}
 
