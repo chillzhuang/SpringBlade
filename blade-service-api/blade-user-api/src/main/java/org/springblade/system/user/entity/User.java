@@ -61,6 +61,10 @@ public class User extends TenantEntity {
 	 */
 	private String realName;
 	/**
+	 * 头像
+	 */
+	private String avatar;
+	/**
 	 * 邮箱
 	 */
 	private String email;

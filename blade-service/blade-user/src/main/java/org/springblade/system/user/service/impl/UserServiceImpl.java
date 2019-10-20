@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import org.springblade.common.constant.CommonConstant;
+import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.base.BaseServiceImpl;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.DigestUtil;
@@ -94,6 +95,18 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 		user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
 		user.setUpdateTime(DateUtil.now());
 		return this.update(user, Wrappers.<User>update().lambda().in(User::getId, Func.toIntList(userIds)));
+	}
+
+	@Override
+	public boolean updatePassword(Integer userId, String oldPassword, String newPassword, String newPassword1) {
+		User user = getById(userId);
+		if (!newPassword.equals(newPassword1)) {
+			throw new ServiceException("请输入正确的确认密码!");
+		}
+		if (!user.getPassword().equals(DigestUtil.encrypt(oldPassword))) {
+			throw new ServiceException("原密码不正确!");
+		}
+		return this.update(Wrappers.<User>update().lambda().set(User::getPassword, DigestUtil.encrypt(newPassword)).eq(User::getId, userId));
 	}
 
 	@Override

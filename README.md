@@ -1,5 +1,5 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V2.5.1-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V2.5.2-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue.svg" alt="Coverage Status">
@@ -65,7 +65,7 @@ SpringBlade
 * Archer-全能代码生成系统：[https://archer.bladex.vip](https://archer.bladex.vip)
 
 ## 技术文档
-* [开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
+* [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
 * [常见问题集锦](https://sns.bladex.vip/article-14966.html)
 
 ## 项目地址

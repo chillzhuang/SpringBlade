@@ -73,16 +73,15 @@ blade:
       exclude-patterns:
         - /weixin
   secure:
-    url:
-      exclude-patterns:
+    skip-url:
         - /test/**
-    client:
-      - client-id: sword
-        path-patterns:
-          - /sword/**
-      - client-id: saber
-        path-patterns:
-          - /saber/**
+  client:
+    - client-id: sword
+      path-patterns:
+        - /sword/**
+    - client-id: saber
+      path-patterns:
+        - /saber/**
   tenant:
     column: tenant_id
     tables:
