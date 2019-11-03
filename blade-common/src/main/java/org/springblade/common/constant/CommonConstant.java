@@ -40,6 +40,21 @@ public interface CommonConstant {
 	String SENTINEL_TEST_ADDR = "172.30.0.58:8858";
 
 	/**
+	 * zipkin dev 地址
+	 */
+	String ZIPKIN_DEV_ADDR = "http://127.0.0.1:9411";
+
+	/**
+	 * zipkin prod 地址
+	 */
+	String ZIPKIN_PROD_ADDR = "http://172.30.0.58:9411";
+
+	/**
+	 * zipkin test 地址
+	 */
+	String ZIPKIN_TEST_ADDR = "http://172.30.0.58:9411";
+
+	/**
 	 * sword 系统名
 	 */
 	String SWORD_NAME = "sword";
@@ -98,6 +113,23 @@ public interface CommonConstant {
 				return SENTINEL_TEST_ADDR;
 			default:
 				return SENTINEL_DEV_ADDR;
+		}
+	}
+
+	/**
+	 * 动态获取zipkin地址
+	 *
+	 * @param profile 环境变量
+	 * @return addr
+	 */
+	static String zipkinAddr(String profile) {
+		switch (profile) {
+			case (AppConstant.PROD_CODE):
+				return ZIPKIN_PROD_ADDR;
+			case (AppConstant.TEST_CODE):
+				return ZIPKIN_TEST_ADDR;
+			default:
+				return ZIPKIN_DEV_ADDR;
 		}
 	}
 

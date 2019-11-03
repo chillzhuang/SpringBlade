@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-admin</artifactId>
+    <artifactId>blade-zipkin</artifactId>
     <name>${project.artifactId}</name>
-    <version>${blade.project.version}</version>
+    <version>${bladex.project.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -23,30 +23,36 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-launch</artifactId>
-            <version>${blade.tool.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-cloud</artifactId>
-            <version>${blade.tool.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springblade</groupId>
                     <artifactId>blade-core-secure</artifactId>
                 </exclusion>
             </exclusions>
+            <version>${blade.tool.version}</version>
         </dependency>
-        <!--Admin-Server-->
+        <!--Zipkin-->
         <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
-            <version>${spring.boot.admin.version}</version>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+            <version>2.12.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+            <version>2.12.3</version>
         </dependency>
     </dependencies>
 
