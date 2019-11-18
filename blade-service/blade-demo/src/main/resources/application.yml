@@ -1,0 +1,12 @@
+#mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:com/example/**/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.example.**.entity
+
+#swagger扫描路径配置
+swagger:
+  base-packages:
+    - org.springbalde
+    - com.example
+
