@@ -69,19 +69,19 @@ management:
 #blade配置
 blade:
   xss:
-    url:
-      exclude-patterns:
-        - /weixin
+    enable: true
+    skip-url:
+      - /weixin
   secure:
     skip-url:
-        - /test/**
-  client:
-    - client-id: sword
-      path-patterns:
-        - /sword/**
-    - client-id: saber
-      path-patterns:
-        - /saber/**
+      - /test/**
+    client:
+      - client-id: sword
+        path-patterns:
+          - /sword/**
+      - client-id: saber
+        path-patterns:
+          - /saber/**
   tenant:
     column: tenant_id
     tables:

@@ -3,6 +3,9 @@ server:
 
 spring:
   cloud:
+    discovery:
+      reactive:
+        enabled: false
     gateway:
       discovery:
         locator:

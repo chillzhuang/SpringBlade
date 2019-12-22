@@ -18,9 +18,9 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Notice;
 import com.example.demo.service.IDynamicService;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.api.R;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -33,7 +33,7 @@ public class DemoLauncherServiceImpl implements LauncherService {
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
-		PropsUtil.setProperty(props, "spring.cloud.nacos.config.ext-config[0].data-id", NacosConstant.dataId("example", profile));
+		PropsUtil.setProperty(props, "spring.cloud.nacos.config.ext-config[0].data-id", NacosConstant.dataId("blade-demo", profile));
 		PropsUtil.setProperty(props, "spring.cloud.nacos.config.ext-config[0].group", NacosConstant.NACOS_CONFIG_GROUP);
 		PropsUtil.setProperty(props, "spring.cloud.nacos.config.ext-config[0].refresh", NacosConstant.NACOS_CONFIG_REFRESH);
 		// 自定义命名空间

@@ -16,7 +16,6 @@
 
 package org.springblade.gateway.handler;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,18 +25,16 @@ import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 /**
- * SwaggerResourceHandler
+ * SwaggerUiHandler
  *
  * @author lengleng
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public class SwaggerResourceHandler implements HandlerFunction<ServerResponse> {
-	private final SwaggerResourcesProvider swaggerResources;
+public class SwaggerUiHandler implements HandlerFunction<ServerResponse> {
 
 	/**
 	 * Handle the given request.
@@ -49,6 +46,6 @@ public class SwaggerResourceHandler implements HandlerFunction<ServerResponse> {
 	public Mono<ServerResponse> handle(ServerRequest request) {
 		return ServerResponse.status(HttpStatus.OK)
 			.contentType(MediaType.APPLICATION_JSON)
-			.body(BodyInserters.fromValue(swaggerResources.get()));
+			.body(BodyInserters.fromValue(UiConfigurationBuilder.builder().build()));
 	}
 }

@@ -19,19 +19,17 @@ package org.springblade.gateway.config;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.gateway.handler.SwaggerResourceHandler;
+import org.springblade.gateway.handler.SwaggerSecurityHandler;
+import org.springblade.gateway.handler.SwaggerUiHandler;
 import org.springblade.gateway.props.AuthProperties;
 import org.springblade.gateway.props.RouteProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
 
 /**
  * 路由配置信息
@@ -45,26 +43,17 @@ import reactor.core.publisher.Mono;
 public class RouterFunctionConfiguration {
 
 	private final SwaggerResourceHandler swaggerResourceHandler;
+	private final SwaggerSecurityHandler swaggerSecurityHandler;
+	private final SwaggerUiHandler swaggerUiHandler;
 
 	@Bean
 	public RouterFunction routerFunction() {
 		return RouterFunctions.route(RequestPredicates.GET("/swagger-resources")
-			.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler);
-
-	}
-
-	/**
-	 * 解决springboot2.0.5版本出现的 Only one connection receive subscriber allowed.
-	 * 参考：https://github.com/spring-cloud/spring-cloud-gateway/issues/541
-	 */
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter() {
-			@Override
-			public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-				return chain.filter(exchange);
-			}
-		};
+			.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler)
+			.andRoute(RequestPredicates.GET("/swagger-resources/configuration/ui")
+				.and(RequestPredicates.accept(MediaType.ALL)), swaggerUiHandler)
+			.andRoute(RequestPredicates.GET("/swagger-resources/configuration/security")
+				.and(RequestPredicates.accept(MediaType.ALL)), swaggerSecurityHandler);
 	}
 
 }
