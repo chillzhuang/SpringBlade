@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Chill
  */
 @RestController
+@RequestMapping("storage")
 @AllArgsConstructor
 public class StorageController {
 

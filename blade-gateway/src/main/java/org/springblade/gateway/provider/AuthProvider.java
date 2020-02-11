@@ -35,6 +35,7 @@ public class AuthProvider {
 	static {
 		defaultSkipUrl.add("/example");
 		defaultSkipUrl.add("/token/**");
+		defaultSkipUrl.add("/captcha/**");
 		defaultSkipUrl.add("/actuator/health/**");
 		defaultSkipUrl.add("/v2/api-docs/**");
 		defaultSkipUrl.add("/v2/api-docs-ext/**");
@@ -42,6 +43,8 @@ public class AuthProvider {
 		defaultSkipUrl.add("/log/**");
 		defaultSkipUrl.add("/menu/routes");
 		defaultSkipUrl.add("/menu/auth-routes");
+		defaultSkipUrl.add("/order/create/**");
+		defaultSkipUrl.add("/storage/deduct/**");
 		defaultSkipUrl.add("/error/**");
 		defaultSkipUrl.add("/assets/**");
 	}
