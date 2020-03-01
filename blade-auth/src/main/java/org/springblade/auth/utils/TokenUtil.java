@@ -33,6 +33,9 @@ import java.util.Map;
  */
 public class TokenUtil {
 
+	public final static String CAPTCHA_HEADER_KEY = "Captcha-Key";
+	public final static String CAPTCHA_HEADER_CODE = "Captcha-Code";
+	public final static String CAPTCHA_NOT_CORRECT = "验证码不正确";
 	public final static String TENANT_HEADER_KEY = "Tenant-Id";
 	public final static String DEFAULT_TENANT_ID = "000000";
 	public final static String USER_TYPE_HEADER_KEY = "User-Type";

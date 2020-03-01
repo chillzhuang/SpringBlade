@@ -8,3 +8,24 @@ spring:
     url: jdbc:mysql://localhost:3306/seata_storage?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
     username: root
     password: root
+
+# seata配置
+seata:
+  tx-service-group: blade-seata-storage-group
+  #registry:
+  #  type: nacos
+  #  nacos:
+  #    server-addr: localhost
+  #config:
+  #  type: nacos
+  #  nacos:
+  #    server-addr: localhost
+  service:
+    grouplist: 127.0.0.1:8091
+    vgroup-mapping: default
+    disable-global-transaction: false
+  client:
+    support:
+      spring:
+        datasource-autoproxy: false
+    rm-report-success-enable: false

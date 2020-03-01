@@ -15,6 +15,7 @@
  */
 package org.springblade.auth.controller;
 
+import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,14 +24,21 @@ import org.springblade.auth.granter.ITokenGranter;
 import org.springblade.auth.granter.TokenGranterBuilder;
 import org.springblade.auth.granter.TokenParameter;
 import org.springblade.auth.utils.TokenUtil;
+import org.springblade.common.cache.CacheNames;
 import org.springblade.core.secure.AuthInfo;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.RedisUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springblade.system.user.entity.UserInfo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 认证模块
@@ -41,6 +49,8 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @Api(value = "用户授权认证", tags = "授权接口")
 public class AuthController {
+
+	private RedisUtil redisUtil;
 
 	@PostMapping("token")
 	@ApiOperation(value = "获取认证token", notes = "传入租户ID:tenantId,账号:account,密码:password")
@@ -68,6 +78,17 @@ public class AuthController {
 		}
 
 		return R.data(TokenUtil.createAuthInfo(userInfo));
+	}
+
+	@GetMapping("/captcha")
+	public R<Kv> captcha() {
+		SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
+		String verCode = specCaptcha.text().toLowerCase();
+		String key = UUID.randomUUID().toString();
+		// 存入redis并设置过期时间为30分钟
+		redisUtil.set(CacheNames.CAPTCHA_KEY + key, verCode, 30L, TimeUnit.MINUTES);
+		// 将key和base64返回给前端
+		return R.data(Kv.init().set("key", key).set("image", specCaptcha.toBase64()));
 	}
 
 }
