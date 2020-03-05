@@ -11,7 +11,6 @@ spring:
 
 # seata配置
 seata:
-  tx-service-group: blade-seata-order-group
   #registry:
   #  type: nacos
   #  nacos:
@@ -20,12 +19,13 @@ seata:
   #  type: nacos
   #  nacos:
   #    server-addr: localhost
+  tx-service-group: blade-seata-order-group
   service:
-    grouplist: 127.0.0.1:8091
-    vgroup-mapping: default
+    grouplist:
+      default: 127.0.0.1:8091
+    vgroup-mapping:
+      blade-seata-order-group: default
     disable-global-transaction: false
   client:
-    support:
-      spring:
-        datasource-autoproxy: false
-    rm-report-success-enable: false
+    rm:
+      report-success-enable: false
