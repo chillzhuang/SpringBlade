@@ -24,19 +24,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springblade.core.mp.base.BaseEntity;
+import org.springblade.core.mp.base.TenantEntity;
 
 /**
- * 实体类
+ * 岗位表实体类
  *
- * @author BladeX
- * @since 2019-03-24
+ * @author Chill
  */
 @Data
-@TableName("blade_client")
+@TableName("blade_post")
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Client对象", description = "Client对象")
-public class AuthClient extends BaseEntity {
+@ApiModel(value = "Post对象", description = "岗位表")
+public class Post extends TenantEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,60 +48,30 @@ public class AuthClient extends BaseEntity {
 	private Long id;
 
 	/**
-	 * 客户端id
+	 * 类型
 	 */
-	@ApiModelProperty(value = "客户端id")
-	private String clientId;
+	@ApiModelProperty(value = "类型")
+	private Integer category;
 	/**
-	 * 客户端密钥
+	 * 岗位编号
 	 */
-	@ApiModelProperty(value = "客户端密钥")
-	private String clientSecret;
+	@ApiModelProperty(value = "岗位编号")
+	private String postCode;
 	/**
-	 * 资源集合
+	 * 岗位名称
 	 */
-	@ApiModelProperty(value = "资源集合")
-	private String resourceIds;
+	@ApiModelProperty(value = "岗位名称")
+	private String postName;
 	/**
-	 * 授权范围
+	 * 岗位排序
 	 */
-	@ApiModelProperty(value = "授权范围")
-	private String scope;
+	@ApiModelProperty(value = "岗位排序")
+	private Integer sort;
 	/**
-	 * 授权类型
+	 * 岗位描述
 	 */
-	@ApiModelProperty(value = "授权类型")
-	private String authorizedGrantTypes;
-	/**
-	 * 回调地址
-	 */
-	@ApiModelProperty(value = "回调地址")
-	private String webServerRedirectUri;
-	/**
-	 * 权限
-	 */
-	@ApiModelProperty(value = "权限")
-	private String authorities;
-	/**
-	 * 令牌过期秒数
-	 */
-	@ApiModelProperty(value = "令牌过期秒数")
-	private Integer accessTokenValidity;
-	/**
-	 * 刷新令牌过期秒数
-	 */
-	@ApiModelProperty(value = "刷新令牌过期秒数")
-	private Integer refreshTokenValidity;
-	/**
-	 * 附加说明
-	 */
-	@ApiModelProperty(value = "附加说明")
-	private String additionalInformation;
-	/**
-	 * 自动授权
-	 */
-	@ApiModelProperty(value = "自动授权")
-	private String autoapprove;
+	@ApiModelProperty(value = "岗位描述")
+	private String remark;
 
 
 }

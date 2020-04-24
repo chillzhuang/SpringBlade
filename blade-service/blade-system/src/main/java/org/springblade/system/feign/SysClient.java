@@ -19,10 +19,13 @@ import lombok.AllArgsConstructor;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.entity.Role;
 import org.springblade.system.service.IDeptService;
+import org.springblade.system.service.IPostService;
 import org.springblade.system.service.IRoleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * 系统服务Feign实现类
@@ -34,37 +37,69 @@ import springfox.documentation.annotations.ApiIgnore;
 @AllArgsConstructor
 public class SysClient implements ISysClient {
 
-	IDeptService deptService;
+	private IDeptService deptService;
 
-	IRoleService roleService;
+	private IPostService postService;
 
-	@Override
-	@GetMapping(API_PREFIX + "/getDeptName")
-	public String getDeptName(Integer id) {
-		return deptService.getById(id).getDeptName();
-	}
+	private IRoleService roleService;
 
 	@Override
 	@GetMapping(API_PREFIX + "/getDept")
-	public Dept getDept(Integer id) {
+	public Dept getDept(Long id) {
 		return deptService.getById(id);
 	}
 
 	@Override
-	@GetMapping(API_PREFIX + "/getRoleName")
-	public String getRoleName(Integer id) {
-		return roleService.getById(id).getRoleName();
+	@GetMapping(API_PREFIX + "/getDeptName")
+	public String getDeptName(Long id) {
+		return deptService.getById(id).getDeptName();
 	}
 
 	@Override
-	@GetMapping(API_PREFIX + "/getRoleAlias")
-	public String getRoleAlias(Integer id) {
-		return roleService.getById(id).getRoleAlias();
+	public String getDeptIds(String tenantId, String deptNames) {
+		return deptService.getDeptIds(tenantId, deptNames);
+	}
+
+	@Override
+	public List<String> getDeptNames(String deptIds) {
+		return deptService.getDeptNames(deptIds);
+	}
+
+	@Override
+	public String getPostIds(String tenantId, String postNames) {
+		return postService.getPostIds(tenantId, postNames);
+	}
+
+	@Override
+	public List<String> getPostNames(String postIds) {
+		return postService.getPostNames(postIds);
 	}
 
 	@Override
 	@GetMapping(API_PREFIX + "/getRole")
-	public Role getRole(Integer id) {
+	public Role getRole(Long id) {
 		return roleService.getById(id);
+	}
+
+	@Override
+	public String getRoleIds(String tenantId, String roleNames) {
+		return roleService.getRoleIds(tenantId, roleNames);
+	}
+
+	@Override
+	@GetMapping(API_PREFIX + "/getRoleName")
+	public String getRoleName(Long id) {
+		return roleService.getById(id).getRoleName();
+	}
+
+	@Override
+	public List<String> getRoleNames(String roleIds) {
+		return roleService.getRoleNames(roleIds);
+	}
+
+	@Override
+	@GetMapping(API_PREFIX + "/getRoleAlias")
+	public String getRoleAlias(Long id) {
+		return roleService.getById(id).getRoleAlias();
 	}
 }

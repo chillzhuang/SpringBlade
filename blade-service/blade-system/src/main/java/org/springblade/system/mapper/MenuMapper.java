@@ -59,7 +59,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<MenuVO> grantTreeByRole(List<Integer> roleId);
+	List<MenuVO> grantTreeByRole(List<Long> roleId);
 
 	/**
 	 * 所有菜单
@@ -74,7 +74,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> roleMenu(List<Integer> roleId);
+	List<Menu> roleMenu(List<Long> roleId);
 
 	/**
 	 * 菜单树形结构
@@ -82,7 +82,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> routes(List<Integer> roleId);
+	List<Menu> routes(List<Long> roleId);
 
 	/**
 	 * 按钮树形结构
@@ -90,7 +90,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> buttons(List<Integer> roleId);
+	List<Menu> buttons(List<Long> roleId);
 
 	/**
 	 * 获取配置的角色权限
@@ -98,5 +98,5 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @param roleIds
 	 * @return
 	 */
-	List<MenuDTO> authRoutes(List<Integer> roleIds);
+	List<MenuDTO> authRoutes(List<Long> roleIds);
 }

@@ -19,6 +19,8 @@ package com.example.demo.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,9 +43,10 @@ public class Notice extends BaseEntity {
 	/**
 	 * 主键id
 	 */
-	@TableId(value = "id", type = IdType.AUTO)
-	@ApiModelProperty(value = "主键id")
-	private Integer id;
+	@ApiModelProperty(value = "主键")
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
 	/**
 	 * 标题

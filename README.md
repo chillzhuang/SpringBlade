@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V2.6.2-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V2.7.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR2-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.5.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -64,6 +64,7 @@ SpringBlade
 * Saber-基于Vue：[https://saber.bladex.vip](https://saber.bladex.vip)
 * Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
 * Archer-全能代码生成系统：[https://archer.bladex.vip](https://archer.bladex.vip)
+* Caster-数据大屏展示系统：[https://data.avuejs.com](https://data.avuejs.com)
 
 ## 技术文档
 * [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)

@@ -19,6 +19,8 @@ import org.springblade.system.entity.Dept;
 import org.springblade.system.entity.Role;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Feign失败配置
  *
@@ -26,28 +28,59 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ISysClientFallback implements ISysClient {
+
 	@Override
-	public String getDeptName(Integer id) {
+	public Dept getDept(Long id) {
 		return null;
 	}
 
 	@Override
-	public Dept getDept(Integer id) {
+	public String getDeptName(Long id) {
 		return null;
 	}
 
 	@Override
-	public String getRoleName(Integer id) {
+	public String getDeptIds(String tenantId, String deptNames) {
 		return null;
 	}
 
 	@Override
-	public String getRoleAlias(Integer id) {
+	public List<String> getDeptNames(String deptIds) {
 		return null;
 	}
 
 	@Override
-	public Role getRole(Integer id) {
+	public String getPostIds(String tenantId, String postNames) {
+		return null;
+	}
+
+	@Override
+	public List<String> getPostNames(String postIds) {
+		return null;
+	}
+
+	@Override
+	public Role getRole(Long id) {
+		return null;
+	}
+
+	@Override
+	public String getRoleIds(String tenantId, String roleNames) {
+		return null;
+	}
+
+	@Override
+	public String getRoleName(Long id) {
+		return null;
+	}
+
+	@Override
+	public List<String> getRoleNames(String roleIds) {
+		return null;
+	}
+
+	@Override
+	public String getRoleAlias(Long id) {
 		return null;
 	}
 }

@@ -90,7 +90,7 @@ public class ParamController extends BladeController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "逻辑删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(paramService.deleteLogic(Func.toIntList(ids)));
+		return R.status(paramService.deleteLogic(Func.toLongList(ids)));
 	}
 
 

@@ -81,6 +81,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/captcha")
+	@ApiOperation(value = "获取验证码")
 	public R<Kv> captcha() {
 		SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
 		String verCode = specCaptcha.text().toLowerCase();

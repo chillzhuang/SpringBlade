@@ -18,6 +18,8 @@ package org.springblade.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,20 +42,23 @@ public class RoleMenu implements Serializable {
 	 * 主键
 	 */
 	@ApiModelProperty(value = "主键")
-	@TableId(value = "id", type = IdType.AUTO)
-	private Integer id;
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
 	/**
 	 * 菜单id
 	 */
 	@ApiModelProperty(value = "菜单id")
-	private Integer menuId;
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long menuId;
 
 	/**
 	 * 角色id
 	 */
 	@ApiModelProperty(value = "角色id")
-	private Integer roleId;
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long roleId;
 
 
 }

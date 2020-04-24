@@ -54,6 +54,23 @@ public interface IRoleService extends IService<Role> {
 	 * @param menuIds 菜单id集合
 	 * @return 是否成功
 	 */
-	boolean grant(@NotEmpty List<Integer> roleIds, @NotEmpty List<Integer> menuIds);
+	boolean grant(@NotEmpty List<Long> roleIds, @NotEmpty List<Long> menuIds);
+
+	/**
+	 * 获取角色ID
+	 *
+	 * @param tenantId
+	 * @param roleNames
+	 * @return
+	 */
+	String getRoleIds(String tenantId, String roleNames);
+
+	/**
+	 * 获取角色名
+	 *
+	 * @param roleIds
+	 * @return
+	 */
+	List<String> getRoleNames(String roleIds);
 
 }

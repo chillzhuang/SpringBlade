@@ -46,8 +46,8 @@ public class JwtUtil {
 			String headStr = auth.substring(0, 6).toLowerCase();
 			if (headStr.compareTo(BEARER) == 0) {
 				auth = auth.substring(7);
-				return auth;
 			}
+			return auth;
 		}
 		return null;
 	}
