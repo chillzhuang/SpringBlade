@@ -38,4 +38,17 @@
         </if>
     </select>
 
+    <select id="getDeptNames" resultType="java.lang.String">
+        SELECT
+        dept_name
+        FROM
+        blade_dept
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
 </mapper>

@@ -46,4 +46,21 @@ public interface IDeptService extends IService<Dept> {
 	 */
 	List<DeptVO> tree(String tenantId);
 
+	/**
+	 * 获取部门ID
+	 *
+	 * @param tenantId
+	 * @param deptNames
+	 * @return
+	 */
+	String getDeptIds(String tenantId, String deptNames);
+
+	/**
+	 * 获取部门名
+	 *
+	 * @param deptIds
+	 * @return
+	 */
+	List<String> getDeptNames(String deptIds);
+
 }

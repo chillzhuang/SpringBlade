@@ -16,6 +16,8 @@
 package org.springblade.system.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,12 +41,14 @@ public class MenuVO extends Menu implements INode {
 	/**
 	 * 主键ID
 	 */
-	private Integer id;
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
 	/**
 	 * 父节点ID
 	 */
-	private Integer parentId;
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long parentId;
 
 	/**
 	 * 子孙节点

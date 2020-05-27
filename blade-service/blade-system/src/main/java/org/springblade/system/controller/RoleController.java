@@ -109,7 +109,7 @@ public class RoleController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(roleService.removeByIds(Func.toIntList(ids)));
+		return R.status(roleService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class RoleController extends BladeController {
 	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
 	public R grant(@ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds,
 				   @ApiParam(value = "menuId集合", required = true) @RequestParam String menuIds) {
-		boolean temp = roleService.grant(Func.toIntList(roleIds), Func.toIntList(menuIds));
+		boolean temp = roleService.grant(Func.toLongList(roleIds), Func.toLongList(menuIds));
 		return R.status(temp);
 	}
 

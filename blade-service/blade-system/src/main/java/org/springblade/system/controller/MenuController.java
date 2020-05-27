@@ -99,7 +99,7 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(menuService.removeByIds(Func.toIntList(ids)));
+		return R.status(menuService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**

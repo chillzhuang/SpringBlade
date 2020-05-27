@@ -12,6 +12,9 @@ server:
 
 #spring配置
 spring:
+  cloud:
+    sentinel:
+      eager: true
   devtools:
     restart:
       log-condition-evaluation-delta: false
@@ -22,8 +25,6 @@ spring:
 feign:
   hystrix:
     enabled: true
-  #sentinel:
-    #enabled: true
   okhttp:
     enabled: true
   httpclient:
@@ -69,7 +70,7 @@ management:
 #blade配置
 blade:
   xss:
-    enable: true
+    enabled: true
     skip-url:
       - /weixin
   secure:

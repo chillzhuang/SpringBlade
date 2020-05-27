@@ -16,6 +16,8 @@
 package org.springblade.system.user.controller;
 
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -24,20 +26,33 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.commons.codec.Charsets;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.user.entity.User;
+import org.springblade.system.user.excel.UserExcel;
+import org.springblade.system.user.excel.UserImportListener;
 import org.springblade.system.user.service.IUserService;
 import org.springblade.system.user.vo.UserVO;
 import org.springblade.system.user.wrapper.UserWrapper;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -118,7 +133,7 @@ public class UserController {
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "删除", notes = "传入地基和")
 	public R remove(@RequestParam String ids) {
-		return R.status(userService.deleteLogic(Func.toIntList(ids)));
+		return R.status(userService.deleteLogic(Func.toLongList(ids)));
 	}
 
 
@@ -177,5 +192,70 @@ public class UserController {
 		List<User> list = userService.list(Condition.getQueryWrapper(user));
 		return R.data(list);
 	}
+
+
+	/**
+	 * 导入用户
+	 */
+	@PostMapping("import-user")
+	@ApiOperationSupport(order = 12)
+	@ApiOperation(value = "导入用户", notes = "传入excel")
+	public R importUser(MultipartFile file, Integer isCovered) {
+		String filename = file.getOriginalFilename();
+		if (StringUtils.isEmpty(filename)) {
+			throw new RuntimeException("请上传文件!");
+		}
+		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls") && !StringUtils.endsWithIgnoreCase(filename, ".xlsx"))) {
+			throw new RuntimeException("请上传正确的excel文件!");
+		}
+		InputStream inputStream;
+		try {
+			UserImportListener importListener = new UserImportListener(userService);
+			inputStream = new BufferedInputStream(file.getInputStream());
+			ExcelReaderBuilder builder = EasyExcel.read(inputStream, UserExcel.class, importListener);
+			builder.doReadAll();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return R.success("操作成功");
+	}
+
+	/**
+	 * 导出用户
+	 */
+	@SneakyThrows
+	@GetMapping("export-user")
+	@ApiOperationSupport(order = 13)
+	@ApiOperation(value = "导出用户", notes = "传入user")
+	public void exportUser(@ApiIgnore @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
+		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
+		if (!SecureUtil.isAdministrator()){
+			queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId());
+		}
+		queryWrapper.lambda().eq(User::getIsDeleted, BladeConstant.DB_NOT_DELETED);
+		List<UserExcel> list = userService.exportUser(queryWrapper);
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding(Charsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据导出", Charsets.UTF_8.name());
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+	}
+
+	/**
+	 * 导出模板
+	 */
+	@SneakyThrows
+	@GetMapping("export-template")
+	@ApiOperationSupport(order = 14)
+	@ApiOperation(value = "导出模板")
+	public void exportUser(HttpServletResponse response) {
+		List<UserExcel> list = new ArrayList<>();
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding(Charsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据模板", Charsets.UTF_8.name());
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+	}
+
 
 }

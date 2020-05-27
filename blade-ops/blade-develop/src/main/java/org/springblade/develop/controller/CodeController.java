@@ -99,7 +99,7 @@ public class CodeController extends BladeController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(codeService.removeByIds(Func.toIntList(ids)));
+		return R.status(codeService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class CodeController extends BladeController {
 	@PostMapping("/copy")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "复制", notes = "传入id")
-	public R copy(@ApiParam(value = "主键", required = true) @RequestParam Integer id) {
+	public R copy(@ApiParam(value = "主键", required = true) @RequestParam Long id) {
 		Code code = codeService.getById(id);
 		code.setId(null);
 		code.setCodeName(code.getCodeName() + "-copy");
@@ -122,7 +122,7 @@ public class CodeController extends BladeController {
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "代码生成", notes = "传入ids")
 	public R genCode(@ApiParam(value = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "sword") String system) {
-		Collection<Code> codes = codeService.listByIds(Func.toIntList(ids));
+		Collection<Code> codes = codeService.listByIds(Func.toLongList(ids));
 		codes.forEach(code -> {
 			BladeCodeGenerator generator = new BladeCodeGenerator();
 			// 设置数据源

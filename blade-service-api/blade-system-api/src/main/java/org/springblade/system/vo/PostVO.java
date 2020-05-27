@@ -13,49 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.vo;
+package org.springblade.system.vo;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springblade.system.user.entity.User;
+import org.springblade.system.entity.Post;
 
 /**
- * 视图实体类
+ * 岗位表视图实体类
  *
  * @author Chill
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UserVO对象", description = "UserVO对象")
-public class UserVO extends User {
+@ApiModel(value = "PostVO对象", description = "岗位表")
+public class PostVO extends Post {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键ID
+	 * 岗位分类名
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long id;
+	private String categoryName;
 
-	/**
-	 * 角色名
-	 */
-	private String roleName;
-
-	/**
-	 * 部门名
-	 */
-	private String deptName;
-
-	/**
-	 * 岗位名
-	 */
-	private String postName;
-
-	/**
-	 * 性别
-	 */
-	private String sexName;
 }

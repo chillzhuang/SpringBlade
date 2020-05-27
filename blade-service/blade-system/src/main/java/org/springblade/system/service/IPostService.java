@@ -13,46 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.mapper;
+package org.springblade.system.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.system.entity.Role;
-import org.springblade.system.vo.RoleVO;
+import org.springblade.core.mp.base.BaseService;
+import org.springblade.system.entity.Post;
+import org.springblade.system.vo.PostVO;
 
 import java.util.List;
 
 /**
- * Mapper 接口
+ * 岗位表 服务类
  *
  * @author Chill
  */
-public interface RoleMapper extends BaseMapper<Role> {
+public interface IPostService extends BaseService<Post> {
 
 	/**
 	 * 自定义分页
 	 *
 	 * @param page
-	 * @param role
+	 * @param post
 	 * @return
 	 */
-	List<RoleVO> selectRolePage(IPage page, RoleVO role);
+	IPage<PostVO> selectPostPage(IPage<PostVO> page, PostVO post);
 
 	/**
-	 * 获取树形节点
+	 * 获取岗位ID
 	 *
 	 * @param tenantId
-	 * @param excludeRole
+	 * @param postNames
 	 * @return
 	 */
-	List<RoleVO> tree(String tenantId, String excludeRole);
+	String getPostIds(String tenantId, String postNames);
 
 	/**
-	 * 获取角色名
+	 * 获取岗位名
 	 *
-	 * @param ids
+	 * @param postIds
 	 * @return
 	 */
-	List<String> getRoleNames(Long[] ids);
+	List<String> getPostNames(String postIds);
 
 }
