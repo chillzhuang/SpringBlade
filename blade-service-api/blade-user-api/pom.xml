@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-service-api</artifactId>
         <groupId>org.springblade</groupId>
-        <version>2.7.0</version>
+        <version>2.7.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

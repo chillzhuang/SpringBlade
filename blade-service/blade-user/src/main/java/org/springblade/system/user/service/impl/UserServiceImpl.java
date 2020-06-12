@@ -136,7 +136,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 			// 设置角色ID
 			user.setRoleId(sysClient.getRoleIds(userExcel.getTenantId(), userExcel.getRoleName()));
 			// 设置默认密码
-			user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
+			user.setPassword(CommonConstant.DEFAULT_PASSWORD);
 			this.submit(user);
 		});
 	}

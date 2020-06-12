@@ -5,28 +5,28 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>2.7.0</version>
+    <version>2.7.1</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>2.7.0</blade.tool.version>
-        <blade.project.version>2.7.0</blade.project.version>
+        <blade.tool.version>2.7.1</blade.tool.version>
+        <blade.project.version>2.7.1</blade.project.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.models.version>1.5.21</swagger.models.version>
-        <knife4j.version>2.0.2</knife4j.version>
-        <mybatis.plus.version>3.3.1</mybatis.plus.version>
+        <knife4j.version>2.0.3</knife4j.version>
+        <mybatis.plus.version>3.3.2</mybatis.plus.version>
         <protostuff.version>1.6.0</protostuff.version>
         <captcha.version>1.6.2</captcha.version>
         <easyexcel.version>2.1.6</easyexcel.version>
         <mica.auto.version>1.1.0</mica.auto.version>
         <alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
-        <spring.boot.admin.version>2.2.2</spring.boot.admin.version>
+        <spring.boot.admin.version>2.2.3</spring.boot.admin.version>
 
-        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
+        <spring.boot.version>2.2.7.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR5</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
         <!-- 推荐使用Harbor -->
