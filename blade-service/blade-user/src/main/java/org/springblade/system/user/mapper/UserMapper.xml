@@ -12,6 +12,7 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="is_deleted" property="isDeleted"/>
+        <result column="code" property="code"/>
         <result column="account" property="account"/>
         <result column="password" property="password"/>
         <result column="name" property="name"/>
@@ -86,6 +87,10 @@
             #{ids}
         </foreach>
         and is_deleted = 0
+    </select>
+
+    <select id="exportUser" resultType="org.springblade.system.user.excel.UserExcel">
+        SELECT id, tenant_id, account, name, real_name, email, phone, birthday, role_id, dept_id, post_id FROM blade_user ${ew.customSqlSegment}
     </select>
 
 </mapper>

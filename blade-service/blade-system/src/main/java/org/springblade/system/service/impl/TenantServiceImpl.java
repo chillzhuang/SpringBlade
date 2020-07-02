@@ -64,7 +64,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			// 新建租户对应的默认角色
 			Role role = new Role();
 			role.setTenantId(tenantId);
-			role.setParentId(0);
+			role.setParentId(0L);
 			role.setRoleName("管理员");
 			role.setRoleAlias("admin");
 			role.setSort(2);
@@ -73,7 +73,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			// 新建租户对应的默认部门
 			Dept dept = new Dept();
 			dept.setTenantId(tenantId);
-			dept.setParentId(0);
+			dept.setParentId(0L);
 			dept.setDeptName(tenant.getTenantName());
 			dept.setFullName(tenant.getTenantName());
 			dept.setSort(2);

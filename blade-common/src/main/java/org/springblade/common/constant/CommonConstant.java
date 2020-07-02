@@ -20,7 +20,7 @@ public interface CommonConstant {
 	/**
 	 * 顶级父节点id
 	 */
-	Integer TOP_PARENT_ID = 0;
+	Long TOP_PARENT_ID = 0L;
 
 	/**
 	 * 顶级父节点名称

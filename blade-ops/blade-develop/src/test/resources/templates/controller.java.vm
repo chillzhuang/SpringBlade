@@ -134,7 +134,7 @@ public class $!{table.controllerName} {
     @ApiOperationSupport(order = 7)
 	@ApiOperation(value = "逻辑删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status($!{table.entityPath}Service.deleteLogic(Func.toIntList(ids)));
+		return R.status($!{table.entityPath}Service.deleteLogic(Func.toLongList(ids)));
 	}
 
 	#else
@@ -146,7 +146,7 @@ public class $!{table.controllerName} {
     @ApiOperationSupport(order = 7)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status($!{table.entityPath}Service.removeByIds(Func.toIntList(ids)));
+		return R.status($!{table.entityPath}Service.removeByIds(Func.toLongList(ids)));
 	}
 
 	#end

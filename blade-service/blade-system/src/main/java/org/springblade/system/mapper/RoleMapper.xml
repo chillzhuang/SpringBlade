@@ -40,4 +40,17 @@
         </if>
     </select>
 
+    <select id="getRoleNames" resultType="java.lang.String">
+        SELECT
+        role_name
+        FROM
+        blade_role
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
 </mapper>
