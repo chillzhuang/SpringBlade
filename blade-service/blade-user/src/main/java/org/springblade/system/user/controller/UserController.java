@@ -257,5 +257,15 @@ public class UserController {
 		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
 
+	/**
+	 * 第三方注册用户
+	 */
+	@PostMapping("/register-guest")
+	@ApiOperationSupport(order = 15)
+	@ApiOperation(value = "第三方注册用户", notes = "传入user")
+	public R registerGuest(User user, Long oauthId) {
+		return R.status(userService.registerGuest(user, oauthId));
+	}
+
 
 }

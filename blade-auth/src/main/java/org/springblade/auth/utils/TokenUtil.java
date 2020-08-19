@@ -58,6 +58,7 @@ public class TokenUtil {
 		Map<String, String> param = new HashMap<>(16);
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.ACCESS_TOKEN);
 		param.put(TokenConstant.TENANT_ID, user.getTenantId());
+		param.put(TokenConstant.OAUTH_ID, userInfo.getOauthId());
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		param.put(TokenConstant.ROLE_ID, user.getRoleId());
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
@@ -66,6 +67,9 @@ public class TokenUtil {
 
 		TokenInfo accessToken = SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.ACCESS_TOKEN);
 		AuthInfo authInfo = new AuthInfo();
+		authInfo.setUserId(user.getId());
+		authInfo.setTenantId(user.getTenantId());
+		authInfo.setOauthId(userInfo.getOauthId());
 		authInfo.setAccount(user.getAccount());
 		authInfo.setUserName(user.getRealName());
 		authInfo.setAuthority(Func.join(userInfo.getRoles()));

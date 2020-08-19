@@ -13,42 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.service;
+package org.springblade.system.user.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.core.mp.base.BaseService;
-import org.springblade.system.entity.Tenant;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springblade.system.user.entity.UserOauth;
+import org.springblade.system.user.mapper.UserOauthMapper;
+import org.springblade.system.user.service.IUserOauthService;
+import org.springframework.stereotype.Service;
 
 /**
- * 服务类
+ * 服务实现类
  *
  * @author Chill
  */
-public interface ITenantService extends BaseService<Tenant> {
-
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param tenant
-	 * @return
-	 */
-	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
-
-	/**
-	 * 根据租户编号获取实体
-	 *
-	 * @param tenantId
-	 * @return
-	 */
-	Tenant getByTenantId(String tenantId);
-
-	/**
-	 * 新增
-	 *
-	 * @param tenant
-	 * @return
-	 */
-	boolean saveTenant(Tenant tenant);
+@Service
+@AllArgsConstructor
+public class UserOauthServiceImpl extends ServiceImpl<UserOauthMapper, UserOauth> implements IUserOauthService {
 
 }

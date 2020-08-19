@@ -109,7 +109,7 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public R<List<MenuVO>> routes(BladeUser user) {
-		List<MenuVO> list = menuService.routes(user.getRoleId());
+		List<MenuVO> list = menuService.routes((user == null || user.getUserId() == 0L) ? null : user.getRoleId());
 		return R.data(list);
 	}
 

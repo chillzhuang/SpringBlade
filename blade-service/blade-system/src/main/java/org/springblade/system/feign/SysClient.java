@@ -16,11 +16,14 @@
 package org.springblade.system.feign;
 
 import lombok.AllArgsConstructor;
+import org.springblade.core.tool.api.R;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.entity.Role;
+import org.springblade.system.entity.Tenant;
 import org.springblade.system.service.IDeptService;
 import org.springblade.system.service.IPostService;
 import org.springblade.system.service.IRoleService;
+import org.springblade.system.service.ITenantService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -42,6 +45,8 @@ public class SysClient implements ISysClient {
 	private IPostService postService;
 
 	private IRoleService roleService;
+
+	private ITenantService tenantService;
 
 	@Override
 	@GetMapping(API_PREFIX + "/getDept")
@@ -101,5 +106,17 @@ public class SysClient implements ISysClient {
 	@GetMapping(API_PREFIX + "/getRoleAlias")
 	public String getRoleAlias(Long id) {
 		return roleService.getById(id).getRoleAlias();
+	}
+
+	@Override
+	@GetMapping(API_PREFIX + "/tenant")
+	public R<Tenant> getTenant(Long id) {
+		return R.data(tenantService.getById(id));
+	}
+
+	@Override
+	@GetMapping(API_PREFIX + "/tenant-id")
+	public R<Tenant> getTenant(String tenantId) {
+		return R.data(tenantService.getByTenantId(tenantId));
 	}
 }
