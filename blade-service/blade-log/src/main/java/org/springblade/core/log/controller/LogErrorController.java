@@ -27,6 +27,7 @@ import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringPool;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,7 +64,9 @@ public class LogErrorController {
 	 */
 	@GetMapping("/list")
 	public R<IPage<LogErrorVo>> list(@ApiIgnore @RequestParam Map<String, Object> logError, Query query) {
-		IPage<LogError> pages = errorLogService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(logError, LogError.class));
+		query.setAscs("create_time");
+		query.setDescs(StringPool.EMPTY);
+		IPage<LogError> pages = errorLogService.page(Condition.getPage(query), Condition.getQueryWrapper(logError, LogError.class));
 		List<LogErrorVo> records = pages.getRecords().stream().map(logApi -> {
 			LogErrorVo vo = BeanUtil.copy(logApi, LogErrorVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));
