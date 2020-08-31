@@ -24,6 +24,7 @@ import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.system.dto.MenuDTO;
 import org.springblade.system.entity.Menu;
 import org.springblade.system.entity.RoleMenu;
@@ -55,6 +56,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 	@Override
 	public List<MenuVO> routes(String roleId) {
+		if (StringUtil.isBlank(roleId)) {
+			return null;
+		}
 		List<Menu> allMenus = baseMapper.allMenu();
 		List<Menu> roleMenus = baseMapper.roleMenu(Func.toLongList(roleId));
 		List<Menu> routes = new LinkedList<>(roleMenus);

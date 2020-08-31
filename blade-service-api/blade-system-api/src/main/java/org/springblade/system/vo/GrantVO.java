@@ -13,42 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.service;
+package org.springblade.system.vo;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.core.mp.base.BaseService;
-import org.springblade.system.entity.Tenant;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * 服务类
+ * GrantVO
  *
  * @author Chill
  */
-public interface ITenantService extends BaseService<Tenant> {
+@Data
+public class GrantVO implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param tenant
-	 * @return
-	 */
-	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
+	@ApiModelProperty(value = "roleIds集合")
+	private List<Long> roleIds;
 
-	/**
-	 * 根据租户编号获取实体
-	 *
-	 * @param tenantId
-	 * @return
-	 */
-	Tenant getByTenantId(String tenantId);
-
-	/**
-	 * 新增
-	 *
-	 * @param tenant
-	 * @return
-	 */
-	boolean saveTenant(Tenant tenant);
+	@ApiModelProperty(value = "menuIds集合")
+	private List<Long> menuIds;
 
 }

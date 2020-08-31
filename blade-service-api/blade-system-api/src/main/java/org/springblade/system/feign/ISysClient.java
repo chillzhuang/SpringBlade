@@ -16,8 +16,10 @@
 package org.springblade.system.feign;
 
 import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.tool.api.R;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.entity.Role;
+import org.springblade.system.entity.Tenant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -140,5 +142,23 @@ public interface ISysClient {
 	 */
 	@GetMapping(API_PREFIX + "/getRoleAlias")
 	String getRoleAlias(@RequestParam("id") Long id);
+
+	/**
+	 * 获取租户
+	 *
+	 * @param id 主键
+	 * @return Tenant
+	 */
+	@GetMapping(API_PREFIX + "/tenant")
+	R<Tenant> getTenant(@RequestParam("id") Long id);
+
+	/**
+	 * 获取租户
+	 *
+	 * @param tenantId 租户id
+	 * @return Tenant
+	 */
+	@GetMapping(API_PREFIX + "/tenant-id")
+	R<Tenant> getTenant(@RequestParam("tenantId") String tenantId);
 
 }

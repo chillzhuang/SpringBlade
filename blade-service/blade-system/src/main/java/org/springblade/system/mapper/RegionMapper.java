@@ -13,42 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.service;
+package org.springblade.system.mapper;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.core.mp.base.BaseService;
-import org.springblade.system.entity.Tenant;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springblade.core.tool.node.INode;
+import org.springblade.system.entity.Region;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * 服务类
+ * 行政区划表 Mapper 接口
  *
  * @author Chill
  */
-public interface ITenantService extends BaseService<Tenant> {
+public interface RegionMapper extends BaseMapper<Region> {
 
 	/**
-	 * 自定义分页
+	 * 懒加载列表
 	 *
-	 * @param page
-	 * @param tenant
+	 * @param parentCode
+	 * @param param
 	 * @return
 	 */
-	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
+	List<INode> lazyList(String parentCode, Map<String, Object> param);
 
 	/**
-	 * 根据租户编号获取实体
+	 * 懒加载列表
 	 *
-	 * @param tenantId
+	 * @param parentCode
+	 * @param param
 	 * @return
 	 */
-	Tenant getByTenantId(String tenantId);
-
-	/**
-	 * 新增
-	 *
-	 * @param tenant
-	 * @return
-	 */
-	boolean saveTenant(Tenant tenant);
+	List<INode> lazyTree(String parentCode, Map<String, Object> param);
 
 }

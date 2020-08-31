@@ -54,6 +54,11 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 	}
 
 	@Override
+	public Tenant getByTenantId(String tenantId) {
+		return getOne(Wrappers.<Tenant>query().lambda().eq(Tenant::getTenantId, tenantId));
+	}
+
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean saveTenant(Tenant tenant) {
 		if (Func.isEmpty(tenant.getId())) {

@@ -15,40 +15,52 @@
  */
 package org.springblade.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.core.mp.base.BaseService;
-import org.springblade.system.entity.Tenant;
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.springblade.core.tool.node.INode;
+import org.springblade.system.entity.Region;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * 服务类
+ * 行政区划表 服务类
  *
  * @author Chill
  */
-public interface ITenantService extends BaseService<Tenant> {
+public interface IRegionService extends IService<Region> {
 
 	/**
-	 * 自定义分页
+	 * 提交
 	 *
-	 * @param page
-	 * @param tenant
+	 * @param region
 	 * @return
 	 */
-	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
+	boolean submit(Region region);
 
 	/**
-	 * 根据租户编号获取实体
+	 * 删除
 	 *
-	 * @param tenantId
+	 * @param id
 	 * @return
 	 */
-	Tenant getByTenantId(String tenantId);
+	boolean removeRegion(String id);
 
 	/**
-	 * 新增
+	 * 懒加载列表
 	 *
-	 * @param tenant
+	 * @param parentCode
+	 * @param param
 	 * @return
 	 */
-	boolean saveTenant(Tenant tenant);
+	List<INode> lazyList(String parentCode, Map<String, Object> param);
+
+	/**
+	 * 懒加载列表
+	 *
+	 * @param parentCode
+	 * @param param
+	 * @return
+	 */
+	List<INode> lazyTree(String parentCode, Map<String, Object> param);
 
 }

@@ -9,3 +9,8 @@ spring:
     url: ${blade.datasource.dev.url}
     username: ${blade.datasource.dev.username}
     password: ${blade.datasource.dev.password}
+
+#第三方登陆
+social:
+  enabled: true
+  domain: http://127.0.0.1:1888

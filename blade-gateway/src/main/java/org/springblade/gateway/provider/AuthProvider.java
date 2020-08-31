@@ -40,6 +40,7 @@ public class AuthProvider {
 		defaultSkipUrl.add("/v2/api-docs/**");
 		defaultSkipUrl.add("/v2/api-docs-ext/**");
 		defaultSkipUrl.add("/auth/**");
+		defaultSkipUrl.add("/oauth/**");
 		defaultSkipUrl.add("/log/**");
 		defaultSkipUrl.add("/menu/routes");
 		defaultSkipUrl.add("/menu/auth-routes");

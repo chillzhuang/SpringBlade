@@ -13,42 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.service;
+package org.springblade.system.user.mapper;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springblade.core.mp.base.BaseService;
-import org.springblade.system.entity.Tenant;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springblade.system.user.entity.UserOauth;
 
 /**
- * 服务类
+ * Mapper 接口
  *
  * @author Chill
  */
-public interface ITenantService extends BaseService<Tenant> {
-
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param tenant
-	 * @return
-	 */
-	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
-
-	/**
-	 * 根据租户编号获取实体
-	 *
-	 * @param tenantId
-	 * @return
-	 */
-	Tenant getByTenantId(String tenantId);
-
-	/**
-	 * 新增
-	 *
-	 * @param tenant
-	 * @return
-	 */
-	boolean saveTenant(Tenant tenant);
+public interface UserOauthMapper extends BaseMapper<UserOauth> {
 
 }
