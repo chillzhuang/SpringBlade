@@ -3,23 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>blade-ops</artifactId>
         <groupId>org.springblade</groupId>
+        <artifactId>blade-ops</artifactId>
         <version>2.8.0</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-seata-order</artifactId>
+    <artifactId>blade-report</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.project.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springblade</groupId>
-            <artifactId>blade-common</artifactId>
-            <version>${blade.project.version}</version>
-        </dependency>
+        <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-boot</artifactId>
@@ -27,8 +24,13 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-transaction</artifactId>
+            <artifactId>blade-core-report</artifactId>
             <version>${blade.tool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-common</artifactId>
+            <version>${blade.project.version}</version>
         </dependency>
     </dependencies>
 

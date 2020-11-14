@@ -60,8 +60,8 @@ public class JwtUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parser()
-				.setSigningKey(Base64.getDecoder().decode(JwtUtil.BASE64_SECURITY))
+			return Jwts.parserBuilder()
+				.setSigningKey(Base64.getDecoder().decode(JwtUtil.BASE64_SECURITY)).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;

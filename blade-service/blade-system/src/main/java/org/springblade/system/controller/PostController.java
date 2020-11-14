@@ -26,6 +26,7 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Post;
@@ -111,6 +112,7 @@ public class PostController extends BladeController {
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "新增或修改", notes = "传入post")
 	public R submit(@Valid @RequestBody Post post) {
+		post.setTenantId(SecureUtil.getTenantId());
 		return R.status(postService.saveOrUpdate(post));
 	}
 

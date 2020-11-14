@@ -1,0 +1,10 @@
+#服务器端口
+server:
+  port: 8108
+
+#报表配置
+report:
+  enabled: true
+  database:
+    provider:
+      prefix: blade-

@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.demo.config;
+package org.springblade.report;
 
-
-import com.example.demo.props.DemoProperties;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Configuration;
+import org.springblade.core.launch.BladeApplication;
+import org.springblade.core.launch.constant.AppConstant;
+import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
- * 配置feign、mybatis包名、properties
+ * UReport启动器
  *
  * @author Chill
  */
-@Configuration
-@EnableFeignClients({"org.springblade", "com.example"})
-@MapperScan({"org.springblade.**.mapper.**", "com.example.**.mapper.**"})
-@EnableConfigurationProperties(DemoProperties.class)
-public class DemoConfiguration {
+@SpringCloudApplication
+public class ReportApplication {
+
+	public static void main(String[] args) {
+		BladeApplication.run(AppConstant.APPLICATION_REPORT_NAME, ReportApplication.class, args);
+	}
 
 }

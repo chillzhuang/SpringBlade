@@ -13,24 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.demo.config;
+package org.springblade.report.config;
 
-
-import com.example.demo.props.DemoProperties;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springblade.core.report.datasource.ReportDataSource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 /**
- * 配置feign、mybatis包名、properties
+ * 报表配置类
  *
  * @author Chill
  */
 @Configuration
-@EnableFeignClients({"org.springblade", "com.example"})
-@MapperScan({"org.springblade.**.mapper.**", "com.example.**.mapper.**"})
-@EnableConfigurationProperties(DemoProperties.class)
-public class DemoConfiguration {
+@ConditionalOnProperty(value = "report.enabled", havingValue = "true", matchIfMissing = true)
+public class BladeReportConfiguration {
+
+	/**
+	 * 自定义报表可选数据源
+	 */
+	@Bean
+	public ReportDataSource reportDataSource(DataSource dataSource) {
+		return new ReportDataSource(dataSource);
+	}
 
 }

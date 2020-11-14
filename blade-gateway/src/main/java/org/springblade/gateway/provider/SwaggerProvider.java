@@ -36,7 +36,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
-	private static final String API_URI = "/v2/api-docs-ext";
+	private static final String API_URI = "/v2/api-docs";
 
 	private RouteProperties routeProperties;
 

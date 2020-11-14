@@ -67,6 +67,26 @@ management:
     health:
       show-details: always
 
+#knife4j配置
+knife4j:
+  #启用
+  enable: true
+  #基础认证
+  basic:
+    enable: false
+    username: blade
+    password: blade
+  #增强配置
+  setting:
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    enableHost: false
+    enableHostText: http://localhost
+    enableRequestCache: true
+    enableFilterMultipartApis: false
+    enableFilterMultipartApiMethodType: POST
+    language: zh-CN
+
 #blade配置
 blade:
   xss:

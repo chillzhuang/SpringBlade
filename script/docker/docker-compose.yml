@@ -112,6 +112,14 @@ services:
       blade_net:
         ipv4_address: 172.30.0.92
 
+  blade-report:
+    image: "${REGISTER}/blade/blade-report:${TAG}"
+    privileged: true
+    restart: always
+    networks:
+      blade_net:
+        ipv4_address: 172.30.0.98
+
   blade-log:
     image: "${REGISTER}/blade/blade-log:${TAG}"
     privileged: true

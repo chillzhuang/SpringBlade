@@ -30,9 +30,9 @@ import org.springblade.system.entity.Post;
 import org.springblade.system.entity.Role;
 import org.springblade.system.entity.Tenant;
 import org.springblade.system.mapper.DeptMapper;
-import org.springblade.system.mapper.PostMapper;
 import org.springblade.system.mapper.RoleMapper;
 import org.springblade.system.mapper.TenantMapper;
+import org.springblade.system.service.IPostService;
 import org.springblade.system.service.ITenantService;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.feign.IUserClient;
@@ -55,7 +55,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 	private final TenantId tenantId;
 	private final RoleMapper roleMapper;
 	private final DeptMapper deptMapper;
-	private final PostMapper postMapper;
+	private final IPostService postService;
 	private final IUserClient userClient;
 
 	@Override
@@ -101,7 +101,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			post.setPostCode("ceo");
 			post.setPostName("首席执行官");
 			post.setSort(1);
-			postMapper.insert(post);
+			postService.save(post);
 			// 新建租户对应的默认管理用户
 			User user = new User();
 			user.setTenantId(tenantId);
