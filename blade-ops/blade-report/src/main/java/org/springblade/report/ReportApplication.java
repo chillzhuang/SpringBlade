@@ -15,16 +15,16 @@
  */
 package org.springblade.report;
 
+import org.springblade.core.cloud.client.BladeCloudApplication;
 import org.springblade.core.launch.BladeApplication;
 import org.springblade.core.launch.constant.AppConstant;
-import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * UReport启动器
  *
  * @author Chill
  */
-@SpringCloudApplication
+@BladeCloudApplication
 public class ReportApplication {
 
 	public static void main(String[] args) {

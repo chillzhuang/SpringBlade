@@ -71,15 +71,6 @@ services:
     networks:
     - blade_net
 
-  blade-zipkin:
-    image: "${REGISTER}/blade/blade-zipkin:${TAG}"
-    ports:
-      - 9411:9411
-    privileged: true
-    restart: always
-    networks:
-      - blade_net
-
   blade-gateway1:
     image: "${REGISTER}/blade/blade-gateway:${TAG}"
     privileged: true

@@ -1,7 +1,7 @@
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springblade.core.test.BladeBootTest;
-import org.springblade.core.test.BladeSpringRunner;
+import org.springblade.core.test.BladeSpringExtension;
 import org.springblade.desk.DeskApplication;
 import org.springblade.desk.service.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * @author Chill
  */
-@RunWith(BladeSpringRunner.class)
+@ExtendWith(BladeSpringExtension.class)
 @SpringBootTest(classes = DeskApplication.class)
 @BladeBootTest(appName = "blade-desk", profile = "test", enableLoader = true)
 public class BladeDemoTest {

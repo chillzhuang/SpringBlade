@@ -15,16 +15,16 @@
  */
 package org.springblade.resource;
 
+import org.springblade.core.cloud.client.BladeCloudApplication;
 import org.springblade.core.launch.BladeApplication;
 import org.springblade.core.launch.constant.AppConstant;
-import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * 资源启动器
  *
  * @author Chill
  */
-@SpringCloudApplication
+@BladeCloudApplication
 public class ResourceApplication {
 
 	public static void main(String[] args) {

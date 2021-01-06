@@ -42,7 +42,7 @@ base(){
 
 #启动程序模块
 modules(){
-	docker-compose up -d blade-gateway1 blade-gateway2 blade-admin blade-zipkin blade-auth1 blade-auth2 blade-user blade-desk blade-system blade-log
+	docker-compose up -d blade-gateway1 blade-gateway2 blade-admin blade-auth1 blade-auth2 blade-user blade-desk blade-system blade-log
 }
 
 #关闭所有模块

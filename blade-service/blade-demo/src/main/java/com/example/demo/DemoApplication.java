@@ -15,15 +15,15 @@
  */
 package com.example.demo;
 
+import org.springblade.core.cloud.client.BladeCloudApplication;
 import org.springblade.core.launch.BladeApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * Demo启动器
  *
  * @author Chill
  */
-@SpringCloudApplication
+@BladeCloudApplication
 public class DemoApplication {
 
 	public static void main(String[] args) {

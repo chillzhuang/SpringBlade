@@ -15,18 +15,16 @@
  */
 package org.springblade.core.log;
 
+import org.springblade.core.cloud.client.BladeCloudApplication;
 import org.springblade.core.launch.BladeApplication;
 import org.springblade.core.launch.constant.AppConstant;
-import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 日志服务
  *
  * @author Chill
  */
-@SpringCloudApplication
-@EnableFeignClients(AppConstant.BASE_PACKAGES)
+@BladeCloudApplication
 public class LogApplication {
 
 	public static void main(String[] args) {

@@ -18,7 +18,6 @@ package org.springblade.gateway;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.BladeApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -26,7 +25,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author Chill
  */
-@EnableHystrix
 @EnableScheduling
 @SpringCloudApplication
 public class GateWayApplication {
