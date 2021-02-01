@@ -5,7 +5,7 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -92,33 +92,6 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.2</version>
         </dependency>
-        <!--Swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>${swagger.models.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-ui</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>-->
     </dependencies>
 
     <build>

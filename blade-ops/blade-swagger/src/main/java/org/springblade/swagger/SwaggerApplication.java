@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.gateway.props;
+package org.springblade.swagger;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springblade.core.launch.BladeApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 路由配置类
+ * swagger聚合启动器
  *
  * @author Chill
  */
-@Data
-@RefreshScope
-@ConfigurationProperties("blade.document")
-public class RouteProperties {
+@SpringBootApplication
+public class SwaggerApplication {
 
-	private final List<RouteResource> resources = new ArrayList<>();
+	public static void main(String[] args) {
+		BladeApplication.run("blade-swagger", SwaggerApplication.class, args);
+	}
 
 }

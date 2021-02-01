@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.0.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.0.1-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2020-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.4.1-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.4.2-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -70,12 +70,12 @@ SpringBlade
 
 ## 技术文档
 * [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
-* [常见问题集锦](https://sns.bladex.vip/article-14966.html)
+* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
 
 ## 项目地址
 * 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)
 * 后端Github地址：[https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)
-* 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/2.0-boot/](https://gitee.com/smallc/SpringBlade/tree/2.0-boot/)
+* 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/)
 * 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
 * 前端框架Saber(基于Vue)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
 * 核心框架项目地址：[https://github.com/chillzhuang/blade-tool](https://github.com/chillzhuang/blade-tool)

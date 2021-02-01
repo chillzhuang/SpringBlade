@@ -1,0 +1,16 @@
+server:
+  port: 18000
+knife4j:
+  enableAggregation: true
+  cloud:
+    enable: true
+    routes:
+      - name: 授权模块
+        uri: 127.0.0.1
+        location: /blade-auth/v2/api-docs
+      - name: 工作台模块
+        uri: 127.0.0.1
+        location: /blade-desk/v2/api-docs
+      - name: 系统模块
+        uri: 127.0.0.1
+        location: /blade-system/v2/api-docs

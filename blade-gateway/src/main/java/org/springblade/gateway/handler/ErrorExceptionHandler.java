@@ -76,6 +76,10 @@ public class ErrorExceptionHandler implements ErrorWebExceptionHandler {
 	 * 构建异常信息
 	 */
 	private String buildMessage(ServerHttpRequest request, Throwable ex) {
+		String uri = request.getURI().toString();
+		if (uri.endsWith("doc.html")) {
+			return "[Swagger聚合网关] 已迁移至 [blade-swagger] 服务，请开启 [blade-swagger] 服务并访问 [http://127.0.0.1:18000/doc.html]";
+		}
 		StringBuilder message = new StringBuilder("Failed to handle request [");
 		message.append(request.getMethodValue());
 		message.append(" ");

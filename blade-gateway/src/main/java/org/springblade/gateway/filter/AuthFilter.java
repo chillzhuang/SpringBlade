@@ -15,12 +15,12 @@
  */
 package org.springblade.gateway.filter;
 
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springblade.gateway.props.AuthProperties;
 import org.springblade.gateway.provider.AuthProvider;
 import org.springblade.gateway.provider.ResponseProvider;
@@ -47,8 +47,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 @AllArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered {
-	private AuthProperties authProperties;
-	private ObjectMapper objectMapper;
+	private final AuthProperties authProperties;
+	private final ObjectMapper objectMapper;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
