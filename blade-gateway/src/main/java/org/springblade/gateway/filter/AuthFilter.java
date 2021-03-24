@@ -32,6 +32,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -49,6 +50,7 @@ import java.nio.charset.StandardCharsets;
 public class AuthFilter implements GlobalFilter, Ordered {
 	private final AuthProperties authProperties;
 	private final ObjectMapper objectMapper;
+	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -72,8 +74,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	}
 
 	private boolean isSkip(String path) {
-		return AuthProvider.getDefaultSkipUrl().stream().map(url -> url.replace(AuthProvider.TARGET, AuthProvider.REPLACEMENT)).anyMatch(path::contains)
-			|| authProperties.getSkipUrl().stream().map(url -> url.replace(AuthProvider.TARGET, AuthProvider.REPLACEMENT)).anyMatch(path::contains);
+		return AuthProvider.getDefaultSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path))
+			|| authProperties.getSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path));
 	}
 
 	private Mono<Void> unAuth(ServerHttpResponse resp, String msg) {

@@ -7,12 +7,12 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>SpringBlade</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
     </parent>
 
     <artifactId>blade-service</artifactId>
     <name>${project.artifactId}</name>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <packaging>pom</packaging>
     <description>SpringBlade 微服务集合</description>
 

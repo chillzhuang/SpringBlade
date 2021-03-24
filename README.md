@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.0.1-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.0.2-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2020-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.4.2-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.4.4-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -27,6 +27,9 @@
 
 ## 架构图
 <img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-framework.png"/>
+
+## 趋势图
+<a href="https://whnb.wang/smallc/SpringBlade" rel="nofollow"><img src="https://whnb.wang/img/smallc/SpringBlade" alt="Stargazers over time"></a>
 
 ## 工程结构
 ``` 
