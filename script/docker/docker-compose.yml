@@ -157,6 +157,13 @@ services:
     networks:
       - blade_net
 
+  blade-develop:
+    image: "${REGISTER}/blade-develop:${TAG}"
+    privileged: true
+    restart: always
+    networks:
+      - blade_net
+
 networks:
   blade_net:
     driver: bridge

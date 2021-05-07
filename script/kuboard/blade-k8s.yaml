@@ -1,0 +1,22 @@
+#spring配置
+spring:
+  redis:
+    ##redis 单机环境配置
+    host: redis
+    port: 6379
+    password:
+    database: 0
+    ssl: false
+    ##redis 集群环境配置
+    #cluster:
+    #  nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003
+    #  commandTimeout: 5000
+
+#项目模块集中配置
+blade:
+  #通用开发生产环境数据库地址(特殊情况可在对应的子工程里配置覆盖)
+  datasource:
+    test:
+      url: jdbc:mysql://saber-db-0.saber-db:3306/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+      username: root
+      password: root

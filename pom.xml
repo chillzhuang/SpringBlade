@@ -5,12 +5,12 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>3.0.2</blade.tool.version>
-        <blade.project.version>3.0.2</blade.project.version>
+        <blade.tool.version>3.0.3</blade.tool.version>
+        <blade.project.version>3.0.3</blade.project.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>

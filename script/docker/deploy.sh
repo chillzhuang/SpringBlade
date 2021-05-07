@@ -45,7 +45,7 @@ base(){
 
 #启动程序模块
 modules(){
-	docker-compose up -d blade-gateway1 blade-gateway2 blade-admin blade-swagger blade-auth1 blade-auth2 blade-user blade-desk blade-system blade-log blade-report
+	docker-compose up -d blade-gateway1 blade-gateway2 blade-admin blade-swagger blade-auth1 blade-auth2 blade-user blade-desk blade-system blade-log blade-report blade-develop
 }
 
 #关闭所有模块

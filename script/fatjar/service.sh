@@ -1,3 +1,6 @@
+#!/bin/bash
+
+#设置jar文件名
 APP_NAME=app.jar
 
 #使用说明，用来提示输入参数
