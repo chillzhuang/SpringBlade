@@ -152,7 +152,7 @@ spec:
     spec:
       containers:
         - name: blade-admin
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-admin:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-admin:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -386,7 +386,7 @@ spec:
     spec:
       containers:
         - name: blade-auth
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-auth:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-auth:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -625,7 +625,7 @@ spec:
     spec:
       containers:
         - name: blade-desk
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-desk:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-desk:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -864,7 +864,7 @@ spec:
     spec:
       containers:
         - name: blade-develop
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-develop:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-develop:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -1096,7 +1096,7 @@ spec:
     spec:
       containers:
         - name: blade-gateway
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-gateway:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-gateway:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -1331,7 +1331,7 @@ spec:
     spec:
       containers:
         - name: blade-log
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-log:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-log:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -1565,7 +1565,7 @@ spec:
     spec:
       containers:
         - name: blade-report
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-report:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-report:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -1799,7 +1799,7 @@ spec:
     spec:
       containers:
         - name: blade-resource
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-resource:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-resource:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -2033,7 +2033,7 @@ spec:
     spec:
       containers:
         - name: blade-system
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-system:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-system:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -2267,7 +2267,7 @@ spec:
     spec:
       containers:
         - name: blade-user
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-user:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-user:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -2496,7 +2496,7 @@ spec:
     spec:
       containers:
         - name: saber-web
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/saber-web:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/saber-web:3.1.0'
           ports:
             - name: web
               containerPort: 80
@@ -2721,7 +2721,7 @@ spec:
     spec:
       containers:
         - name: blade-swagger
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-swagger:3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/blade-swagger:3.1.0'
           args:
             - '--spring.profiles.active=${PROFILE}'
             - '--spring.cloud.nacos.config.server-addr=${NACOS_SERVER_ADDR}'
@@ -3016,7 +3016,7 @@ spec:
             defaultMode: 420
       containers:
         - name: nacos
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/nacos-server:2.0.0'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/nacos-server:2.0.2'
           ports:
             - name: client
               containerPort: 8848
@@ -3749,7 +3749,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: 'swr.cn-east-2.myhuaweicloud.com/blade/saber-db:v3.0.3'
+          image: 'swr.cn-east-2.myhuaweicloud.com/blade/saber-db:v3.1.0'
           ports:
             - name: mysql
               containerPort: 3306

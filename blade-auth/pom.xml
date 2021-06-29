@@ -8,7 +8,7 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.0.3</version>
+        <version>3.1.0</version>
     </parent>
 
     <artifactId>blade-auth</artifactId>

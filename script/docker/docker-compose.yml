@@ -1,7 +1,7 @@
 version: '3'
 services:
   nacos:
-    image: nacos/nacos-server:2.0.0
+    image: nacos/nacos-server:2.0.2
     hostname: "nacos-standalone"
     environment:
       - MODE=standalone
