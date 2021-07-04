@@ -124,6 +124,11 @@ public class Menu implements Serializable {
 
 
 	@Override
+	public int hashCode() {
+		return (this.getId() == null) ? -1 : this.getId();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
