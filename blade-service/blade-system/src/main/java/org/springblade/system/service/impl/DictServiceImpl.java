@@ -70,7 +70,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	public boolean submit(Dict dict) {
 		LambdaQueryWrapper<Dict> lqw = Wrappers.<Dict>query().lambda().eq(Dict::getCode, dict.getCode()).eq(Dict::getDictKey, dict.getDictKey());
-		Integer cnt = baseMapper.selectCount((Func.isEmpty(dict.getId())) ? lqw : lqw.notIn(Dict::getId, dict.getId()));
+		Long cnt = baseMapper.selectCount((Func.isEmpty(dict.getId())) ? lqw : lqw.notIn(Dict::getId, dict.getId()));
 		if (cnt > 0) {
 			throw new ServiceException("当前字典键值已存在!");
 		}

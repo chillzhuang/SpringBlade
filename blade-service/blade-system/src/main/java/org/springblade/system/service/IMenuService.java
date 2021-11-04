@@ -23,6 +23,7 @@ import org.springblade.system.entity.Menu;
 import org.springblade.system.vo.MenuVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务类
@@ -39,6 +40,15 @@ public interface IMenuService extends IService<Menu> {
 	 * @return
 	 */
 	IPage<MenuVO> selectMenuPage(IPage<MenuVO> page, MenuVO menu);
+
+	/**
+	 * 懒加载菜单列表
+	 *
+	 * @param parentId
+	 * @param param
+	 * @return
+	 */
+	List<MenuVO> lazyMenuList(Long parentId, Map<String, Object> param);
 
 	/**
 	 * 菜单树形结构
@@ -72,12 +82,28 @@ public interface IMenuService extends IService<Menu> {
 	List<MenuVO> grantTree(BladeUser user);
 
 	/**
+	 * 数据权限授权树形结构
+	 *
+	 * @param user
+	 * @return
+	 */
+	List<MenuVO> grantDataScopeTree(BladeUser user);
+
+	/**
 	 * 默认选中节点
 	 *
 	 * @param roleIds
 	 * @return
 	 */
 	List<String> roleTreeKeys(String roleIds);
+
+	/**
+	 * 默认选中节点
+	 *
+	 * @param roleIds
+	 * @return
+	 */
+	List<String> dataScopeTreeKeys(String roleIds);
 
 	/**
 	 * 获取配置的角色权限

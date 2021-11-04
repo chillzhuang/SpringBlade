@@ -63,4 +63,12 @@ public interface IDeptService extends IService<Dept> {
 	 */
 	List<String> getDeptNames(String deptIds);
 
+	/**
+	 * 提交
+	 *
+	 * @param dept
+	 * @return
+	 */
+	boolean submit(Dept dept);
+
 }

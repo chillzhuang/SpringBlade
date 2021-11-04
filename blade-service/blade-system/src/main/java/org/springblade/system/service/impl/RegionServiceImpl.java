@@ -44,7 +44,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
 
 	@Override
 	public boolean submit(Region region) {
-		Integer cnt = baseMapper.selectCount(Wrappers.<Region>query().lambda().eq(Region::getCode, region.getCode()));
+		Long cnt = baseMapper.selectCount(Wrappers.<Region>query().lambda().eq(Region::getCode, region.getCode()));
 		if (cnt > 0) {
 			return this.updateById(region);
 		}
@@ -79,7 +79,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
 
 	@Override
 	public boolean removeRegion(String id) {
-		Integer cnt = baseMapper.selectCount(Wrappers.<Region>query().lambda().eq(Region::getParentCode, id));
+		Long cnt = baseMapper.selectCount(Wrappers.<Region>query().lambda().eq(Region::getParentCode, id));
 		if (cnt > 0) {
 			throw new ServiceException("请先删除子节点!");
 		}

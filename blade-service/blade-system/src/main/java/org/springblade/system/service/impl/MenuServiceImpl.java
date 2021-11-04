@@ -28,9 +28,11 @@ import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.system.dto.MenuDTO;
 import org.springblade.system.entity.Menu;
 import org.springblade.system.entity.RoleMenu;
+import org.springblade.system.entity.RoleScope;
 import org.springblade.system.mapper.MenuMapper;
 import org.springblade.system.service.IMenuService;
 import org.springblade.system.service.IRoleMenuService;
+import org.springblade.system.service.IRoleScopeService;
 import org.springblade.system.vo.MenuVO;
 import org.springblade.system.wrapper.MenuWrapper;
 import org.springframework.stereotype.Service;
@@ -47,11 +49,21 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
-	IRoleMenuService roleMenuService;
+	private final IRoleMenuService roleMenuService;
+	private final IRoleScopeService roleScopeService;
+	private final static String PARENT_ID = "parentId";
 
 	@Override
 	public IPage<MenuVO> selectMenuPage(IPage<MenuVO> page, MenuVO menu) {
 		return page.setRecords(baseMapper.selectMenuPage(page, menu));
+	}
+
+	@Override
+	public List<MenuVO> lazyMenuList(Long parentId, Map<String, Object> param) {
+		if (Func.isEmpty(Func.toStr(param.get(PARENT_ID)))) {
+			parentId = null;
+		}
+		return baseMapper.lazyMenuList(parentId, param);
 	}
 
 	@Override
@@ -95,9 +107,20 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	}
 
 	@Override
+	public List<MenuVO> grantDataScopeTree(BladeUser user) {
+		return ForestNodeMerger.merge(user.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID) ? baseMapper.grantDataScopeTree() : baseMapper.grantDataScopeTreeByRole(Func.toLongList(user.getRoleId())));
+	}
+
+	@Override
 	public List<String> roleTreeKeys(String roleIds) {
 		List<RoleMenu> roleMenus = roleMenuService.list(Wrappers.<RoleMenu>query().lambda().in(RoleMenu::getRoleId, Func.toLongList(roleIds)));
 		return roleMenus.stream().map(roleMenu -> Func.toStr(roleMenu.getMenuId())).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<String> dataScopeTreeKeys(String roleIds) {
+		List<RoleScope> roleScopes = roleScopeService.list(Wrappers.<RoleScope>query().lambda().in(RoleScope::getRoleId, Func.toLongList(roleIds)));
+		return roleScopes.stream().map(roleScope -> Func.toStr(roleScope.getScopeId())).collect(Collectors.toList());
 	}
 
 	@Override

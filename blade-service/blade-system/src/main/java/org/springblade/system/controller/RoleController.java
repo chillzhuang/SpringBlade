@@ -25,6 +25,7 @@ import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.node.INode;
+import org.springblade.core.tool.utils.CacheUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Role;
 import org.springblade.system.service.IRoleService;
@@ -37,6 +38,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+
+import static org.springblade.core.tool.utils.CacheUtil.SYS_CACHE;
 
 /**
  * 控制器
@@ -89,27 +92,41 @@ public class RoleController extends BladeController {
 		return R.data(tree);
 	}
 
+
+	/**
+	 * 获取指定角色树形结构
+	 */
+	@GetMapping("/tree-by-id")
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "树形结构", notes = "树形结构")
+	public R<List<RoleVO>> treeById(Long roleId, BladeUser bladeUser) {
+		Role role = roleService.getById(roleId);
+		List<RoleVO> tree = roleService.tree(Func.notNull(role) ? role.getTenantId() : bladeUser.getTenantId());
+		return R.data(tree);
+	}
+
 	/**
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 4)
+	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "新增或修改", notes = "传入role")
 	public R submit(@Valid @RequestBody Role role, BladeUser user) {
+		CacheUtil.clear(SYS_CACHE);
 		if (Func.isEmpty(role.getId())) {
 			role.setTenantId(user.getTenantId());
 		}
 		return R.status(roleService.saveOrUpdate(role));
 	}
 
-
 	/**
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 5)
+	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+		CacheUtil.clear(SYS_CACHE);
 		return R.status(roleService.removeByIds(Func.toLongList(ids)));
 	}
 
@@ -117,11 +134,11 @@ public class RoleController extends BladeController {
 	 * 设置菜单权限
 	 */
 	@PostMapping("/grant")
-	@ApiOperationSupport(order = 6)
+	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
 	public R grant(@RequestBody GrantVO grantVO) {
-		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds());
+		CacheUtil.clear(SYS_CACHE);
+		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds(), grantVO.getDataScopeIds());
 		return R.status(temp);
 	}
-
 }

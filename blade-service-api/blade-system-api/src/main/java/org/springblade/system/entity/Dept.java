@@ -61,6 +61,12 @@ public class Dept implements Serializable {
 	private Long parentId;
 
 	/**
+	 * 祖级机构主键
+	 */
+	@ApiModelProperty(value = "祖级机构主键")
+	private String ancestors;
+
+	/**
 	 * 部门名
 	 */
 	@ApiModelProperty(value = "部门名")

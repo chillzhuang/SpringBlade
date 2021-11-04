@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.1.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.2.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2020-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.2-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.6-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -186,6 +186,3 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-swagger2.png"/></td>
     </tr>
 </table>
-
-## 关注我们
-![](https://images.gitee.com/uploads/images/2019/0330/065148_f0ada806_410595.jpeg)

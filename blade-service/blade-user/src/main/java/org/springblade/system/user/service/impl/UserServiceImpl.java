@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 		if (Func.isNotEmpty(user.getPassword())) {
 			user.setPassword(DigestUtil.encrypt(user.getPassword()));
 		}
-		Integer cnt = baseMapper.selectCount(Wrappers.<User>query().lambda().eq(User::getTenantId, user.getTenantId()).eq(User::getAccount, user.getAccount()));
+		Long cnt = baseMapper.selectCount(Wrappers.<User>query().lambda().eq(User::getTenantId, user.getTenantId()).eq(User::getAccount, user.getAccount()));
 		if (cnt > 0) {
 			throw new ServiceException("当前用户已存在!");
 		}

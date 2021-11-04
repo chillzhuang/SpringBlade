@@ -61,6 +61,7 @@ public class TokenUtil {
 		param.put(TokenConstant.OAUTH_ID, userInfo.getOauthId());
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		param.put(TokenConstant.ROLE_ID, user.getRoleId());
+		param.put(TokenConstant.DEPT_ID, user.getDeptId());
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
 		param.put(TokenConstant.USER_NAME, user.getAccount());
 		param.put(TokenConstant.ROLE_NAME, Func.join(userInfo.getRoles()));

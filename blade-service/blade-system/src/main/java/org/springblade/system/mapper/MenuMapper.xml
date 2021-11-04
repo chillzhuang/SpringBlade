@@ -19,6 +19,23 @@
         <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
+    <resultMap id="menuVOResultMap" type="org.springblade.system.vo.MenuVO">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="alias" property="alias"/>
+        <result column="path" property="path"/>
+        <result column="source" property="source"/>
+        <result column="sort" property="sort"/>
+        <result column="category" property="category"/>
+        <result column="action" property="action"/>
+        <result column="is_open" property="isOpen"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="has_children" property="hasChildren"/>
+    </resultMap>
+
     <resultMap id="treeNodeResultMap" type="org.springblade.core.tool.node.TreeNode">
         <id column="id" property="id"/>
         <result column="parent_id" property="parentId"/>
@@ -35,6 +52,35 @@
 
     <select id="selectMenuPage" resultMap="menuResultMap">
         select * from blade_menu where is_deleted = 0
+    </select>
+
+    <select id="lazyMenuList" resultMap="menuVOResultMap">
+        SELECT
+        menu.*,
+        (
+        SELECT
+        CASE WHEN count( 1 ) > 0 THEN 1 ELSE 0 END
+        FROM
+        blade_menu
+        WHERE
+        parent_id = menu.id AND is_deleted = 0  AND category = 1
+        ) AS "has_children"
+        FROM
+        blade_menu menu
+        WHERE menu.is_deleted = 0 AND menu.category = 1
+        <if test="param1!=null">
+            and menu.parent_id = #{param1}
+        </if>
+        <if test="param2.name!=null and param2.name!=''">
+            and menu.name like concat(concat('%', #{param2.name}),'%')
+        </if>
+        <if test="param2.code!=null and param2.code!=''">
+            and menu.code like concat(concat('%', #{param2.code}),'%')
+        </if>
+        <if test="param2.alias!=null and param2.alias!=''">
+            and menu.alias like concat(concat('%', #{param2.alias}),'%')
+        </if>
+        ORDER BY menu.sort
     </select>
 
     <select id="tree" resultMap="treeNodeResultMap">
@@ -125,6 +171,104 @@
             #{item}
         </foreach> )
         )
+    </select>
+
+    <select id="grantDataScopeTree" resultMap="treeNodeResultMap">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    id,
+                    parent_id,
+                    NAME AS title,
+                    id AS "value",
+                    id AS "key"
+                FROM
+                    blade_menu
+                WHERE
+                    category = 1
+                  AND is_deleted = 0
+                  AND id IN ( SELECT menu_id FROM blade_scope_data WHERE is_deleted = 0 AND menu_id IS NOT NULL )
+            ) menu
+
+        UNION ALL
+
+        SELECT
+            id,
+            menu_id AS parent_id,
+            scope_name AS title,
+            id AS "value",
+            id AS "key"
+        FROM
+            blade_scope_data
+        WHERE
+            is_deleted = 0
+          AND menu_id IS NOT NULL
+    </select>
+
+    <select id="grantDataScopeTreeByRole" resultMap="treeNodeResultMap">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        id,
+        parent_id,
+        NAME AS title,
+        id AS "value",
+        id AS "key"
+        FROM
+        blade_menu
+        WHERE
+        category = 1
+        AND is_deleted = 0
+        AND id IN ( SELECT menu_id FROM blade_scope_data WHERE is_deleted = 0 AND menu_id IS NOT NULL )
+        AND (
+        id IN (
+        select menu_id from blade_role_menu where role_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        OR id IN (
+        select parent_id from blade_menu where is_deleted = 0
+        and id in ( select menu_id from blade_role_menu where role_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach> )
+        )
+        )
+        ) menu
+
+        UNION ALL
+
+        SELECT
+        id,
+        menu_id AS parent_id,
+        scope_name AS title,
+        id AS "value",
+        id AS "key"
+        FROM
+        blade_scope_data
+        WHERE
+        is_deleted = 0
+        AND (
+        menu_id IN (
+        select menu_id from blade_role_menu where role_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        OR menu_id IN (
+        select parent_id from blade_menu where is_deleted = 0
+        and id in ( select menu_id from blade_role_menu where role_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach> )
+        )
+        )
+        AND menu_id IS NOT NULL
     </select>
 
     <select id="authRoutes" resultType="org.springblade.system.dto.MenuDTO">

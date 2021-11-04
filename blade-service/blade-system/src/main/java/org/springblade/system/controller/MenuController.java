@@ -28,6 +28,8 @@ import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Menu;
 import org.springblade.system.service.IMenuService;
+import org.springblade.system.vo.CheckedTreeVO;
+import org.springblade.system.vo.GrantTreeVO;
 import org.springblade.system.vo.MenuVO;
 import org.springblade.system.wrapper.MenuWrapper;
 import org.springframework.web.bind.annotation.*;
@@ -74,9 +76,40 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入menu")
 	public R<List<MenuVO>> list(@ApiIgnore @RequestParam Map<String, Object> menu) {
-		@SuppressWarnings("unchecked")
 		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().orderByAsc(Menu::getSort));
 		return R.data(MenuWrapper.build().listNodeVO(list));
+	}
+
+	/**
+	 * 菜单列表
+	 */
+	@GetMapping("/menu-list")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
+		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
+	})
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "菜单列表", notes = "传入menu")
+	public R<List<MenuVO>> menuList(@ApiIgnore @RequestParam Map<String, Object> menu) {
+		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().eq(Menu::getCategory, 1).orderByAsc(Menu::getSort));
+		return R.data(MenuWrapper.build().listNodeVO(list));
+	}
+
+	/**
+	 * 懒加载菜单列表
+	 */
+	@GetMapping("/lazy-menu-list")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
+		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
+	})
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	@ApiOperationSupport(order = 4)
+	@ApiOperation(value = "懒加载菜单列表", notes = "传入menu")
+	public R<List<MenuVO>> lazyMenuList(Long parentId, @ApiIgnore @RequestParam Map<String, Object> menu) {
+		List<MenuVO> list = menuService.lazyMenuList(parentId, menu);
+		return R.data(MenuWrapper.build().listNodeLazyVO(list));
 	}
 
 	/**
@@ -84,7 +117,7 @@ public class MenuController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	@ApiOperationSupport(order = 3)
+	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "新增或修改", notes = "传入menu")
 	public R submit(@Valid @RequestBody Menu menu) {
 		return R.status(menuService.saveOrUpdate(menu));
@@ -96,7 +129,7 @@ public class MenuController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	@ApiOperationSupport(order = 4)
+	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(menuService.removeByIds(Func.toLongList(ids)));
@@ -106,7 +139,7 @@ public class MenuController extends BladeController {
 	 * 前端菜单数据
 	 */
 	@GetMapping("/routes")
-	@ApiOperationSupport(order = 5)
+	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public R<List<MenuVO>> routes(BladeUser user) {
 		List<MenuVO> list = menuService.routes((user == null || user.getUserId() == 0L) ? null : user.getRoleId());
@@ -117,7 +150,7 @@ public class MenuController extends BladeController {
 	 * 前端按钮数据
 	 */
 	@GetMapping("/buttons")
-	@ApiOperationSupport(order = 6)
+	@ApiOperationSupport(order = 8)
 	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
 	public R<List<MenuVO>> buttons(BladeUser user) {
 		List<MenuVO> list = menuService.buttons(user.getRoleId());
@@ -128,7 +161,7 @@ public class MenuController extends BladeController {
 	 * 获取菜单树形结构
 	 */
 	@GetMapping("/tree")
-	@ApiOperationSupport(order = 7)
+	@ApiOperationSupport(order = 9)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public R<List<MenuVO>> tree() {
 		List<MenuVO> tree = menuService.tree();
@@ -139,27 +172,33 @@ public class MenuController extends BladeController {
 	 * 获取权限分配树形结构
 	 */
 	@GetMapping("/grant-tree")
-	@ApiOperationSupport(order = 8)
+	@ApiOperationSupport(order = 10)
 	@ApiOperation(value = "权限分配树形结构", notes = "权限分配树形结构")
-	public R<List<MenuVO>> grantTree(BladeUser user) {
-		return R.data(menuService.grantTree(user));
+	public R<GrantTreeVO> grantTree(BladeUser user) {
+		GrantTreeVO vo = new GrantTreeVO();
+		vo.setMenu(menuService.grantTree(user));
+		vo.setDataScope(menuService.grantDataScopeTree(user));
+		return R.data(vo);
 	}
 
 	/**
 	 * 获取权限分配树形结构
 	 */
 	@GetMapping("/role-tree-keys")
-	@ApiOperationSupport(order = 9)
+	@ApiOperationSupport(order = 11)
 	@ApiOperation(value = "角色所分配的树", notes = "角色所分配的树")
-	public R<List<String>> roleTreeKeys(String roleIds) {
-		return R.data(menuService.roleTreeKeys(roleIds));
+	public R<CheckedTreeVO> roleTreeKeys(String roleIds) {
+		CheckedTreeVO vo = new CheckedTreeVO();
+		vo.setMenu(menuService.roleTreeKeys(roleIds));
+		vo.setDataScope(menuService.dataScopeTreeKeys(roleIds));
+		return R.data(vo);
 	}
 
 	/**
 	 * 获取配置的角色权限
 	 */
 	@GetMapping("auth-routes")
-	@ApiOperationSupport(order = 10)
+	@ApiOperationSupport(order = 12)
 	@ApiOperation(value = "菜单的角色权限")
 	public R<List<Kv>> authRoutes(BladeUser user) {
 		if (Func.isEmpty(user) || user.getUserId() == 0L) {

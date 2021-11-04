@@ -22,6 +22,7 @@ import org.springblade.system.entity.Menu;
 import org.springblade.system.vo.MenuVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Mapper 接口
@@ -38,6 +39,15 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @return
 	 */
 	List<MenuVO> selectMenuPage(IPage page, MenuVO menu);
+
+	/**
+	 * 懒加载菜单列表
+	 *
+	 * @param parentId
+	 * @param param
+	 * @return
+	 */
+	List<MenuVO> lazyMenuList(Long parentId, Map<String, Object> param);
 
 	/**
 	 * 树形结构
@@ -60,6 +70,21 @@ public interface MenuMapper extends BaseMapper<Menu> {
 	 * @return
 	 */
 	List<MenuVO> grantTreeByRole(List<Long> roleId);
+
+	/**
+	 * 数据权限授权树形结构
+	 *
+	 * @return
+	 */
+	List<MenuVO> grantDataScopeTree();
+
+	/**
+	 * 数据权限授权树形结构
+	 *
+	 * @param roleId
+	 * @return
+	 */
+	List<MenuVO> grantDataScopeTreeByRole(List<Long> roleId);
 
 	/**
 	 * 所有菜单
