@@ -17,6 +17,7 @@ package org.springblade.common.launch;
 
 import org.springblade.common.constant.LauncherConstant;
 import org.springblade.core.launch.service.LauncherService;
+import org.springblade.core.launch.utils.PropsUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.util.Properties;
@@ -31,10 +32,10 @@ public class LauncherServiceImpl implements LauncherService {
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
-		props.setProperty("spring.cloud.nacos.discovery.server-addr", LauncherConstant.nacosAddr(profile));
-		props.setProperty("spring.cloud.nacos.config.server-addr", LauncherConstant.nacosAddr(profile));
-		props.setProperty("spring.cloud.sentinel.transport.dashboard", LauncherConstant.sentinelAddr(profile));
-		props.setProperty("spring.zipkin.base-url", LauncherConstant.zipkinAddr(profile));
+		PropsUtil.setProperty(props, "spring.cloud.nacos.discovery.server-addr", LauncherConstant.nacosAddr(profile));
+		PropsUtil.setProperty(props, "spring.cloud.nacos.config.server-addr", LauncherConstant.nacosAddr(profile));
+		PropsUtil.setProperty(props, "spring.cloud.sentinel.transport.dashboard", LauncherConstant.sentinelAddr(profile));
+		PropsUtil.setProperty(props, "spring.zipkin.base-url", LauncherConstant.zipkinAddr(profile));
 	}
 
 }

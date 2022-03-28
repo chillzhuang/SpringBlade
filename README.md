@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.2.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.3.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-2020-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.6-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.6.3-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -22,7 +22,7 @@
 * 极简封装了多租户底层，用更少的代码换来拓展性更强的SaaS多租户系统。
 * 借鉴OAuth2，实现了多终端认证系统，可控制子系统的token权限互相隔离。
 * 借鉴Security，封装了Secure模块，采用JWT做Token认证，可拓展集成Redis等细颗粒度控制方案。
-* 稳定生产了三年，经历了从 Camden -> Hoxton -> 2020 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构。
+* 稳定生产了三年，经历了从 Camden -> Hoxton -> 2021 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构。
 * 项目分包明确，规范微服务的开发模式，使包与包之间的分工清晰。
 
 ## 架构图
