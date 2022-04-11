@@ -5,12 +5,12 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>3.3.0</blade.tool.version>
-        <blade.project.version>3.3.0</blade.project.version>
+        <blade.tool.version>3.3.1</blade.tool.version>
+        <blade.project.version>3.3.1</blade.project.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
@@ -26,7 +26,7 @@
         <spring.boot.admin.version>2.6.2</spring.boot.admin.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.6.3</spring.boot.version>
+        <spring.boot.version>2.6.6</spring.boot.version>
         <spring.cloud.version>2021.0.1</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
