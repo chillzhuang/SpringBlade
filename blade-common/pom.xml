@@ -5,7 +5,7 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.3.1</version>
+        <version>3.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,6 +18,11 @@
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-launch</artifactId>
+            <version>${blade.tool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-loadbalancer</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <dependency>

@@ -19,14 +19,12 @@ import org.springblade.core.launch.BladeApplication;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 项目启动
  *
  * @author Chill
  */
-@EnableScheduling
 @EnableDiscoveryClient
 @SpringBootApplication
 public class GateWayApplication {

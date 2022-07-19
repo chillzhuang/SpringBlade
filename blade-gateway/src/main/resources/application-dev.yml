@@ -1,0 +1,11 @@
+blade:
+  #多团队协作服务配置
+  loadbalancer:
+    #开启配置
+    enabled: true
+    #灰度版本
+    #version: 3.0.0
+    #负载均衡优先调用的ip段
+    prior-ip-pattern:
+      - 192.168.0.*
+      - 127.0.0.1
