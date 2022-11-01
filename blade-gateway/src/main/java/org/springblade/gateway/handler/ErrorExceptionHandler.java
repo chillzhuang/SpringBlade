@@ -39,7 +39,7 @@ import reactor.core.publisher.Mono;
  * @author Chill
  */
 @Order(-1)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 public class ErrorExceptionHandler implements ErrorWebExceptionHandler {
 

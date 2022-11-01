@@ -39,7 +39,7 @@ import reactor.core.publisher.Mono;
  * @author Chill
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @EnableConfigurationProperties({AuthProperties.class})
 public class RouterFunctionConfiguration {

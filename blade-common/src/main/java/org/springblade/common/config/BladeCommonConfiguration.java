@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 public class BladeCommonConfiguration {
 

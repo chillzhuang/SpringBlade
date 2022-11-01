@@ -63,13 +63,13 @@ knife4j:
     language: zh-CN
     enableFooter: false
     enableFooterCustom: true
-    footerCustomContent: Copyright © 2021 SpringBlade All Rights Reserved
+    footerCustomContent: Copyright © 2022 SpringBlade All Rights Reserved
 
 #swagger配置信息
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 3.4.0
+  version: 3.4.1
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip

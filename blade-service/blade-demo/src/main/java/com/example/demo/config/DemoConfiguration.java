@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableFeignClients({"org.springblade", "com.example"})
 @MapperScan({"org.springblade.**.mapper.**", "com.example.**.mapper.**"})
 @EnableConfigurationProperties(DemoProperties.class)

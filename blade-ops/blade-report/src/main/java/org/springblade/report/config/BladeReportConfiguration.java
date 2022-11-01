@@ -27,7 +27,7 @@ import javax.sql.DataSource;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "report.enabled", havingValue = "true", matchIfMissing = true)
 public class BladeReportConfiguration {
 
