@@ -69,7 +69,7 @@ knife4j:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 3.4.1
+  version: 3.5.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip
@@ -80,6 +80,8 @@ swagger:
 
 #blade配置
 blade:
+  token:
+    sign-key: 请配置32位签名提高安全性
   xss:
     enabled: true
     skip-url:
