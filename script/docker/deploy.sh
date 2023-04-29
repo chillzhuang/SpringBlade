@@ -33,9 +33,9 @@ mount(){
 		cp nginx/web/nginx.conf /docker/nginx/web/nginx.conf
 		cp -r nginx/web/html /docker/nginx/web/html
 	fi
-	if test ! -f "/docker/nacos/init.d/custom.properties" ;then
-		mkdir -p /docker/nacos/init.d
-		cp nacos/init.d/custom.properties /docker/nacos/init.d/custom.properties
+	if test ! -f "/docker/nacos/conf/application.properties" ;then
+		mkdir -p /docker/nacos/conf
+		cp nacos/conf/application.properties /docker/nacos/conf/application.properties
 	fi
 }
 

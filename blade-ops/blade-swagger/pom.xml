@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-ops</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,8 +23,14 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-aggregation-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
         </dependency>
+        <!--Mac M1笔记本会报错，参考：https://github.com/netty/netty/issues/11020-->
+        <!--<dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <version>${netty.resolver.version}</version>
+            <classifier>osx-aarch_64</classifier>
+        </dependency>-->
     </dependencies>
 
     <build>

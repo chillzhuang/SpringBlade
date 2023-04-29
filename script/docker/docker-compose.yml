@@ -1,13 +1,14 @@
 version: '3'
 services:
   nacos:
-    image: nacos/nacos-server:2.0.2
+    image: nacos/nacos-server:v2.1.2
     hostname: "nacos-standalone"
     environment:
       - MODE=standalone
+      - TZ=Asia/Shanghai
     volumes:
       - /docker/nacos/standalone-logs/:/home/nacos/logs
-      - /docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+      - /docker/nacos/conf/application.properties:/home/nacos/conf/application.properties
     ports:
       - 8848:8848
       - 9848:9848

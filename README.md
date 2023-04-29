@@ -1,9 +1,9 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.5.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.6.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.10-blue.svg" alt="Downloads">
    <a target="_blank" href="https://bladex.vip">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
@@ -69,12 +69,13 @@ SpringBlade
 * Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
 
 ## 数据大屏
-* Caster-数据大屏展示系统：[https://caster.bladex.vip](https://caster.bladex.vip)
+* 数据大屏展示系统：[https://data.bladex.vip](https://data.bladex.vip)
 
 ## 技术文档
 * [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
 * [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
 * [SpringBlade基于Kuboard部署K8S](https://kuboard.cn/learning/k8s-practice/spring-blade/)
+* [SpringBlade基于Rainbond部署](https://www.rainbond.com/docs/micro-service/example/blade)
 
 ## 项目地址
 * 核心框架项目地址：[https://gitee.com/smallc/blade-tool](https://gitee.com/smallc/blade-tool)
@@ -82,7 +83,8 @@ SpringBlade
 * 后端Github地址：[https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)
 * 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/)
 * 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
-* 前端框架Saber(基于Vue)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
+* 前端框架Saber(基于Vue2)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
+* 前端框架Saber3(基于Vue3)：[https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber/tree/3.x/)
 
 # 开源协议
 Apache Licence 2.0 （[英文原文](http://www.apache.org/licenses/LICENSE-2.0.html)）

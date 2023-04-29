@@ -47,7 +47,7 @@ public class RouterFunctionConfiguration {
 	/**
 	 * 这里为支持的请求头，如果有自定义的header字段请自己添加
 	 */
-	private static final String ALLOWED_HEADERS = "X-Requested-With, Tenant-Id, Blade-Auth, Content-Type, Authorization, credential, X-XSRF-TOKEN, token, username, client, knfie4j-gateway-request, request-origion";
+	private static final String ALLOWED_HEADERS = "X-Requested-With, Tenant-Id, Blade-Auth, Content-Type, Authorization, credential, X-XSRF-TOKEN, token, username, client, knfie4j-gateway-request, knife4j-gateway-code, request-origion";
 	private static final String ALLOWED_METHODS = "GET,POST,PUT,DELETE,OPTIONS,HEAD";
 	private static final String ALLOWED_ORIGIN = "*";
 	private static final String ALLOWED_EXPOSE = "*";

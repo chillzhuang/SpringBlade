@@ -60,16 +60,16 @@ knife4j:
     enableRequestCache: true
     enableFilterMultipartApis: false
     enableFilterMultipartApiMethodType: POST
-    language: zh-CN
+    language: zh_cn
     enableFooter: false
     enableFooterCustom: true
-    footerCustomContent: Copyright © 2022 SpringBlade All Rights Reserved
+    footerCustomContent: Copyright © 2023 SpringBlade All Rights Reserved
 
 #swagger配置信息
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 3.5.0
+  version: 3.6.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip
@@ -81,6 +81,7 @@ swagger:
 #blade配置
 blade:
   token:
+    #使用 blade-auth服务 @org.springblade.test.SignKeyGenerator 获取
     sign-key: 请配置32位签名提高安全性
   xss:
     enabled: true

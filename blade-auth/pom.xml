@@ -8,7 +8,7 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
     </parent>
 
     <artifactId>blade-auth</artifactId>
@@ -63,6 +63,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>

@@ -18,6 +18,7 @@ package org.springblade.gateway.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springblade.core.launch.constant.TokenConstant;
+import org.springblade.gateway.props.JwtProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -29,11 +30,30 @@ import java.util.Base64;
  */
 public class JwtUtil {
 
-	public static String SIGN_KEY = TokenConstant.SIGN_KEY;
 	public static String BEARER = TokenConstant.BEARER;
 	public static Integer AUTH_LENGTH = 7;
 
-	public static String BASE64_SECURITY = Base64.getEncoder().encodeToString(SIGN_KEY.getBytes(StandardCharsets.UTF_8));
+	/**
+	 * jwt配置
+	 */
+	private static JwtProperties jwtProperties;
+
+	public static JwtProperties getJwtProperties() {
+		return jwtProperties;
+	}
+
+	public static void setJwtProperties(JwtProperties properties) {
+		if (JwtUtil.jwtProperties == null) {
+			JwtUtil.jwtProperties = properties;
+		}
+	}
+
+	/**
+	 * 签名加密
+	 */
+	public static String getBase64Security() {
+		return Base64.getEncoder().encodeToString(getJwtProperties().getSignKey().getBytes(StandardCharsets.UTF_8));
+	}
 
 	/**
 	 * 获取token串
@@ -61,7 +81,7 @@ public class JwtUtil {
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
 			return Jwts.parserBuilder()
-				.setSigningKey(Base64.getDecoder().decode(JwtUtil.BASE64_SECURITY)).build()
+				.setSigningKey(Base64.getDecoder().decode(getBase64Security())).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;
