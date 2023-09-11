@@ -35,7 +35,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "RoleVO对象", description = "RoleVO对象")
-public class RoleVO extends Role implements INode {
+public class RoleVO extends Role implements INode<RoleVO> {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,10 +54,10 @@ public class RoleVO extends Role implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<INode> children;
+	private List<RoleVO> children;
 
 	@Override
-	public List<INode> getChildren() {
+	public List<RoleVO> getChildren() {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}

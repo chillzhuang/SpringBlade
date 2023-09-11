@@ -36,7 +36,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "RegionVO对象", description = "行政区划表")
-public class RegionVO extends Region implements INode {
+public class RegionVO extends Region implements INode<RegionVO> {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -66,7 +66,7 @@ public class RegionVO extends Region implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<INode> children;
+	private List<RegionVO> children;
 
 	@Override
 	public Long getId() {
@@ -79,7 +79,7 @@ public class RegionVO extends Region implements INode {
 	}
 
 	@Override
-	public List<INode> getChildren() {
+	public List<RegionVO> getChildren() {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}

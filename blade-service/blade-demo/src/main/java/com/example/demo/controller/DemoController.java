@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "配置接口", tags = "即时刷新配置")
 public class DemoController {
 
-	@Value("${demo.name}")
+	@Value("${demo.name:1}")
 	private String name;
 
 	private final DemoProperties properties;

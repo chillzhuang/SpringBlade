@@ -35,7 +35,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "MenuVO对象", description = "MenuVO对象")
-public class MenuVO extends Menu implements INode {
+public class MenuVO extends Menu implements INode<MenuVO> {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,7 +54,7 @@ public class MenuVO extends Menu implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<INode> children;
+	private List<MenuVO> children;
 
 	/**
 	 * 是否有子孙节点
@@ -63,7 +63,7 @@ public class MenuVO extends Menu implements INode {
 	private Boolean hasChildren;
 
 	@Override
-	public List<INode> getChildren() {
+	public List<MenuVO> getChildren() {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}

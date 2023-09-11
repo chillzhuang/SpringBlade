@@ -35,7 +35,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "DeptVO对象", description = "DeptVO对象")
-public class DeptVO extends Dept implements INode {
+public class DeptVO extends Dept implements INode<DeptVO> {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,10 +54,10 @@ public class DeptVO extends Dept implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<INode> children;
+	private List<DeptVO> children;
 
 	@Override
-	public List<INode> getChildren() {
+	public List<DeptVO> getChildren() {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}

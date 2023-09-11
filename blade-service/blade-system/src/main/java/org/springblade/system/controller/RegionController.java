@@ -24,7 +24,6 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.node.INode;
 import org.springblade.system.entity.Region;
 import org.springblade.system.service.IRegionService;
 import org.springblade.system.vo.RegionVO;
@@ -81,8 +80,8 @@ public class RegionController extends BladeController {
 	})
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "懒加载列表", notes = "传入menu")
-	public R<List<INode>> lazyList(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
-		List<INode> list = regionService.lazyList(parentCode, menu);
+	public R<List<RegionVO>> lazyList(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
+		List<RegionVO> list = regionService.lazyList(parentCode, menu);
 		return R.data(RegionWrapper.build().listNodeLazyVO(list));
 	}
 
@@ -96,8 +95,8 @@ public class RegionController extends BladeController {
 	})
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "懒加载列表", notes = "传入menu")
-	public R<List<INode>> lazyTree(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
-		List<INode> list = regionService.lazyTree(parentCode, menu);
+	public R<List<RegionVO>> lazyTree(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
+		List<RegionVO> list = regionService.lazyTree(parentCode, menu);
 		return R.data(RegionWrapper.build().listNodeLazyVO(list));
 	}
 

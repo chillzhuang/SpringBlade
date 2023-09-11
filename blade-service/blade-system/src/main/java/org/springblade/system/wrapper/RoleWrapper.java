@@ -18,7 +18,6 @@ package org.springblade.system.wrapper;
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.SpringUtil;
@@ -58,8 +57,8 @@ public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 		return roleVO;
 	}
 
-	public List<INode> listNodeVO(List<Role> list) {
-		List<INode> collect = list.stream().map(this::entityVO).collect(Collectors.toList());
+	public List<RoleVO> listNodeVO(List<Role> list) {
+		List<RoleVO> collect = list.stream().map(this::entityVO).collect(Collectors.toList());
 		return ForestNodeMerger.merge(collect);
 	}
 

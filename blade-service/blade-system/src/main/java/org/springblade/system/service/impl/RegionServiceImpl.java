@@ -18,12 +18,12 @@ package org.springblade.system.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.core.log.exception.ServiceException;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.system.entity.Region;
 import org.springblade.system.mapper.RegionMapper;
 import org.springblade.system.service.IRegionService;
+import org.springblade.system.vo.RegionVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -87,12 +87,12 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
 	}
 
 	@Override
-	public List<INode> lazyList(String parentCode, Map<String, Object> param) {
+	public List<RegionVO> lazyList(String parentCode, Map<String, Object> param) {
 		return baseMapper.lazyList(parentCode, param);
 	}
 
 	@Override
-	public List<INode> lazyTree(String parentCode, Map<String, Object> param) {
+	public List<RegionVO> lazyTree(String parentCode, Map<String, Object> param) {
 		return baseMapper.lazyTree(parentCode, param);
 	}
 }

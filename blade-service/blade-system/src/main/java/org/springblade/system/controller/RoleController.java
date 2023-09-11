@@ -24,7 +24,6 @@ import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.CacheUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Role;
@@ -75,7 +74,7 @@ public class RoleController extends BladeController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入role")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> role, BladeUser bladeUser) {
+	public R<List<RoleVO>> list(@ApiIgnore @RequestParam Map<String, Object> role, BladeUser bladeUser) {
 		QueryWrapper<Role> queryWrapper = Condition.getQueryWrapper(role, Role.class);
 		List<Role> list = roleService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Role::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(RoleWrapper.build().listNodeVO(list));

@@ -1,13 +1,13 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V3.6.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V3.7.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.7.10-blue.svg" alt="Downloads">
-   <a target="_blank" href="https://bladex.vip">
+   <a target="_blank" href="https://bladex.cn">
    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
  </a>
- <a target="_blank" href="https://bladex.vip">
+ <a target="_blank" href="https://bladex.cn">
    <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
  </a>
  </p>  
@@ -53,8 +53,8 @@ SpringBlade
 ```
 
 ## 官方信息
-* 官网地址：[https://bladex.vip](https://bladex.vip)
-* 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
+* 官网地址：[https://bladex.cn](https://bladex.cn)
+* 问答社区：[https://sns.bladex.cn](https://sns.bladex.cn)
 * 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
 * 交流一群：`477853168`(满)
 * 交流二群：`751253339`(满)
@@ -65,15 +65,15 @@ SpringBlade
 * 交流七群：`298061704`
 
 ## 在线演示
-* Saber-基于Vue：[https://saber.bladex.vip](https://saber.bladex.vip)
-* Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
+* Saber-基于Vue：[https://saber.bladex.cn](https://saber.bladex.cn)
+* Sword-基于React：[https://sword.bladex.cn](https://sword.bladex.cn)
 
 ## 数据大屏
-* 数据大屏展示系统：[https://data.bladex.vip](https://data.bladex.vip)
+* 数据大屏展示系统：[https://data.bladex.cn](https://data.bladex.cn)
 
 ## 技术文档
 * [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
-* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
+* [SpringBlade常见问题集锦](https://sns.bladex.cn/article-14966.html)
 * [SpringBlade基于Kuboard部署K8S](https://kuboard.cn/learning/k8s-practice/spring-blade/)
 * [SpringBlade基于Rainbond部署](https://www.rainbond.com/docs/micro-service/example/blade)
 
@@ -103,7 +103,7 @@ Apache Licence也是对商业应用友好的许可。使用者也可以在需要
 
 # 界面
 
-## [BladeX](https://bladex.vip/#/vip) 工作流一览
+## [BladeX](https://bladex.cn/#/vip) 工作流一览
 <table>
     <tr>
         <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow1.png"/></td>

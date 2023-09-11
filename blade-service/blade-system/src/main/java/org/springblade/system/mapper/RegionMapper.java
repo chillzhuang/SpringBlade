@@ -16,8 +16,8 @@
 package org.springblade.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springblade.core.tool.node.INode;
 import org.springblade.system.entity.Region;
+import org.springblade.system.vo.RegionVO;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +36,7 @@ public interface RegionMapper extends BaseMapper<Region> {
 	 * @param param
 	 * @return
 	 */
-	List<INode> lazyList(String parentCode, Map<String, Object> param);
+	List<RegionVO> lazyList(String parentCode, Map<String, Object> param);
 
 	/**
 	 * 懒加载列表
@@ -45,6 +45,6 @@ public interface RegionMapper extends BaseMapper<Region> {
 	 * @param param
 	 * @return
 	 */
-	List<INode> lazyTree(String parentCode, Map<String, Object> param);
+	List<RegionVO> lazyTree(String parentCode, Map<String, Object> param);
 
 }

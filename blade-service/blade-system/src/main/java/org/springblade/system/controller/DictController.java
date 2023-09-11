@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Dict;
 import org.springblade.system.service.IDictService;
@@ -72,8 +71,7 @@ public class DictController extends BladeController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入dict")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dict) {
-		@SuppressWarnings("unchecked")
+	public R<List<DictVO>> list(@ApiIgnore @RequestParam Map<String, Object> dict) {
 		List<Dict> list = dictService.list(Condition.getQueryWrapper(dict, Dict.class).lambda().orderByAsc(Dict::getSort));
 		return R.data(DictWrapper.build().listNodeVO(list));
 	}

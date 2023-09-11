@@ -24,7 +24,6 @@ import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.service.IDeptService;
@@ -71,7 +70,7 @@ public class DeptController extends BladeController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入dept")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dept, BladeUser bladeUser) {
+	public R<List<DeptVO>> list(@ApiIgnore @RequestParam Map<String, Object> dept, BladeUser bladeUser) {
 		QueryWrapper<Dept> queryWrapper = Condition.getQueryWrapper(dept, Dept.class);
 		List<Dept> list = deptService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Dept::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(DeptWrapper.build().listNodeVO(list));

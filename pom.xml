@@ -5,12 +5,12 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>3.6.0</version>
+    <version>3.7.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>3.6.0</blade.tool.version>
-        <blade.project.version>3.6.0</blade.project.version>
+        <blade.tool.version>3.7.0</blade.tool.version>
+        <blade.project.version>3.7.0</blade.project.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
@@ -22,10 +22,10 @@
         <mica.auto.version>2.3.2</mica.auto.version>
         <mysql.connector.version>8.0.32</mysql.connector.version>
 
-        <spring.version>5.3.27</spring.version>
-        <spring.boot.version>2.7.10</spring.boot.version>
+        <spring.version>5.3.29</spring.version>
+        <spring.boot.version>2.7.15</spring.boot.version>
         <spring.boot.admin.version>2.7.10</spring.boot.admin.version>
-        <spring.cloud.version>2021.0.6</spring.cloud.version>
+        <spring.cloud.version>2021.0.8</spring.cloud.version>
         <alibaba.cloud.version>2021.0.5.0</alibaba.cloud.version>
         <alibaba.nacos.version>2.1.2</alibaba.nacos.version>
 

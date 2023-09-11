@@ -17,7 +17,6 @@ package org.springblade.system.wrapper;
 
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
-import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.system.entity.Region;
@@ -52,7 +51,7 @@ public class RegionWrapper extends BaseEntityWrapper<Region, RegionVO> {
 		return regionVO;
 	}
 
-	public List<INode> listNodeLazyVO(List<INode> list) {
+	public List<RegionVO> listNodeLazyVO(List<RegionVO> list) {
 		return ForestNodeMerger.merge(list);
 	}
 
