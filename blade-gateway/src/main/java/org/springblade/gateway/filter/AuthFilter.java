@@ -21,9 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.gateway.props.AuthProperties;
 import org.springblade.gateway.provider.AuthProvider;
 import org.springblade.gateway.provider.ResponseProvider;
+import org.springblade.gateway.utils.JwtCrypto;
 import org.springblade.gateway.utils.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -39,6 +41,8 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.springblade.gateway.utils.JwtCrypto.BLADE_CRYPTO_AES_KEY;
+
 /**
  * 鉴权认证
  *
@@ -50,6 +54,7 @@ import java.nio.charset.StandardCharsets;
 public class AuthFilter implements GlobalFilter, Ordered {
 	private final AuthProperties authProperties;
 	private final ObjectMapper objectMapper;
+	private final BladeProperties bladeProperties;
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
@@ -66,6 +71,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}
 		String auth = StringUtils.isBlank(headerToken) ? paramToken : headerToken;
 		String token = JwtUtil.getToken(auth);
+		//校验 加密Token 合法性
+		if (JwtUtil.isCrypto(auth)) {
+			token = JwtCrypto.decryptToString(token, bladeProperties.getEnvironment().getProperty(BLADE_CRYPTO_AES_KEY));
+		}
 		Claims claims = JwtUtil.parseJWT(token);
 		if (claims == null) {
 			return unAuth(resp, "请求未授权");

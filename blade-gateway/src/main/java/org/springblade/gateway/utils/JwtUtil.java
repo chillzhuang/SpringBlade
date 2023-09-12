@@ -17,6 +17,7 @@ package org.springblade.gateway.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.Getter;
 import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.gateway.props.JwtProperties;
 
@@ -31,16 +32,14 @@ import java.util.Base64;
 public class JwtUtil {
 
 	public static String BEARER = TokenConstant.BEARER;
+	public static String CRYPTO = TokenConstant.CRYPTO;
 	public static Integer AUTH_LENGTH = 7;
 
 	/**
 	 * jwt配置
 	 */
+	@Getter
 	private static JwtProperties jwtProperties;
-
-	public static JwtProperties getJwtProperties() {
-		return jwtProperties;
-	}
 
 	public static void setJwtProperties(JwtProperties properties) {
 		if (JwtUtil.jwtProperties == null) {
@@ -53,6 +52,20 @@ public class JwtUtil {
 	 */
 	public static String getBase64Security() {
 		return Base64.getEncoder().encodeToString(getJwtProperties().getSignKey().getBytes(StandardCharsets.UTF_8));
+	}
+
+	/**
+	 * 判断token类型为crypto
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static Boolean isCrypto(String auth) {
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			return headStr.compareTo(CRYPTO) == 0;
+		}
+		return false;
 	}
 
 	/**
