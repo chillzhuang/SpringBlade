@@ -83,7 +83,7 @@ blade:
   token:
     #使用 blade-auth服务 @org.springblade.test.SignKeyGenerator 获取
     sign-key: 请配置32位签名提高安全性
-    #使用AesUtil.genAesKey()生成,需和后端配置保持一致
+    #使用 blade-auth服务 @org.springblade.test.AesKeyGenerator 获取
     aes-key: 请配置Aes的密钥
   xss:
     enabled: true
