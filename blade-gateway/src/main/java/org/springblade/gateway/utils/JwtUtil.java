@@ -55,6 +55,33 @@ public class JwtUtil {
 	}
 
 	/**
+	 * 获取请求传递的token串
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static String getToken(String auth) {
+		if (isBearer(auth) || isCrypto(auth)) {
+			return auth.substring(AUTH_LENGTH);
+		}
+		return null;
+	}
+
+	/**
+	 * 判断token类型为bearer
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static Boolean isBearer(String auth) {
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			return headStr.compareTo(BEARER) == 0;
+		}
+		return false;
+	}
+
+	/**
 	 * 判断token类型为crypto
 	 *
 	 * @param auth token
@@ -66,23 +93,6 @@ public class JwtUtil {
 			return headStr.compareTo(CRYPTO) == 0;
 		}
 		return false;
-	}
-
-	/**
-	 * 获取token串
-	 *
-	 * @param auth token
-	 * @return String
-	 */
-	public static String getToken(String auth) {
-		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
-			String headStr = auth.substring(0, 6).toLowerCase();
-			if (headStr.compareTo(BEARER) == 0) {
-				auth = auth.substring(7);
-			}
-			return auth;
-		}
-		return null;
 	}
 
 	/**
