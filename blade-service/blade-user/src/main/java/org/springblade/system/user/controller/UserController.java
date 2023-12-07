@@ -27,13 +27,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.commons.codec.Charsets;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.excel.UserExcel;
@@ -52,6 +53,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -227,6 +229,7 @@ public class UserController {
 	@GetMapping("export-user")
 	@ApiOperationSupport(order = 13)
 	@ApiOperation(value = "导出用户", notes = "传入user")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public void exportUser(@ApiIgnore @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
 		if (!SecureUtil.isAdministrator()){
@@ -235,8 +238,8 @@ public class UserController {
 		queryWrapper.lambda().eq(User::getIsDeleted, BladeConstant.DB_NOT_DELETED);
 		List<UserExcel> list = userService.exportUser(queryWrapper);
 		response.setContentType("application/vnd.ms-excel");
-		response.setCharacterEncoding(Charsets.UTF_8.name());
-		String fileName = URLEncoder.encode("用户数据导出", Charsets.UTF_8.name());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8.name());
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
@@ -251,8 +254,8 @@ public class UserController {
 	public void exportUser(HttpServletResponse response) {
 		List<UserExcel> list = new ArrayList<>();
 		response.setContentType("application/vnd.ms-excel");
-		response.setCharacterEncoding(Charsets.UTF_8.name());
-		String fileName = URLEncoder.encode("用户数据模板", Charsets.UTF_8.name());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8.name());
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}

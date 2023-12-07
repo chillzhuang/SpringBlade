@@ -24,7 +24,9 @@ import org.springblade.core.log.model.LogApiVo;
 import org.springblade.core.log.service.ILogApiService;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
@@ -63,6 +65,7 @@ public class LogApiController {
 	 * 查询多条(分页)
 	 */
 	@GetMapping("/list")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<LogApiVo>> list(@ApiIgnore @RequestParam Map<String, Object> log, Query query) {
 		query.setAscs("create_time");
 		query.setDescs(StringPool.EMPTY);

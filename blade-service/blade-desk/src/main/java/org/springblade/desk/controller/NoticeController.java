@@ -23,9 +23,7 @@ import org.springblade.common.cache.CacheNames;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
-import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.desk.entity.Notice;
 import org.springblade.desk.service.INoticeService;
@@ -42,7 +40,6 @@ import java.util.Map;
  * @author Chill
  * @since 2018-09-29
  */
-@PreAuth(RoleConstant.HAS_CRYPTO)
 @RestController
 @RequestMapping("notice")
 @AllArgsConstructor
