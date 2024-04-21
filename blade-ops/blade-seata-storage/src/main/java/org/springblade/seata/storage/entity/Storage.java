@@ -4,6 +4,7 @@ package org.springblade.seata.storage.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @TableName("tb_storage")
 public class Storage implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

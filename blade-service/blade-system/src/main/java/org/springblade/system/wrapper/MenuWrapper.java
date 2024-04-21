@@ -52,7 +52,7 @@ public class MenuWrapper extends BaseEntityWrapper<Menu, MenuVO> {
 
 	@Override
 	public MenuVO entityVO(Menu menu) {
-		MenuVO menuVO = BeanUtil.copy(menu, MenuVO.class);
+		MenuVO menuVO = BeanUtil.copyProperties(menu, MenuVO.class);
 		if (Func.equals(menu.getParentId(), CommonConstant.TOP_PARENT_ID)) {
 			menuVO.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
@@ -76,7 +76,7 @@ public class MenuWrapper extends BaseEntityWrapper<Menu, MenuVO> {
 
 
 	public List<MenuVO> listNodeVO(List<Menu> list) {
-		List<MenuVO> collect = list.stream().map(menu -> BeanUtil.copy(menu, MenuVO.class)).collect(Collectors.toList());
+		List<MenuVO> collect = list.stream().map(menu -> BeanUtil.copyProperties(menu, MenuVO.class)).collect(Collectors.toList());
 		return ForestNodeMerger.merge(collect);
 	}
 

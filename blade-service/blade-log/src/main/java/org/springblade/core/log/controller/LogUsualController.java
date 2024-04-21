@@ -18,6 +18,8 @@ package org.springblade.core.log.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.model.LogUsual;
 import org.springblade.core.log.model.LogUsualVo;
@@ -34,7 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ import java.util.stream.Collectors;
  * @author Chill
  * @since 2018-10-12
  */
+@Hidden
 @RestController
 @AllArgsConstructor
 @RequestMapping("/usual")
@@ -66,12 +68,12 @@ public class LogUsualController {
 	 */
 	@GetMapping("/list")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public R<IPage<LogUsualVo>> list(@ApiIgnore @RequestParam Map<String, Object> log, Query query) {
+	public R<IPage<LogUsualVo>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> log, Query query) {
 		query.setAscs("create_time");
 		query.setDescs(StringPool.EMPTY);
 		IPage<LogUsual> pages = logService.page(Condition.getPage(query), Condition.getQueryWrapper(log, LogUsual.class));
 		List<LogUsualVo> records = pages.getRecords().stream().map(logApi -> {
-			LogUsualVo vo = BeanUtil.copy(logApi, LogUsualVo.class);
+			LogUsualVo vo = BeanUtil.copyProperties(logApi, LogUsualVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));
 			return vo;
 		}).collect(Collectors.toList());

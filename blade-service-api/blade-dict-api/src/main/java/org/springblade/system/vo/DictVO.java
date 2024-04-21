@@ -18,12 +18,13 @@ package org.springblade.system.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.tool.node.INode;
 import org.springblade.system.entity.Dict;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,9 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DictVO对象", description = "DictVO对象")
+@Schema(description = "DictVO对象")
 public class DictVO extends Dict implements INode<DictVO> {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 主键ID

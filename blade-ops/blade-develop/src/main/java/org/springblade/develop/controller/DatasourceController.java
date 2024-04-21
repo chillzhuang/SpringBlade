@@ -17,9 +17,9 @@ package org.springblade.develop.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -30,7 +30,7 @@ import org.springblade.develop.entity.Datasource;
 import org.springblade.develop.service.IDatasourceService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/datasource")
-@Api(value = "数据源配置表", tags = "数据源配置表接口")
+@Tag(name = "数据源配置表", description = "数据源配置表接口")
 public class DatasourceController extends BladeController {
 
 	private IDatasourceService datasourceService;
@@ -51,7 +51,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入datasource")
+	@Operation(summary = "详情", description = "传入datasource")
 	public R<Datasource> detail(Datasource datasource) {
 		Datasource detail = datasourceService.getOne(Condition.getQueryWrapper(datasource));
 		return R.data(detail);
@@ -62,7 +62,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入datasource")
+	@Operation(summary = "分页", description = "传入datasource")
 	public R<IPage<Datasource>> list(Datasource datasource, Query query) {
 		IPage<Datasource> pages = datasourceService.page(Condition.getPage(query), Condition.getQueryWrapper(datasource));
 		return R.data(pages);
@@ -73,7 +73,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增", notes = "传入datasource")
+	@Operation(summary = "新增", description = "传入datasource")
 	public R save(@Valid @RequestBody Datasource datasource) {
 		return R.status(datasourceService.save(datasource));
 	}
@@ -83,7 +83,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改", notes = "传入datasource")
+	@Operation(summary = "修改", description = "传入datasource")
 	public R update(@Valid @RequestBody Datasource datasource) {
 		return R.status(datasourceService.updateById(datasource));
 	}
@@ -93,7 +93,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "新增或修改", notes = "传入datasource")
+	@Operation(summary = "新增或修改", description = "传入datasource")
 	public R submit(@Valid @RequestBody Datasource datasource) {
 		datasource.setUrl(datasource.getUrl().replace("&amp;", "&"));
 		return R.status(datasourceService.saveOrUpdate(datasource));
@@ -105,8 +105,8 @@ public class DatasourceController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(datasourceService.deleteLogic(Func.toLongList(ids)));
 	}
 
@@ -115,7 +115,7 @@ public class DatasourceController extends BladeController {
 	 */
 	@GetMapping("/select")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "下拉数据源", notes = "查询列表")
+	@Operation(summary = "下拉数据源", description = "查询列表")
 	public R<List<Datasource>> select() {
 		List<Datasource> list = datasourceService.list();
 		return R.data(list);

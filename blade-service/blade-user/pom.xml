@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-service</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.7.1</version>
+        <version>4.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -53,22 +53,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <!--suppress UnresolvedMavenProperty -->
-                                <copy overwrite="true"
-                                      tofile="${session.executionRootDirectory}/target/${artifactId}.jar"
-                                      file="${project.build.directory}/${artifactId}.jar" />
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

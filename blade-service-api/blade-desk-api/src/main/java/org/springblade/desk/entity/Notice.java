@@ -20,11 +20,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.mp.base.BaseEntity;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -37,12 +38,13 @@ import java.util.Date;
 @TableName("blade_notice")
 public class Notice extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键id
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
@@ -50,25 +52,25 @@ public class Notice extends BaseEntity {
 	/**
 	 * 标题
 	 */
-	@ApiModelProperty(value = "标题")
+	@Schema(description = "标题")
 	private String title;
 
 	/**
 	 * 通知类型
 	 */
-	@ApiModelProperty(value = "通知类型")
+	@Schema(description = "通知类型")
 	private Integer category;
 
 	/**
 	 * 发布日期
 	 */
-	@ApiModelProperty(value = "发布日期")
+	@Schema(description = "发布日期")
 	private Date releaseTime;
 
 	/**
 	 * 内容
 	 */
-	@ApiModelProperty(value = "内容")
+	@Schema(description = "内容")
 	private String content;
 
 

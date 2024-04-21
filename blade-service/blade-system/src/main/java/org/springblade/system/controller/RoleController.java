@@ -17,7 +17,13 @@ package org.springblade.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -32,9 +38,7 @@ import org.springblade.system.vo.GrantVO;
 import org.springblade.system.vo.RoleVO;
 import org.springblade.system.wrapper.RoleWrapper;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +52,7 @@ import static org.springblade.core.tool.utils.CacheUtil.SYS_CACHE;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/role")
-@Api(value = "角色", tags = "角色")
+@Tag(name = "角色", description = "角色")
 public class RoleController extends BladeController {
 
 	private IRoleService roleService;
@@ -58,7 +62,7 @@ public class RoleController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入role")
+	@Operation(summary = "详情", description = "传入role")
 	public R<RoleVO> detail(Role role) {
 		Role detail = roleService.getOne(Condition.getQueryWrapper(role));
 		return R.data(RoleWrapper.build().entityVO(detail));
@@ -68,13 +72,13 @@ public class RoleController extends BladeController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "roleName", value = "参数名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "roleAlias", value = "角色别名", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "roleName", description = "参数名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "roleAlias", description = "角色别名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表", notes = "传入role")
-	public R<List<RoleVO>> list(@ApiIgnore @RequestParam Map<String, Object> role, BladeUser bladeUser) {
+	@Operation(summary = "列表", description = "传入role")
+	public R<List<RoleVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> role, BladeUser bladeUser) {
 		QueryWrapper<Role> queryWrapper = Condition.getQueryWrapper(role, Role.class);
 		List<Role> list = roleService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Role::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(RoleWrapper.build().listNodeVO(list));
@@ -85,7 +89,7 @@ public class RoleController extends BladeController {
 	 */
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<RoleVO>> tree(String tenantId, BladeUser bladeUser) {
 		List<RoleVO> tree = roleService.tree(Func.toStr(tenantId, bladeUser.getTenantId()));
 		return R.data(tree);
@@ -97,7 +101,7 @@ public class RoleController extends BladeController {
 	 */
 	@GetMapping("/tree-by-id")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<RoleVO>> treeById(Long roleId, BladeUser bladeUser) {
 		Role role = roleService.getById(roleId);
 		List<RoleVO> tree = roleService.tree(Func.notNull(role) ? role.getTenantId() : bladeUser.getTenantId());
@@ -109,7 +113,7 @@ public class RoleController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "新增或修改", notes = "传入role")
+	@Operation(summary = "新增或修改", description = "传入role")
 	public R submit(@Valid @RequestBody Role role, BladeUser user) {
 		CacheUtil.clear(SYS_CACHE);
 		if (Func.isEmpty(role.getId())) {
@@ -123,8 +127,8 @@ public class RoleController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		CacheUtil.clear(SYS_CACHE);
 		return R.status(roleService.removeByIds(Func.toLongList(ids)));
 	}
@@ -134,7 +138,7 @@ public class RoleController extends BladeController {
 	 */
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
+	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
 	public R grant(@RequestBody GrantVO grantVO) {
 		CacheUtil.clear(SYS_CACHE);
 		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds(), grantVO.getDataScopeIds());

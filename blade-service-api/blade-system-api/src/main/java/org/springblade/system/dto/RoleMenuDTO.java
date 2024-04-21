@@ -19,6 +19,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.system.entity.RoleMenu;
 
+import java.io.Serial;
+
 /**
  * 数据传输对象实体类
  *
@@ -27,6 +29,7 @@ import org.springblade.system.entity.RoleMenu;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RoleMenuDTO extends RoleMenu {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 }

@@ -16,7 +16,13 @@
 package org.springblade.system.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -28,9 +34,7 @@ import org.springblade.system.vo.DictVO;
 import org.springblade.system.wrapper.DictWrapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +49,7 @@ import static org.springblade.common.cache.CacheNames.DICT_VALUE;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dict")
-@Api(value = "字典", tags = "字典")
+@Tag(name = "字典", description = "字典")
 public class DictController extends BladeController {
 
 	private IDictService dictService;
@@ -55,7 +59,7 @@ public class DictController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入dict")
+	@Operation(summary = "详情", description = "传入dict")
 	public R<DictVO> detail(Dict dict) {
 		Dict detail = dictService.getOne(Condition.getQueryWrapper(dict));
 		return R.data(DictWrapper.build().entityVO(detail));
@@ -65,13 +69,13 @@ public class DictController extends BladeController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "字典编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "dictValue", value = "字典名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "字典编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "dictValue", description = "字典名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表", notes = "传入dict")
-	public R<List<DictVO>> list(@ApiIgnore @RequestParam Map<String, Object> dict) {
+	@Operation(summary = "列表", description = "传入dict")
+	public R<List<DictVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> dict) {
 		List<Dict> list = dictService.list(Condition.getQueryWrapper(dict, Dict.class).lambda().orderByAsc(Dict::getSort));
 		return R.data(DictWrapper.build().listNodeVO(list));
 	}
@@ -83,7 +87,7 @@ public class DictController extends BladeController {
 	 */
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<DictVO>> tree() {
 		List<DictVO> tree = dictService.tree();
 		return R.data(tree);
@@ -94,7 +98,7 @@ public class DictController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增或修改", notes = "传入dict")
+	@Operation(summary = "新增或修改", description = "传入dict")
 	public R submit(@Valid @RequestBody Dict dict) {
 		return R.status(dictService.submit(dict));
 	}
@@ -106,8 +110,8 @@ public class DictController extends BladeController {
 	@PostMapping("/remove")
 	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(dictService.removeByIds(Func.toLongList(ids)));
 	}
 
@@ -118,7 +122,7 @@ public class DictController extends BladeController {
 	 */
 	@GetMapping("/dictionary")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "获取字典", notes = "获取字典")
+	@Operation(summary = "获取字典", description = "获取字典")
 	public R<List<Dict>> dictionary(String code) {
 		List<Dict> tree = dictService.getList(code);
 		return R.data(tree);

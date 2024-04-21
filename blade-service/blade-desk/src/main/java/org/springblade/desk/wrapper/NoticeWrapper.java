@@ -42,7 +42,7 @@ public class NoticeWrapper extends BaseEntityWrapper<Notice, NoticeVO> {
 
 	@Override
 	public NoticeVO entityVO(Notice notice) {
-		NoticeVO noticeVO = BeanUtil.copy(notice, NoticeVO.class);
+		NoticeVO noticeVO = BeanUtil.copyProperties(notice, NoticeVO.class);
 		R<String> dict = dictClient.getValue("notice", noticeVO.getCategory());
 		if (dict.isSuccess()) {
 			String categoryName = dict.getData();

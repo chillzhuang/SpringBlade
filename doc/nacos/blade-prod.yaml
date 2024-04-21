@@ -1,16 +1,18 @@
 #spring配置
 spring:
-  redis:
-    ##redis 单机环境配置
-    host: 10.211.55.5
-    port: 3379
-    password:
-    database: 0
-    ssl: false
-    ##redis 集群环境配置
-    #cluster:
-    #  nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003
-    #  commandTimeout: 5000
+  data:
+    redis:
+      ##redis 单机环境配置
+      host: 10.211.55.5
+      port: 3379
+      password:
+      database: 0
+      ssl:
+        enabled: false
+      ##redis 集群环境配置
+      #cluster:
+      #  nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003
+      #  commandTimeout: 5000
 
 #项目模块集中配置
 blade:

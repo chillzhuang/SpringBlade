@@ -1,7 +1,7 @@
 package org.springblade.desk.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.support.Kv;
@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("dashboard")
 @AllArgsConstructor
-@Api(value = "首页", tags = "首页")
+@Tag(name = "首页", description = "首页")
 public class DashBoardController {
 
 	/**
@@ -31,7 +31,7 @@ public class DashBoardController {
 	 * @return
 	 */
 	@GetMapping("/activities")
-	@ApiOperation(value = "活跃用户", notes = "活跃用户")
+	@Operation(summary = "活跃用户", description = "活跃用户")
 	public R activities() {
 
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -62,7 +62,7 @@ public class DashBoardController {
 	 * @return
 	 */
 	@GetMapping("/notices")
-	@ApiOperation(value = "消息", notes = "消息")
+	@Operation(summary = "消息", description = "消息")
 	public R notices() {
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, String> map1 = new HashMap<>(16);
@@ -122,7 +122,7 @@ public class DashBoardController {
 	 * @return
 	 */
 	@GetMapping("/my-notices")
-	@ApiOperation(value = "消息", notes = "消息")
+	@Operation(summary = "消息", description = "消息")
 	public R myNotices() {
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, String> map1 = new HashMap<>(16);

@@ -1,6 +1,6 @@
 package com.example.demo.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.example.demo.entity.Notice;
@@ -14,7 +14,7 @@ import com.example.demo.entity.Notice;
 @EqualsAndHashCode(callSuper = true)
 public class NoticeVO extends Notice {
 
-	@ApiModelProperty(value = "通知类型名")
+	@Schema(description = "通知类型名")
 	private String categoryName;
 
 }

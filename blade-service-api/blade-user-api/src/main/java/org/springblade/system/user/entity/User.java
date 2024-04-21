@@ -20,11 +20,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.mp.base.TenantEntity;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -37,12 +38,13 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 public class User extends TenantEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键id
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;

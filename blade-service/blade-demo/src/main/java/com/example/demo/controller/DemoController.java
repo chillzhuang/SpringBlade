@@ -16,7 +16,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.props.DemoProperties;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 @RestController
 @RequestMapping("demo")
-@Api(value = "配置接口", tags = "即时刷新配置")
+@Tag(name = "配置接口", description = "即时刷新配置")
 public class DemoController {
 
 	@Value("${demo.name:1}")

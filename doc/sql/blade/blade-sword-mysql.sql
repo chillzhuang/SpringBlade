@@ -92,6 +92,7 @@ CREATE TABLE `blade_datasource`  (
   `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `create_user` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_dept` bigint(20) NULL DEFAULT NULL COMMENT '创建部门',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_user` bigint(20) NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
@@ -104,7 +105,7 @@ CREATE TABLE `blade_datasource`  (
 -- Records of blade_datasource
 -- ----------------------------
 BEGIN;
-INSERT INTO `blade_datasource` VALUES (1123598812738675201, 'mysql', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://localhost:3306/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true', 'root', 'root', 'mysql', 1, '2019-08-14 11:43:06', 1, '2019-08-14 11:43:06', 1, 0), (1123598812738675202, 'postgresql', 'org.postgresql.Driver', 'jdbc:postgresql://127.0.0.1:5432/blade', 'postgres', '123456', 'postgresql', 1, '2019-08-14 11:43:41', 1, '2019-08-14 11:43:41', 1, 0), (1123598812738675203, 'oracle', 'oracle.jdbc.OracleDriver', 'jdbc:oracle:thin:@127.0.0.1:49161:orcl', 'BLADE', 'blade', 'oracle', 1, '2019-08-14 11:44:03', 1, '2019-08-14 11:44:03', 1, 0);
+INSERT INTO `blade_datasource` VALUES (1123598812738675201, 'mysql', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://localhost:3306/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true', 'root', 'root', 'mysql', 1, 1123598813738675201, '2019-08-14 11:43:06', 1, '2019-08-14 11:43:06', 1, 0), (1123598812738675202, 'postgresql', 'org.postgresql.Driver', 'jdbc:postgresql://127.0.0.1:5432/blade', 'postgres', '123456', 'postgresql', 1, 1123598813738675201, '2019-08-14 11:43:41', 1, '2019-08-14 11:43:41', 1, 0), (1123598812738675203, 'oracle', 'oracle.jdbc.OracleDriver', 'jdbc:oracle:thin:@127.0.0.1:49161:orcl', 'BLADE', 'blade', 'oracle', 1, 1123598813738675201, '2019-08-14 11:44:03', 1, '2019-08-14 11:44:03', 1, 0);
 COMMIT;
 
 -- ----------------------------

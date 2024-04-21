@@ -21,12 +21,13 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springblade.core.tool.utils.Func;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 实体类
@@ -35,15 +36,16 @@ import java.io.Serializable;
  */
 @Data
 @TableName("blade_menu")
-@ApiModel(value = "Menu对象", description = "Menu对象")
+@Schema(description = "Menu对象")
 public class Menu implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
@@ -51,75 +53,75 @@ public class Menu implements Serializable {
 	/**
 	 * 菜单父主键
 	 */
-	@ApiModelProperty(value = "父主键")
+	@Schema(description = "父主键")
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long parentId;
 
 	/**
 	 * 菜单编号
 	 */
-	@ApiModelProperty(value = "菜单编号")
+	@Schema(description = "菜单编号")
 	private String code;
 
 	/**
 	 * 菜单名称
 	 */
-	@ApiModelProperty(value = "菜单名称")
+	@Schema(description = "菜单名称")
 	private String name;
 
 	/**
 	 * 菜单别名
 	 */
-	@ApiModelProperty(value = "菜单别名")
+	@Schema(description = "菜单别名")
 	private String alias;
 
 	/**
 	 * 请求地址
 	 */
-	@ApiModelProperty(value = "请求地址")
+	@Schema(description = "请求地址")
 	private String path;
 
 	/**
 	 * 菜单资源
 	 */
-	@ApiModelProperty(value = "菜单资源")
+	@Schema(description = "菜单资源")
 	private String source;
 
 	/**
 	 * 排序
 	 */
-	@ApiModelProperty(value = "排序")
+	@Schema(description = "排序")
 	private Integer sort;
 
 	/**
 	 * 菜单类型
 	 */
-	@ApiModelProperty(value = "菜单类型")
+	@Schema(description = "菜单类型")
 	private Integer category;
 
 	/**
 	 * 操作按钮类型
 	 */
-	@ApiModelProperty(value = "操作按钮类型")
+	@Schema(description = "操作按钮类型")
 	private Integer action;
 
 	/**
 	 * 是否打开新页面
 	 */
-	@ApiModelProperty(value = "是否打开新页面")
+	@Schema(description = "是否打开新页面")
 	private Integer isOpen;
 
 	/**
 	 * 备注
 	 */
-	@ApiModelProperty(value = "备注")
+	@Schema(description = "备注")
 	private String remark;
 
 	/**
 	 * 是否已删除
 	 */
 	@TableLogic
-	@ApiModelProperty(value = "是否已删除")
+	@Schema(description = "是否已删除")
 	private Integer isDeleted;
 
 
@@ -132,10 +134,12 @@ public class Menu implements Serializable {
 			return false;
 		}
 		Menu other = (Menu) obj;
-		if (Func.equals(this.getId(), other.getId())) {
-			return true;
-		}
-		return false;
+		return Func.equals(this.getId(), other.getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, parentId, code);
 	}
 
 }

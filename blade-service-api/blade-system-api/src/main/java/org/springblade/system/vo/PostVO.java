@@ -15,10 +15,12 @@
  */
 package org.springblade.system.vo;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.system.entity.Post;
+
+import java.io.Serial;
 
 /**
  * 岗位表视图实体类
@@ -27,8 +29,9 @@ import org.springblade.system.entity.Post;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "PostVO对象", description = "岗位表")
+@Schema(description = "PostVO对象")
 public class PostVO extends Post {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

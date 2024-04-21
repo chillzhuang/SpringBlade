@@ -19,7 +19,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.demo.entity.Notice;
 import com.example.demo.service.INoticeService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springblade.common.cache.CacheNames;
 import org.springblade.core.boot.ctrl.BladeController;
@@ -28,7 +33,6 @@ import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.Func;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Map;
 
@@ -40,7 +44,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("notice")
 @AllArgsConstructor
-@Api(value = "用户博客", tags = "博客接口")
+@Tag(name = "用户博客", description = "博客接口")
 public class NoticeController extends BladeController implements CacheNames {
 
 	private INoticeService noticeService;
@@ -50,7 +54,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入notice")
+	@Operation(summary = "详情", description = "传入notice")
 	public R<Notice> detail(Notice notice) {
 		Notice detail = noticeService.getOne(Condition.getQueryWrapper(notice));
 		return R.data(detail);
@@ -60,13 +64,13 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 分页
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "category", value = "公告类型", paramType = "query", dataType = "integer"),
-		@ApiImplicitParam(name = "title", value = "公告标题", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "category", description = "公告类型", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
+		@Parameter(name = "title", description = "公告标题", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入notice")
-	public R<IPage<Notice>> list(@ApiIgnore @RequestParam Map<String, Object> notice, Query query) {
+	@Operation(summary = "分页", description = "传入notice")
+	public R<IPage<Notice>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> notice, Query query) {
 		IPage<Notice> pages = noticeService.page(Condition.getPage(query), Condition.getQueryWrapper(notice, Notice.class));
 		return R.data(pages);
 	}
@@ -76,7 +80,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "新增", notes = "传入notice")
+	@Operation(summary = "新增", description = "传入notice")
 	public R save(@RequestBody Notice notice) {
 		return R.status(noticeService.save(notice));
 	}
@@ -86,7 +90,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "修改", notes = "传入notice")
+	@Operation(summary = "修改", description = "传入notice")
 	public R update(@RequestBody Notice notice) {
 		return R.status(noticeService.updateById(notice));
 	}
@@ -96,7 +100,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "新增或修改", notes = "传入notice")
+	@Operation(summary = "新增或修改", description = "传入notice")
 	public R submit(@RequestBody Notice notice) {
 		return R.status(noticeService.saveOrUpdate(notice));
 	}
@@ -106,8 +110,8 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "逻辑删除", notes = "传入notice")
-	public R remove(@ApiParam(value = "主键集合") @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入notice")
+	public R remove(@Parameter(name = "主键集合") @RequestParam String ids) {
 		boolean temp = noticeService.deleteLogic(Func.toLongList(ids));
 		return R.status(temp);
 	}

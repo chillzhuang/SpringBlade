@@ -37,7 +37,7 @@ public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}V
 
 	@Override
 	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {
-		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copy($!{table.entityPath}, $!{entity}VO.class);
+		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copyProperties($!{table.entityPath}, $!{entity}VO.class);
 
 		return $!{table.entityPath}VO;
 	}

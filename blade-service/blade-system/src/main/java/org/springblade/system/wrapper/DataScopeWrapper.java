@@ -44,7 +44,7 @@ public class DataScopeWrapper extends BaseEntityWrapper<DataScope, DataScopeVO> 
 
 	@Override
 	public DataScopeVO entityVO(DataScope dataScope) {
-		DataScopeVO dataScopeVO = Objects.requireNonNull(BeanUtil.copy(dataScope, DataScopeVO.class));
+		DataScopeVO dataScopeVO = Objects.requireNonNull(BeanUtil.copyProperties(dataScope, DataScopeVO.class));
 		String scopeTypeName = dictService.getValue("data_scope_type", dataScope.getScopeType());
 		dataScopeVO.setScopeTypeName(scopeTypeName);
 		return dataScopeVO;

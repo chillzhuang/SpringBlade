@@ -47,7 +47,7 @@ public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 
 	@Override
 	public DeptVO entityVO(Dept dept) {
-		DeptVO deptVO = BeanUtil.copy(dept, DeptVO.class);
+		DeptVO deptVO = BeanUtil.copyProperties(dept, DeptVO.class);
 		if (Func.equals(dept.getParentId(), CommonConstant.TOP_PARENT_ID)) {
 			deptVO.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
@@ -58,7 +58,7 @@ public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 	}
 
 	public List<DeptVO> listNodeVO(List<Dept> list) {
-		List<DeptVO> collect = list.stream().map(dept -> BeanUtil.copy(dept, DeptVO.class)).collect(Collectors.toList());
+		List<DeptVO> collect = list.stream().map(dept -> BeanUtil.copyProperties(dept, DeptVO.class)).collect(Collectors.toList());
 		return ForestNodeMerger.merge(collect);
 	}
 

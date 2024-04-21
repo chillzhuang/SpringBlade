@@ -10,6 +10,16 @@ import org.springblade.core.launch.constant.AppConstant;
 public interface LauncherConstant {
 
 	/**
+	 * nacos 用户名
+	 */
+	String NACOS_USERNAME = "nacos";
+
+	/**
+	 * nacos 密码
+	 */
+	String NACOS_PASSWORD = "nacos";
+
+	/**
 	 * nacos namespace id
 	 */
 	String NACOS_NAMESPACE = "f447a694-519a-4255-95f9-bcbb5a5d636";

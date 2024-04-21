@@ -20,9 +20,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -34,6 +35,7 @@ import java.io.Serializable;
 @TableName("blade_user_oauth")
 public class UserOauth implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 
@@ -41,7 +43,7 @@ public class UserOauth implements Serializable {
 	 * 主键
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
 
@@ -59,7 +61,7 @@ public class UserOauth implements Serializable {
 	 * 用户ID
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "用户主键")
+	@Schema(description = "用户主键")
 	private Long userId;
 
 	/**

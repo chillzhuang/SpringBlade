@@ -18,7 +18,13 @@ package org.springblade.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -29,9 +35,7 @@ import org.springblade.system.service.IRegionService;
 import org.springblade.system.vo.RegionVO;
 import org.springblade.system.wrapper.RegionWrapper;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +47,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/region")
-@Api(value = "行政区划表", tags = "行政区划表接口")
+@Tag(name = "行政区划表", description = "行政区划表接口")
 public class RegionController extends BladeController {
 
 	private final IRegionService regionService;
@@ -53,7 +57,7 @@ public class RegionController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入region")
+	@Operation(summary = "详情", description = "传入region")
 	public R<RegionVO> detail(Region region) {
 		Region detail = regionService.getOne(Condition.getQueryWrapper(region));
 		return R.data(RegionWrapper.build().entityVO(detail));
@@ -64,7 +68,7 @@ public class RegionController extends BladeController {
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入region")
+	@Operation(summary = "分页", description = "传入region")
 	public R<IPage<Region>> list(Region region, Query query) {
 		IPage<Region> pages = regionService.page(Condition.getPage(query), Condition.getQueryWrapper(region));
 		return R.data(pages);
@@ -74,13 +78,13 @@ public class RegionController extends BladeController {
 	 * 懒加载列表
 	 */
 	@GetMapping("/lazy-list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "区划编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "区划名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "区划编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "name", description = "区划名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "懒加载列表", notes = "传入menu")
-	public R<List<RegionVO>> lazyList(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
+	@Operation(summary = "懒加载列表", description = "传入menu")
+	public R<List<RegionVO>> lazyList(String parentCode, @Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<RegionVO> list = regionService.lazyList(parentCode, menu);
 		return R.data(RegionWrapper.build().listNodeLazyVO(list));
 	}
@@ -89,13 +93,13 @@ public class RegionController extends BladeController {
 	 * 懒加载列表
 	 */
 	@GetMapping("/lazy-tree")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "区划编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "区划名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "区划编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "name", description = "区划名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "懒加载列表", notes = "传入menu")
-	public R<List<RegionVO>> lazyTree(String parentCode, @ApiIgnore @RequestParam Map<String, Object> menu) {
+	@Operation(summary = "懒加载列表", description = "传入menu")
+	public R<List<RegionVO>> lazyTree(String parentCode, @Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<RegionVO> list = regionService.lazyTree(parentCode, menu);
 		return R.data(RegionWrapper.build().listNodeLazyVO(list));
 	}
@@ -105,7 +109,7 @@ public class RegionController extends BladeController {
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "新增", notes = "传入region")
+	@Operation(summary = "新增", description = "传入region")
 	public R save(@Valid @RequestBody Region region) {
 		return R.status(regionService.save(region));
 	}
@@ -115,7 +119,7 @@ public class RegionController extends BladeController {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "修改", notes = "传入region")
+	@Operation(summary = "修改", description = "传入region")
 	public R update(@Valid @RequestBody Region region) {
 		return R.status(regionService.updateById(region));
 	}
@@ -125,7 +129,7 @@ public class RegionController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "新增或修改", notes = "传入region")
+	@Operation(summary = "新增或修改", description = "传入region")
 	public R submit(@Valid @RequestBody Region region) {
 		return R.status(regionService.submit(region));
 	}
@@ -136,8 +140,8 @@ public class RegionController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "删除", notes = "传入主键")
-	public R remove(@ApiParam(value = "主键", required = true) @RequestParam String id) {
+	@Operation(summary = "删除", description = "传入主键")
+	public R remove(@Parameter(name = "主键", required = true) @RequestParam String id) {
 		return R.status(regionService.removeRegion(id));
 	}
 
@@ -146,7 +150,7 @@ public class RegionController extends BladeController {
 	 */
 	@GetMapping("/select")
 	@ApiOperationSupport(order = 9)
-	@ApiOperation(value = "下拉数据源", notes = "传入tenant")
+	@Operation(summary = "下拉数据源", description = "传入tenant")
 	public R<List<Region>> select(@RequestParam(required = false, defaultValue = "00") String code) {
 		List<Region> list = regionService.list(Wrappers.<Region>query().lambda().eq(Region::getParentCode, code));
 		return R.data(list);

@@ -15,10 +15,12 @@
  */
 package org.springblade.system.vo;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.system.entity.DataScope;
+
+import java.io.Serial;
 
 /**
  * 视图实体类
@@ -27,8 +29,9 @@ import org.springblade.system.entity.DataScope;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DataScopeVO对象", description = "DataScopeVO对象")
+@Schema(description = "DataScopeVO对象")
 public class DataScopeVO extends DataScope {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -12,7 +12,7 @@ server:
 spring:
   #排除DruidDataSourceAutoConfigure
   autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+    exclude: com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
     dynamic:
       #设置默认的数据源或者数据源组,默认值即为master

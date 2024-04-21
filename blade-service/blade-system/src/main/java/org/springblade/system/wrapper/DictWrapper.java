@@ -47,7 +47,7 @@ public class DictWrapper extends BaseEntityWrapper<Dict, DictVO> {
 
 	@Override
 	public DictVO entityVO(Dict dict) {
-		DictVO dictVO = BeanUtil.copy(dict, DictVO.class);
+		DictVO dictVO = BeanUtil.copyProperties(dict, DictVO.class);
 		if (Func.equals(dict.getParentId(), CommonConstant.TOP_PARENT_ID)) {
 			dictVO.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
@@ -58,7 +58,7 @@ public class DictWrapper extends BaseEntityWrapper<Dict, DictVO> {
 	}
 
 	public List<DictVO> listNodeVO(List<Dict> list) {
-		List<DictVO> collect = list.stream().map(dict -> BeanUtil.copy(dict, DictVO.class)).collect(Collectors.toList());
+		List<DictVO> collect = list.stream().map(dict -> BeanUtil.copyProperties(dict, DictVO.class)).collect(Collectors.toList());
 		return ForestNodeMerger.merge(collect);
 	}
 

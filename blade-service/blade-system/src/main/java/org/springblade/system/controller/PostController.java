@@ -18,9 +18,9 @@ package org.springblade.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -35,7 +35,7 @@ import org.springblade.system.vo.PostVO;
 import org.springblade.system.wrapper.PostWrapper;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -46,7 +46,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/post")
-@Api(value = "岗位表", tags = "岗位表接口")
+@Tag(name = "岗位表", description = "岗位表接口")
 public class PostController extends BladeController {
 
 	private IPostService postService;
@@ -56,7 +56,7 @@ public class PostController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入post")
+	@Operation(summary = "详情", description = "传入post")
 	public R<PostVO> detail(Post post) {
 		Post detail = postService.getOne(Condition.getQueryWrapper(post));
 		return R.data(PostWrapper.build().entityVO(detail));
@@ -67,7 +67,7 @@ public class PostController extends BladeController {
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入post")
+	@Operation(summary = "分页", description = "传入post")
 	public R<IPage<PostVO>> list(Post post, Query query) {
 		IPage<Post> pages = postService.page(Condition.getPage(query), Condition.getQueryWrapper(post));
 		return R.data(PostWrapper.build().pageVO(pages));
@@ -79,7 +79,7 @@ public class PostController extends BladeController {
 	 */
 	@GetMapping("/page")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "分页", notes = "传入post")
+	@Operation(summary = "分页", description = "传入post")
 	public R<IPage<PostVO>> page(PostVO post, Query query) {
 		IPage<PostVO> pages = postService.selectPostPage(Condition.getPage(query), post);
 		return R.data(pages);
@@ -90,7 +90,7 @@ public class PostController extends BladeController {
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增", notes = "传入post")
+	@Operation(summary = "新增", description = "传入post")
 	public R save(@Valid @RequestBody Post post) {
 		return R.status(postService.save(post));
 	}
@@ -100,7 +100,7 @@ public class PostController extends BladeController {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改", notes = "传入post")
+	@Operation(summary = "修改", description = "传入post")
 	public R update(@Valid @RequestBody Post post) {
 		return R.status(postService.updateById(post));
 	}
@@ -110,7 +110,7 @@ public class PostController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "新增或修改", notes = "传入post")
+	@Operation(summary = "新增或修改", description = "传入post")
 	public R submit(@Valid @RequestBody Post post) {
 		post.setTenantId(SecureUtil.getTenantId());
 		return R.status(postService.saveOrUpdate(post));
@@ -122,8 +122,8 @@ public class PostController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(postService.deleteLogic(Func.toLongList(ids)));
 	}
 
@@ -132,7 +132,7 @@ public class PostController extends BladeController {
 	 */
 	@GetMapping("/select")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "下拉数据源", notes = "传入post")
+	@Operation(summary = "下拉数据源", description = "传入post")
 	public R<List<Post>> select(String tenantId, BladeUser bladeUser) {
 		List<Post> list = postService.list(Wrappers.<Post>query().lambda().eq(Post::getTenantId, Func.toStr(tenantId, bladeUser.getTenantId())));
 		return R.data(list);

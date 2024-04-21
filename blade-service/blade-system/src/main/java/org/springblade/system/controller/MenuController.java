@@ -16,7 +16,13 @@
 package org.springblade.system.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -33,9 +39,7 @@ import org.springblade.system.vo.GrantTreeVO;
 import org.springblade.system.vo.MenuVO;
 import org.springblade.system.wrapper.MenuWrapper;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +51,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/menu")
-@Api(value = "菜单", tags = "菜单")
+@Tag(name = "菜单", description = "菜单")
 public class MenuController extends BladeController {
 
 	private IMenuService menuService;
@@ -58,7 +62,7 @@ public class MenuController extends BladeController {
 	@GetMapping("/detail")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入menu")
+	@Operation(summary = "详情", description = "传入menu")
 	public R<MenuVO> detail(Menu menu) {
 		Menu detail = menuService.getOne(Condition.getQueryWrapper(menu));
 		return R.data(MenuWrapper.build().entityVO(detail));
@@ -68,14 +72,14 @@ public class MenuController extends BladeController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "菜单编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "name", description = "菜单名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表", notes = "传入menu")
-	public R<List<MenuVO>> list(@ApiIgnore @RequestParam Map<String, Object> menu) {
+	@Operation(summary = "列表", description = "传入menu")
+	public R<List<MenuVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().orderByAsc(Menu::getSort));
 		return R.data(MenuWrapper.build().listNodeVO(list));
 	}
@@ -84,14 +88,14 @@ public class MenuController extends BladeController {
 	 * 菜单列表
 	 */
 	@GetMapping("/menu-list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "菜单编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "name", description = "菜单名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "菜单列表", notes = "传入menu")
-	public R<List<MenuVO>> menuList(@ApiIgnore @RequestParam Map<String, Object> menu) {
+	@Operation(summary = "菜单列表", description = "传入menu")
+	public R<List<MenuVO>> menuList(@Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().eq(Menu::getCategory, 1).orderByAsc(Menu::getSort));
 		return R.data(MenuWrapper.build().listNodeVO(list));
 	}
@@ -100,14 +104,14 @@ public class MenuController extends BladeController {
 	 * 懒加载菜单列表
 	 */
 	@GetMapping("/lazy-menu-list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "code", description = "菜单编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "name", description = "菜单名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "懒加载菜单列表", notes = "传入menu")
-	public R<List<MenuVO>> lazyMenuList(Long parentId, @ApiIgnore @RequestParam Map<String, Object> menu) {
+	@Operation(summary = "懒加载菜单列表", description = "传入menu")
+	public R<List<MenuVO>> lazyMenuList(Long parentId, @Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<MenuVO> list = menuService.lazyMenuList(parentId, menu);
 		return R.data(MenuWrapper.build().listNodeLazyVO(list));
 	}
@@ -118,7 +122,7 @@ public class MenuController extends BladeController {
 	@PostMapping("/submit")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "新增或修改", notes = "传入menu")
+	@Operation(summary = "新增或修改", description = "传入menu")
 	public R submit(@Valid @RequestBody Menu menu) {
 		return R.status(menuService.saveOrUpdate(menu));
 	}
@@ -130,8 +134,8 @@ public class MenuController extends BladeController {
 	@PostMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(menuService.removeByIds(Func.toLongList(ids)));
 	}
 
@@ -140,7 +144,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/routes")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
+	@Operation(summary = "前端菜单数据", description = "前端菜单数据")
 	public R<List<MenuVO>> routes(BladeUser user) {
 		List<MenuVO> list = menuService.routes((user == null || user.getUserId() == 0L) ? null : user.getRoleId());
 		return R.data(list);
@@ -151,7 +155,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/buttons")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
+	@Operation(summary = "前端按钮数据", description = "前端按钮数据")
 	public R<List<MenuVO>> buttons(BladeUser user) {
 		List<MenuVO> list = menuService.buttons(user.getRoleId());
 		return R.data(list);
@@ -162,7 +166,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 9)
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<MenuVO>> tree() {
 		List<MenuVO> tree = menuService.tree();
 		return R.data(tree);
@@ -173,7 +177,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/grant-tree")
 	@ApiOperationSupport(order = 10)
-	@ApiOperation(value = "权限分配树形结构", notes = "权限分配树形结构")
+	@Operation(summary = "权限分配树形结构", description = "权限分配树形结构")
 	public R<GrantTreeVO> grantTree(BladeUser user) {
 		GrantTreeVO vo = new GrantTreeVO();
 		vo.setMenu(menuService.grantTree(user));
@@ -186,7 +190,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("/role-tree-keys")
 	@ApiOperationSupport(order = 11)
-	@ApiOperation(value = "角色所分配的树", notes = "角色所分配的树")
+	@Operation(summary = "角色所分配的树", description = "角色所分配的树")
 	public R<CheckedTreeVO> roleTreeKeys(String roleIds) {
 		CheckedTreeVO vo = new CheckedTreeVO();
 		vo.setMenu(menuService.roleTreeKeys(roleIds));
@@ -199,7 +203,7 @@ public class MenuController extends BladeController {
 	 */
 	@GetMapping("auth-routes")
 	@ApiOperationSupport(order = 12)
-	@ApiOperation(value = "菜单的角色权限")
+	@Operation(summary = "菜单的角色权限")
 	public R<List<Kv>> authRoutes(BladeUser user) {
 		if (Func.isEmpty(user) || user.getUserId() == 0L) {
 			return null;

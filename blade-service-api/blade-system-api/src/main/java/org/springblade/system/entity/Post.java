@@ -20,11 +20,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.mp.base.TenantEntity;
+
+import java.io.Serial;
 
 /**
  * 岗位表实体类
@@ -34,15 +35,16 @@ import org.springblade.core.mp.base.TenantEntity;
 @Data
 @TableName("blade_post")
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Post对象", description = "岗位表")
+@Schema(description = "Post对象")
 public class Post extends TenantEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键id
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
@@ -50,27 +52,27 @@ public class Post extends TenantEntity {
 	/**
 	 * 类型
 	 */
-	@ApiModelProperty(value = "类型")
+	@Schema(description = "类型")
 	private Integer category;
 	/**
 	 * 岗位编号
 	 */
-	@ApiModelProperty(value = "岗位编号")
+	@Schema(description = "岗位编号")
 	private String postCode;
 	/**
 	 * 岗位名称
 	 */
-	@ApiModelProperty(value = "岗位名称")
+	@Schema(description = "岗位名称")
 	private String postName;
 	/**
 	 * 岗位排序
 	 */
-	@ApiModelProperty(value = "岗位排序")
+	@Schema(description = "岗位排序")
 	private Integer sort;
 	/**
 	 * 岗位描述
 	 */
-	@ApiModelProperty(value = "岗位描述")
+	@Schema(description = "岗位描述")
 	private String remark;
 
 

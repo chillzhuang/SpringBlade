@@ -18,12 +18,13 @@ package org.springblade.system.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.tool.node.INode;
 import org.springblade.system.entity.Menu;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,9 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "MenuVO对象", description = "MenuVO对象")
+@Schema(description = "MenuVO对象")
 public class MenuVO extends Menu implements INode<MenuVO> {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

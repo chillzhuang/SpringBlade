@@ -5,29 +5,29 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>3.7.1</version>
+    <version>4.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>3.7.1</blade.tool.version>
-        <blade.project.version>3.7.1</blade.project.version>
+        <blade.tool.version>4.0.0</blade.tool.version>
+        <blade.project.version>4.0.0</blade.project.version>
 
-        <java.version>1.8</java.version>
-        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <java.version>17</java.version>
+        <maven.plugin.version>3.11.0</maven.plugin.version>
 
-        <knife4j.version>4.3.0</knife4j.version>
+        <knife4j.version>4.5.0</knife4j.version>
         <protostuff.version>1.6.0</protostuff.version>
         <captcha.version>1.6.2</captcha.version>
-        <easyexcel.version>2.2.11</easyexcel.version>
-        <mica.auto.version>2.3.2</mica.auto.version>
-        <mysql.connector.version>8.0.32</mysql.connector.version>
+        <easyexcel.version>3.3.4</easyexcel.version>
+        <mica.auto.version>3.1.3</mica.auto.version>
 
-        <spring.version>5.3.31</spring.version>
-        <spring.boot.version>2.7.18</spring.boot.version>
-        <spring.boot.admin.version>2.7.14</spring.boot.admin.version>
-        <spring.cloud.version>2021.0.8</spring.cloud.version>
-        <alibaba.cloud.version>2021.0.5.0</alibaba.cloud.version>
-        <alibaba.nacos.version>2.1.2</alibaba.nacos.version>
+        <spring.version>6.1.5</spring.version>
+        <spring.boot.version>3.2.4</spring.boot.version>
+        <spring.boot.admin.version>3.2.3</spring.boot.admin.version>
+        <spring.cloud.version>2023.0.1</spring.cloud.version>
+
+        <alibaba.cloud.version>2022.0.0.0</alibaba.cloud.version>
+        <alibaba.nacos.version>2.3.1</alibaba.nacos.version>
 
         <!-- 推荐使用Harbor -->
         <docker.registry.url>10.211.55.5</docker.registry.url>
@@ -122,6 +122,27 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <copy overwrite="true"
+                                          todir="${project.root.directory}/target"
+                                          file="${project.build.directory}/${project.artifactId}.jar"/>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -140,6 +161,23 @@
                         <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>directories</id>
+                        <goals>
+                            <goal>highest-basedir</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <property>project.root.directory</property>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

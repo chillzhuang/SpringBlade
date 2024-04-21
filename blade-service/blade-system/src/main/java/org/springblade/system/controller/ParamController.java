@@ -17,7 +17,13 @@ package org.springblade.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -29,9 +35,7 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Param;
 import org.springblade.system.service.IParamService;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -42,7 +46,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/param")
-@Api(value = "参数管理", tags = "接口")
+@Tag(name = "参数管理", description = "接口")
 public class ParamController extends BladeController {
 
 	private IParamService paramService;
@@ -52,7 +56,7 @@ public class ParamController extends BladeController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入param")
+	@Operation(summary = "详情", description = "传入param")
 	public R<Param> detail(Param param) {
 		Param detail = paramService.getOne(Condition.getQueryWrapper(param));
 		return R.data(detail);
@@ -62,15 +66,15 @@ public class ParamController extends BladeController {
 	 * 分页
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "paramName", value = "参数名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "paramKey", value = "参数键名", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "paramValue", value = "参数键值", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "paramName", description = "参数名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "paramKey", description = "参数键名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "paramValue", description = "参数键值", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入param")
+	@Operation(summary = "分页", description = "传入param")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public R<IPage<Param>> list(@ApiIgnore @RequestParam Map<String, Object> param, Query query) {
+	public R<IPage<Param>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> param, Query query) {
 		IPage<Param> pages = paramService.page(Condition.getPage(query), Condition.getQueryWrapper(param, Param.class));
 		return R.data(pages);
 	}
@@ -80,7 +84,7 @@ public class ParamController extends BladeController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "新增或修改", notes = "传入param")
+	@Operation(summary = "新增或修改", description = "传入param")
 	public R submit(@Valid @RequestBody Param param) {
 		return R.status(paramService.saveOrUpdate(param));
 	}
@@ -91,8 +95,8 @@ public class ParamController extends BladeController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(paramService.deleteLogic(Func.toLongList(ids)));
 	}
 

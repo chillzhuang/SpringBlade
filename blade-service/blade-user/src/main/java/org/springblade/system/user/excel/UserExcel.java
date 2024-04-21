@@ -22,6 +22,7 @@ import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,6 +36,7 @@ import java.util.Date;
 @HeadRowHeight(20)
 @ContentRowHeight(18)
 public class UserExcel implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@ColumnWidth(15)

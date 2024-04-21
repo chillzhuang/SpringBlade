@@ -18,12 +18,13 @@ package org.springblade.system.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.core.tool.node.INode;
 import org.springblade.system.entity.Dept;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,9 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DeptVO对象", description = "DeptVO对象")
+@Schema(description = "DeptVO对象")
 public class DeptVO extends Dept implements INode<DeptVO> {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

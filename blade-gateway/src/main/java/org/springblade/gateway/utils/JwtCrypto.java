@@ -18,7 +18,6 @@ package org.springblade.gateway.utils;
 
 import lombok.SneakyThrows;
 import org.springframework.util.Assert;
-import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
 import reactor.util.annotation.Nullable;
 
@@ -28,6 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Objects;
 
 /**
@@ -49,7 +49,7 @@ public class JwtCrypto {
 	 * @return {String}
 	 */
 	public static String encryptToString(String content, String aesTextKey) {
-		return Base64Utils.encodeToString(encrypt(content, aesTextKey));
+		return Base64.getEncoder().encodeToString(encrypt(content, aesTextKey));
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class JwtCrypto {
 	 * @return {String}
 	 */
 	public static String encryptToString(byte[] content, String aesTextKey) {
-		return Base64Utils.encodeToString(encrypt(content, aesTextKey));
+		return Base64.getEncoder().encodeToString(encrypt(content, aesTextKey));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class JwtCrypto {
 		if (!StringUtils.hasText(content) || !StringUtils.hasText(aesTextKey)) {
 			return null;
 		}
-		byte[] hexBytes = decrypt(Base64Utils.decode(content.getBytes(DEFAULT_CHARSET)), aesTextKey);
+		byte[] hexBytes = decrypt(Base64.getDecoder().decode(content.getBytes(DEFAULT_CHARSET)), aesTextKey);
 		return new String(hexBytes, DEFAULT_CHARSET);
 	}
 

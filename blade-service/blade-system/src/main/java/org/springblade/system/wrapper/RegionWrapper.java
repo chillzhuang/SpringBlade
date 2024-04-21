@@ -45,7 +45,7 @@ public class RegionWrapper extends BaseEntityWrapper<Region, RegionVO> {
 
 	@Override
 	public RegionVO entityVO(Region region) {
-		RegionVO regionVO = Objects.requireNonNull(BeanUtil.copy(region, RegionVO.class));
+		RegionVO regionVO = Objects.requireNonNull(BeanUtil.copyProperties(region, RegionVO.class));
 		Region parentRegion = regionService.getById(region.getParentCode());
 		regionVO.setParentName(parentRegion.getName());
 		return regionVO;

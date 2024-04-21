@@ -15,7 +15,7 @@
  */
 package org.springblade.resource.endpoint;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springblade.core.oss.QiniuTemplate;
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/oss/endpoint")
-@Api(value = "对象存储端点", tags = "对象存储端点")
+@Tag(name = "对象存储端点", description = "对象存储端点")
 public class OssEndpoint {
 
 	private QiniuTemplate qiniuTemplate;

@@ -20,10 +20,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -33,15 +33,16 @@ import java.io.Serializable;
  */
 @Data
 @TableName("blade_role_menu")
-@ApiModel(value = "RoleMenu对象", description = "RoleMenu对象")
+@Schema(description = "RoleMenu对象")
 public class RoleMenu implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
@@ -49,14 +50,14 @@ public class RoleMenu implements Serializable {
 	/**
 	 * 菜单id
 	 */
-	@ApiModelProperty(value = "菜单id")
+	@Schema(description = "菜单id")
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long menuId;
 
 	/**
 	 * 角色id
 	 */
-	@ApiModelProperty(value = "角色id")
+	@Schema(description = "角色id")
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long roleId;
 

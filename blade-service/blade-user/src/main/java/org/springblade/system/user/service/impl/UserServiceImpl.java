@@ -160,7 +160,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	@Override
 	public void importUser(List<UserExcel> data) {
 		data.forEach(userExcel -> {
-			User user = Objects.requireNonNull(BeanUtil.copy(userExcel, User.class));
+			User user = Objects.requireNonNull(BeanUtil.copyProperties(userExcel, User.class));
 			// 设置部门ID
 			user.setDeptId(sysClient.getDeptIds(userExcel.getTenantId(), userExcel.getDeptName()));
 			// 设置岗位ID

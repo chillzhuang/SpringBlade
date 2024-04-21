@@ -15,9 +15,10 @@
  */
 package org.springblade.system.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,15 +29,16 @@ import java.util.List;
  */
 @Data
 public class GrantVO implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "roleIds集合")
+	@Schema(description = "roleIds集合")
 	private List<Long> roleIds;
 
-	@ApiModelProperty(value = "menuIds集合")
+	@Schema(description = "menuIds集合")
 	private List<Long> menuIds;
 
-	@ApiModelProperty(value = "dataScopeIds集合")
+	@Schema(description = "dataScopeIds集合")
 	private List<Long> dataScopeIds;
 
 }

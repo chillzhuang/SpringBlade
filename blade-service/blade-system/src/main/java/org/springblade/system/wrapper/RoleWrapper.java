@@ -47,7 +47,7 @@ public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 
 	@Override
 	public RoleVO entityVO(Role role) {
-		RoleVO roleVO = BeanUtil.copy(role, RoleVO.class);
+		RoleVO roleVO = BeanUtil.copyProperties(role, RoleVO.class);
 		if (Func.equals(role.getParentId(), CommonConstant.TOP_PARENT_ID)) {
 			roleVO.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {

@@ -16,9 +16,9 @@
 package org.springblade.auth.controller;
 
 import com.wf.captcha.SpecCaptcha;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.auth.granter.ITokenGranter;
 import org.springblade.auth.granter.TokenGranterBuilder;
@@ -47,18 +47,18 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @AllArgsConstructor
-@Api(value = "用户授权认证", tags = "授权接口")
+@Tag(name = "用户授权认证", description = "授权接口")
 public class AuthController {
 
 	private RedisUtil redisUtil;
 
 	@PostMapping("token")
-	@ApiOperation(value = "获取认证token", notes = "传入租户ID:tenantId,账号:account,密码:password")
-	public R<AuthInfo> token(@ApiParam(value = "授权类型", required = true) @RequestParam(defaultValue = "password", required = false) String grantType,
-							 @ApiParam(value = "刷新令牌") @RequestParam(required = false) String refreshToken,
-							 @ApiParam(value = "租户ID", required = true) @RequestParam(defaultValue = "000000", required = false) String tenantId,
-							 @ApiParam(value = "账号") @RequestParam(required = false) String account,
-							 @ApiParam(value = "密码") @RequestParam(required = false) String password) {
+	@Operation(summary = "获取认证token", description = "传入租户ID:tenantId,账号:account,密码:password")
+	public R<AuthInfo> token(@Parameter(name = "授权类型", required = true) @RequestParam(defaultValue = "password", required = false) String grantType,
+							 @Parameter(name = "刷新令牌") @RequestParam(required = false) String refreshToken,
+							 @Parameter(name = "租户ID", required = true) @RequestParam(defaultValue = "000000", required = false) String tenantId,
+							 @Parameter(name = "账号") @RequestParam(required = false) String account,
+							 @Parameter(name = "密码") @RequestParam(required = false) String password) {
 
 		String userType = Func.toStr(WebUtil.getRequest().getHeader(TokenUtil.USER_TYPE_HEADER_KEY), TokenUtil.DEFAULT_USER_TYPE);
 
@@ -81,7 +81,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/captcha")
-	@ApiOperation(value = "获取验证码")
+	@Operation(summary = "获取验证码")
 	public R<Kv> captcha() {
 		SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
 		String verCode = specCaptcha.text().toLowerCase();

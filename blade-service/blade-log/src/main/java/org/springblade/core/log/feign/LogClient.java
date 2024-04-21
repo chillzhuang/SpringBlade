@@ -15,6 +15,7 @@
  */
 package org.springblade.core.log.feign;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.model.LogApi;
 import org.springblade.core.log.model.LogUsual;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Chill
  */
+@Hidden
 @RestController
 @AllArgsConstructor
 public class LogClient implements ILogClient {

@@ -18,7 +18,14 @@ package org.springblade.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
@@ -31,9 +38,7 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Tenant;
 import org.springblade.system.service.ITenantService;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +50,8 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/tenant")
-@ApiIgnore
-@Api(value = "租户管理", tags = "接口")
+@Hidden
+@Tag(name = "租户管理", description = "接口")
 public class TenantController extends BladeController {
 
 	private ITenantService tenantService;
@@ -55,7 +60,7 @@ public class TenantController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入tenant")
+	@Operation(summary = "详情", description = "传入tenant")
 	public R<Tenant> detail(Tenant tenant) {
 		Tenant detail = tenantService.getOne(Condition.getQueryWrapper(tenant));
 		return R.data(detail);
@@ -65,13 +70,13 @@ public class TenantController extends BladeController {
 	 * 分页
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "tenantId", value = "参数名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "tenantName", value = "角色别名", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "contactNumber", value = "联系电话", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "tenantId", description = "参数名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "tenantName", description = "角色别名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "contactNumber", description = "联系电话", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperation(value = "分页", notes = "传入tenant")
-	public R<IPage<Tenant>> list(@ApiIgnore @RequestParam Map<String, Object> tenant, Query query, BladeUser bladeUser) {
+	@Operation(summary = "分页", description = "传入tenant")
+	public R<IPage<Tenant>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> tenant, Query query, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant, Tenant.class);
 		IPage<Tenant> pages = tenantService.page(Condition.getPage(query), (!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Tenant::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(pages);
@@ -81,7 +86,7 @@ public class TenantController extends BladeController {
 	 * 下拉数据源
 	 */
 	@GetMapping("/select")
-	@ApiOperation(value = "下拉数据源", notes = "传入tenant")
+	@Operation(summary = "下拉数据源", description = "传入tenant")
 	public R<List<Tenant>> select(Tenant tenant, BladeUser bladeUser) {
 		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant);
 		List<Tenant> list = tenantService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Tenant::getTenantId, bladeUser.getTenantId()) : queryWrapper);
@@ -92,7 +97,7 @@ public class TenantController extends BladeController {
 	 * 自定义分页
 	 */
 	@GetMapping("/page")
-	@ApiOperation(value = "分页", notes = "传入tenant")
+	@Operation(summary = "分页", description = "传入tenant")
 	public R<IPage<Tenant>> page(Tenant tenant, Query query) {
 		IPage<Tenant> pages = tenantService.selectTenantPage(Condition.getPage(query), tenant);
 		return R.data(pages);
@@ -102,7 +107,7 @@ public class TenantController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入tenant")
+	@Operation(summary = "新增或修改", description = "传入tenant")
 	public R submit(@Valid @RequestBody Tenant tenant) {
 		return R.status(tenantService.saveTenant(tenant));
 	}
@@ -112,8 +117,8 @@ public class TenantController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(tenantService.deleteLogic(Func.toLongList(ids)));
 	}
 
@@ -123,7 +128,7 @@ public class TenantController extends BladeController {
 	 * @param domain 域名
 	 */
 	@GetMapping("/info")
-	@ApiOperation(value = "配置信息", notes = "传入domain")
+	@Operation(summary = "配置信息", description = "传入domain")
 	public R<Kv> info(String domain) {
 		Tenant tenant = tenantService.getOne(Wrappers.<Tenant>query().lambda().eq(Tenant::getDomain, domain));
 		Kv kv = Kv.init();

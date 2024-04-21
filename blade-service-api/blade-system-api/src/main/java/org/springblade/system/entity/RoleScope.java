@@ -20,10 +20,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -33,16 +33,17 @@ import java.io.Serializable;
  */
 @Data
 @TableName("blade_role_scope")
-@ApiModel(value = "RoleScope对象", description = "RoleScope对象")
+@Schema(description = "RoleScope对象")
 public class RoleScope implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
 
@@ -50,14 +51,14 @@ public class RoleScope implements Serializable {
 	 * 权限id
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "权限id")
+	@Schema(description = "权限id")
 	private Long scopeId;
 
 	/**
 	 * 角色id
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "角色id")
+	@Schema(description = "角色id")
 	private Long roleId;
 
 

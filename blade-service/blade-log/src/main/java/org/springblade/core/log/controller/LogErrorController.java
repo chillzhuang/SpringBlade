@@ -18,6 +18,8 @@ package org.springblade.core.log.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.model.LogError;
 import org.springblade.core.log.model.LogErrorVo;
@@ -34,7 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ import java.util.stream.Collectors;
  * @author Chill
  * @since 2018-09-26
  */
+@Hidden
 @RestController
 @AllArgsConstructor
 @RequestMapping("/error")
@@ -66,12 +68,12 @@ public class LogErrorController {
 	 */
 	@GetMapping("/list")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public R<IPage<LogErrorVo>> list(@ApiIgnore @RequestParam Map<String, Object> logError, Query query) {
+	public R<IPage<LogErrorVo>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> logError, Query query) {
 		query.setAscs("create_time");
 		query.setDescs(StringPool.EMPTY);
 		IPage<LogError> pages = errorLogService.page(Condition.getPage(query), Condition.getQueryWrapper(logError, LogError.class));
 		List<LogErrorVo> records = pages.getRecords().stream().map(logApi -> {
-			LogErrorVo vo = BeanUtil.copy(logApi, LogErrorVo.class);
+			LogErrorVo vo = BeanUtil.copyProperties(logApi, LogErrorVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));
 			return vo;
 		}).collect(Collectors.toList());

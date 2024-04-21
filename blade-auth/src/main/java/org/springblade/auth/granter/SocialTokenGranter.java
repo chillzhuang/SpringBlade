@@ -33,7 +33,7 @@ import org.springblade.system.user.entity.UserOauth;
 import org.springblade.system.user.feign.IUserClient;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
@@ -79,7 +79,7 @@ public class SocialTokenGranter implements ITokenGranter {
 		}
 
 		// 组装数据
-		UserOauth userOauth = Objects.requireNonNull(BeanUtil.copy(authUser, UserOauth.class));
+		UserOauth userOauth = Objects.requireNonNull(BeanUtil.copyProperties(authUser, UserOauth.class));
 		userOauth.setSource(authUser.getSource());
 		userOauth.setTenantId(tenantId);
 		userOauth.setUuid(authUser.getUuid());

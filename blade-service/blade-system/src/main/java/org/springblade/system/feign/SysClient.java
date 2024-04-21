@@ -26,7 +26,7 @@ import org.springblade.system.service.IRoleService;
 import org.springblade.system.service.ITenantService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author Chill
  */
-@ApiIgnore
+@Hidden
 @RestController
 @AllArgsConstructor
 public class SysClient implements ISysClient {

@@ -15,12 +15,12 @@
  */
 package $!{package.Controller};
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
@@ -54,7 +54,7 @@ import $!{superControllerClassPackage};
 @RestController
 @AllArgsConstructor
 @RequestMapping("#if($!{package.ModuleName})$!{package.ModuleName}#end/$!{entityKey}")
-@Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
+@Tag(name = "$!{table.comment}", description = "$!{table.comment}接口")
 #if($!{superControllerClass})
 public class $!{table.controllerName} extends $!{superControllerClass} {
 #else
@@ -69,7 +69,7 @@ public class $!{table.controllerName} {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "详情", description = "传入$!{table.entityPath}")
 	public R<$!{entity}VO> detail($!{entity} $!{table.entityPath}) {
 		$!{entity} detail = $!{table.entityPath}Service.getOne(Condition.getQueryWrapper($!{table.entityPath}));
 		return R.data($!{entity}Wrapper.build().entityVO(detail));
@@ -80,7 +80,7 @@ public class $!{table.controllerName} {
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "分页", description = "传入$!{table.entityPath}")
 	public R<IPage<$!{entity}VO>> list($!{entity} $!{table.entityPath}, Query query) {
 		IPage<$!{entity}> pages = $!{table.entityPath}Service.page(Condition.getPage(query), Condition.getQueryWrapper($!{table.entityPath}));
 		return R.data($!{entity}Wrapper.build().pageVO(pages));
@@ -92,7 +92,7 @@ public class $!{table.controllerName} {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "详情", description = "传入$!{table.entityPath}")
 	public R<$!{entity}> detail($!{entity} $!{table.entityPath}) {
 		$!{entity} detail = $!{table.entityPath}Service.getOne(Condition.getQueryWrapper($!{table.entityPath}));
 		return R.data(detail);
@@ -103,7 +103,7 @@ public class $!{table.controllerName} {
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "分页", description = "传入$!{table.entityPath}")
 	public R<IPage<$!{entity}>> list($!{entity} $!{table.entityPath}, Query query) {
 		IPage<$!{entity}> pages = $!{table.entityPath}Service.page(Condition.getPage(query), Condition.getQueryWrapper($!{table.entityPath}));
 		return R.data(pages);
@@ -115,7 +115,7 @@ public class $!{table.controllerName} {
 	 */
 	@GetMapping("/page")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "分页", description = "传入$!{table.entityPath}")
 	public R<IPage<$!{entity}VO>> page($!{entity}VO $!{table.entityPath}, Query query) {
 		IPage<$!{entity}VO> pages = $!{table.entityPath}Service.select$!{entity}Page(Condition.getPage(query), $!{table.entityPath});
 		return R.data(pages);
@@ -126,7 +126,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "新增", description = "传入$!{table.entityPath}")
 	public R save(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
 		return R.status($!{table.entityPath}Service.save($!{table.entityPath}));
 	}
@@ -136,7 +136,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "修改", description = "传入$!{table.entityPath}")
 	public R update(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
 		return R.status($!{table.entityPath}Service.updateById($!{table.entityPath}));
 	}
@@ -146,7 +146,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "新增或修改", notes = "传入$!{table.entityPath}")
+	@Operation(summary = "新增或修改", description = "传入$!{table.entityPath}")
 	public R submit(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
 		return R.status($!{table.entityPath}Service.saveOrUpdate($!{table.entityPath}));
 	}
@@ -158,8 +158,8 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "逻辑删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status($!{table.entityPath}Service.deleteLogic(Func.toLongList(ids)));
 	}
 
@@ -170,8 +170,8 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+	@Operation(summary = "删除", description = "传入ids")
+	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
 		return R.status($!{table.entityPath}Service.removeByIds(Func.toLongList(ids)));
 	}
 

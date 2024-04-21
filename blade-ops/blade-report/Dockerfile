@@ -1,6 +1,6 @@
-FROM anapsix/alpine-java:8_server-jre_unlimited
+FROM bladex/alpine-java:openjdk17_cn_slim
 
-MAINTAINER smallchill@163.com
+MAINTAINER bladejava@qq.com
 
 RUN mkdir -p /blade/report
 
@@ -10,6 +10,6 @@ EXPOSE 8108
 
 ADD ./target/blade-report.jar ./app.jar
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+ENTRYPOINT ["java", "--add-opens java.base/java.lang.reflect=ALL-UNNAMED", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
 
 CMD ["--spring.profiles.active=test"]

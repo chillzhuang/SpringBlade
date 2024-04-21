@@ -15,10 +15,12 @@
  */
 package org.springblade.system.vo;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.system.entity.RoleMenu;
+
+import java.io.Serial;
 
 /**
  * 视图实体类
@@ -27,8 +29,9 @@ import org.springblade.system.entity.RoleMenu;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "RoleMenuVO对象", description = "RoleMenuVO对象")
+@Schema(description = "RoleMenuVO对象")
 public class RoleMenuVO extends RoleMenu {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 }

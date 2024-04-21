@@ -21,10 +21,13 @@ import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springblade.core.mp.support.Condition;
@@ -45,10 +48,7 @@ import org.springblade.system.user.wrapper.UserWrapper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,7 +74,7 @@ public class UserController {
 	 * 查询单条
 	 */
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "查看详情", notes = "传入id")
+	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/detail")
 	public R<UserVO> detail(User user) {
 		User detail = userService.getOne(Condition.getQueryWrapper(user));
@@ -85,7 +85,7 @@ public class UserController {
 	 * 查询单条
 	 */
 	@ApiOperationSupport(order =2)
-	@ApiOperation(value = "查看详情", notes = "传入id")
+	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/info")
 	public R<UserVO> info(BladeUser user) {
 		User detail = userService.getById(user.getUserId());
@@ -96,13 +96,13 @@ public class UserController {
 	 * 用户列表
 	 */
 	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "account", value = "账号名", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "realName", value = "姓名", paramType = "query", dataType = "string")
+	@Parameters({
+		@Parameter(name = "account", description = "账号名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
+		@Parameter(name = "realName", description = "姓名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "列表", notes = "传入account和realName")
-	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam Map<String, Object> user, Query query, BladeUser bladeUser) {
+	@Operation(summary = "列表", description = "传入account和realName")
+	public R<IPage<UserVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> user, Query query, BladeUser bladeUser) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
 		IPage<User> pages = userService.page(Condition.getPage(query), (!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId()) : queryWrapper);
 		return R.data(UserWrapper.build().pageVO(pages));
@@ -113,7 +113,7 @@ public class UserController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增或修改", notes = "传入User")
+	@Operation(summary = "新增或修改", description = "传入User")
 	public R submit(@Valid @RequestBody User user) {
 		return R.status(userService.submit(user));
 	}
@@ -123,7 +123,7 @@ public class UserController {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改", notes = "传入User")
+	@Operation(summary = "修改", description = "传入User")
 	public R update(@Valid @RequestBody User user) {
 		return R.status(userService.updateById(user));
 	}
@@ -133,7 +133,7 @@ public class UserController {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "删除", notes = "传入地基和")
+	@Operation(summary = "删除", description = "传入地基和")
 	public R remove(@RequestParam String ids) {
 		return R.status(userService.deleteLogic(Func.toLongList(ids)));
 	}
@@ -148,17 +148,17 @@ public class UserController {
 	 */
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
-	public R grant(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds,
-				   @ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds) {
+	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
+	public R grant(@Parameter(name = "userId集合", required = true) @RequestParam String userIds,
+				   @Parameter(name = "roleId集合", required = true) @RequestParam String roleIds) {
 		boolean temp = userService.grant(userIds, roleIds);
 		return R.status(temp);
 	}
 
 	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
-	public R resetPassword(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds) {
+	@Operation(summary = "初始化密码", description = "传入userId集合")
+	public R resetPassword(@Parameter(name = "userId集合", required = true) @RequestParam String userIds) {
 		boolean temp = userService.resetPassword(userIds);
 		return R.status(temp);
 	}
@@ -173,10 +173,10 @@ public class UserController {
 	 */
 	@PostMapping("/update-password")
 	@ApiOperationSupport(order = 9)
-	@ApiOperation(value = "修改密码", notes = "传入密码")
-	public R updatePassword(BladeUser user, @ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
-							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
-							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
+	@Operation(summary = "修改密码", description = "传入密码")
+	public R updatePassword(BladeUser user, @Parameter(name = "旧密码", required = true) @RequestParam String oldPassword,
+							@Parameter(name = "新密码", required = true) @RequestParam String newPassword,
+							@Parameter(name = "新密码", required = true) @RequestParam String newPassword1) {
 		boolean temp = userService.updatePassword(user.getUserId(), oldPassword, newPassword, newPassword1);
 		return R.status(temp);
 	}
@@ -189,7 +189,7 @@ public class UserController {
 	 */
 	@GetMapping("/user-list")
 	@ApiOperationSupport(order = 10)
-	@ApiOperation(value = "用户列表", notes = "传入user")
+	@Operation(summary = "用户列表", description = "传入user")
 	public R<List<User>> userList(User user) {
 		List<User> list = userService.list(Condition.getQueryWrapper(user));
 		return R.data(list);
@@ -201,7 +201,7 @@ public class UserController {
 	 */
 	@PostMapping("import-user")
 	@ApiOperationSupport(order = 12)
-	@ApiOperation(value = "导入用户", notes = "传入excel")
+	@Operation(summary = "导入用户", description = "传入excel")
 	public R importUser(MultipartFile file, Integer isCovered) {
 		String filename = file.getOriginalFilename();
 		if (StringUtils.isEmpty(filename)) {
@@ -228,9 +228,9 @@ public class UserController {
 	@SneakyThrows
 	@GetMapping("export-user")
 	@ApiOperationSupport(order = 13)
-	@ApiOperation(value = "导出用户", notes = "传入user")
+	@Operation(summary = "导出用户", description = "传入user")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public void exportUser(@ApiIgnore @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
+	public void exportUser(@Parameter(hidden = true) @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
 		if (!SecureUtil.isAdministrator()){
 			queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId());
@@ -250,7 +250,7 @@ public class UserController {
 	@SneakyThrows
 	@GetMapping("export-template")
 	@ApiOperationSupport(order = 14)
-	@ApiOperation(value = "导出模板")
+	@Operation(summary = "导出模板")
 	public void exportUser(HttpServletResponse response) {
 		List<UserExcel> list = new ArrayList<>();
 		response.setContentType("application/vnd.ms-excel");
@@ -265,7 +265,7 @@ public class UserController {
 	 */
 	@PostMapping("/register-guest")
 	@ApiOperationSupport(order = 15)
-	@ApiOperation(value = "第三方注册用户", notes = "传入user")
+	@Operation(summary = "第三方注册用户", description = "传入user")
 	public R registerGuest(User user, Long oauthId) {
 		return R.status(userService.registerGuest(user, oauthId));
 	}

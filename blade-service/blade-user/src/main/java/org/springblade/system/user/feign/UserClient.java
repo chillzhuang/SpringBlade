@@ -15,6 +15,7 @@
  */
 package org.springblade.system.user.feign;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.api.R;
 import org.springblade.system.user.entity.User;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Chill
  */
+@Hidden
 @RestController
 @AllArgsConstructor
 public class UserClient implements IUserClient {

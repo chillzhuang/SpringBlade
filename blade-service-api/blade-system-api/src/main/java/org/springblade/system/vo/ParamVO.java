@@ -15,10 +15,12 @@
  */
 package org.springblade.system.vo;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springblade.system.entity.Param;
+
+import java.io.Serial;
 
 /**
  * 视图实体类
@@ -27,8 +29,9 @@ import org.springblade.system.entity.Param;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "ParamVO对象", description = "ParamVO对象")
+@Schema(description = "ParamVO对象")
 public class ParamVO extends Param {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 }

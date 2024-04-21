@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.springblade.system.entity.Role;
 import org.springblade.system.vo.RoleVO;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
