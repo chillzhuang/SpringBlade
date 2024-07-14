@@ -128,7 +128,7 @@ public class RoleController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		CacheUtil.clear(SYS_CACHE);
 		return R.status(roleService.removeByIds(Func.toLongList(ids)));
 	}

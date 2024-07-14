@@ -103,7 +103,7 @@ public class CodeController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 4)
 	@Operation(summary = "删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(codeService.removeByIds(Func.toLongList(ids)));
 	}
 
@@ -113,7 +113,7 @@ public class CodeController extends BladeController {
 	@PostMapping("/copy")
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "复制", description = "传入id")
-	public R copy(@Parameter(name = "主键", required = true) @RequestParam Long id) {
+	public R copy(@Parameter(description = "主键", required = true) @RequestParam Long id) {
 		Code code = codeService.getById(id);
 		code.setId(null);
 		code.setCodeName(code.getCodeName() + "-copy");
@@ -126,7 +126,7 @@ public class CodeController extends BladeController {
 	@PostMapping("/gen-code")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "代码生成", description = "传入ids")
-	public R genCode(@Parameter(name = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "sword") String system) {
+	public R genCode(@Parameter(description = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "sword") String system) {
 		Collection<Code> codes = codeService.listByIds(Func.toLongList(ids));
 		codes.forEach(code -> {
 			BladeCodeGenerator generator = new BladeCodeGenerator();

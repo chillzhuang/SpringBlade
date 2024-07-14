@@ -96,7 +96,7 @@ public class ParamController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 4)
 	@Operation(summary = "逻辑删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(paramService.deleteLogic(Func.toLongList(ids)));
 	}
 

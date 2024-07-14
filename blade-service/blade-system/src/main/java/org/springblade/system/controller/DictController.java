@@ -111,7 +111,7 @@ public class DictController extends BladeController {
 	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(dictService.removeByIds(Func.toLongList(ids)));
 	}
 

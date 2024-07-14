@@ -112,7 +112,7 @@ public class DataScopeController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "逻辑删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		CacheUtil.clear(SYS_CACHE);
 		return R.status(dataScopeService.deleteLogic(Func.toLongList(ids)));
 	}

@@ -20,6 +20,7 @@ import org.springblade.auth.enums.BladeUserEnum;
 import org.springblade.auth.utils.TokenUtil;
 import org.springblade.common.cache.CacheNames;
 import org.springblade.core.log.exception.ServiceException;
+import org.springblade.core.secure.props.BladeAuthProperties;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.*;
 import org.springblade.system.user.entity.UserInfo;
@@ -42,6 +43,8 @@ public class CaptchaTokenGranter implements ITokenGranter {
 	private IUserClient userClient;
 	private RedisUtil redisUtil;
 
+	private BladeAuthProperties authProperties;
+
 	@Override
 	public UserInfo grant(TokenParameter tokenParameter) {
 		HttpServletRequest request = WebUtil.getRequest();
@@ -62,14 +65,17 @@ public class CaptchaTokenGranter implements ITokenGranter {
 		if (Func.isNoneBlank(account, password)) {
 			// 获取用户类型
 			String userType = tokenParameter.getArgs().getStr("userType");
+			// 解密密码
+			String decryptPassword = TokenUtil.decryptPassword(password, authProperties.getPublicKey(), authProperties.getPrivateKey());
+			// 定义返回结果
 			R<UserInfo> result;
 			// 根据不同用户类型调用对应的接口返回数据，用户可自行拓展
 			if (userType.equals(BladeUserEnum.WEB.getName())) {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			} else if (userType.equals(BladeUserEnum.APP.getName())) {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			} else {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			}
 			userInfo = result.isSuccess() ? result.getData() : null;
 		}

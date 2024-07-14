@@ -109,7 +109,7 @@ public class DeptController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(deptService.removeByIds(Func.toLongList(ids)));
 	}
 

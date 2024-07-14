@@ -149,8 +149,8 @@ public class UserController {
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 7)
 	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
-	public R grant(@Parameter(name = "userId集合", required = true) @RequestParam String userIds,
-				   @Parameter(name = "roleId集合", required = true) @RequestParam String roleIds) {
+	public R grant(@Parameter(description = "userId集合", required = true) @RequestParam String userIds,
+				   @Parameter(description = "roleId集合", required = true) @RequestParam String roleIds) {
 		boolean temp = userService.grant(userIds, roleIds);
 		return R.status(temp);
 	}
@@ -158,7 +158,7 @@ public class UserController {
 	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 8)
 	@Operation(summary = "初始化密码", description = "传入userId集合")
-	public R resetPassword(@Parameter(name = "userId集合", required = true) @RequestParam String userIds) {
+	public R resetPassword(@Parameter(description = "userId集合", required = true) @RequestParam String userIds) {
 		boolean temp = userService.resetPassword(userIds);
 		return R.status(temp);
 	}
@@ -174,9 +174,9 @@ public class UserController {
 	@PostMapping("/update-password")
 	@ApiOperationSupport(order = 9)
 	@Operation(summary = "修改密码", description = "传入密码")
-	public R updatePassword(BladeUser user, @Parameter(name = "旧密码", required = true) @RequestParam String oldPassword,
-							@Parameter(name = "新密码", required = true) @RequestParam String newPassword,
-							@Parameter(name = "新密码", required = true) @RequestParam String newPassword1) {
+	public R updatePassword(BladeUser user, @Parameter(description = "旧密码", required = true) @RequestParam String oldPassword,
+							@Parameter(description = "新密码", required = true) @RequestParam String newPassword,
+							@Parameter(description = "新密码", required = true) @RequestParam String newPassword1) {
 		boolean temp = userService.updatePassword(user.getUserId(), oldPassword, newPassword, newPassword1);
 		return R.status(temp);
 	}

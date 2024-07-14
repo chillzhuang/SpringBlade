@@ -141,7 +141,7 @@ public class RegionController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 8)
 	@Operation(summary = "删除", description = "传入主键")
-	public R remove(@Parameter(name = "主键", required = true) @RequestParam String id) {
+	public R remove(@Parameter(description = "主键", required = true) @RequestParam String id) {
 		return R.status(regionService.removeRegion(id));
 	}
 

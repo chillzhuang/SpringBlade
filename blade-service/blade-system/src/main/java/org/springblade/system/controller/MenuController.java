@@ -135,7 +135,7 @@ public class MenuController extends BladeController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "删除", description = "传入ids")
-	public R remove(@Parameter(name = "主键集合", required = true) @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(menuService.removeByIds(Func.toLongList(ids)));
 	}
 

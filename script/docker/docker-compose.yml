@@ -1,13 +1,14 @@
 version: '3'
 services:
   nacos:
-    image: nacos/nacos-server:v2.3.1
+    image: nacos/nacos-server:v2.3.2
     hostname: "nacos-standalone"
     environment:
       - NACOS_AUTH_ENABLE=true
       - NACOS_AUTH_CACHE_ENABLE=true
       - NACOS_AUTH_IDENTITY_KEY=nacos
       - NACOS_AUTH_IDENTITY_VALUE=nacos
+      - NACOS_AUTH_TOKEN= # 请阅读官方文档了解规则后替换为自己的token：https://nacos.io/zh-cn/docs/v2/guide/user/auth.html
       - MODE=standalone
       - TZ=Asia/Shanghai
     volumes:

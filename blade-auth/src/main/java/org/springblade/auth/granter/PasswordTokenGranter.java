@@ -17,6 +17,8 @@ package org.springblade.auth.granter;
 
 import lombok.AllArgsConstructor;
 import org.springblade.auth.enums.BladeUserEnum;
+import org.springblade.auth.utils.TokenUtil;
+import org.springblade.core.secure.props.BladeAuthProperties;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.DigestUtil;
 import org.springblade.core.tool.utils.Func;
@@ -37,6 +39,8 @@ public class PasswordTokenGranter implements ITokenGranter {
 
 	private IUserClient userClient;
 
+	private BladeAuthProperties authProperties;
+
 	@Override
 	public UserInfo grant(TokenParameter tokenParameter) {
 		String tenantId = tokenParameter.getArgs().getStr("tenantId");
@@ -46,14 +50,17 @@ public class PasswordTokenGranter implements ITokenGranter {
 		if (Func.isNoneBlank(account, password)) {
 			// 获取用户类型
 			String userType = tokenParameter.getArgs().getStr("userType");
+			// 解密密码
+			String decryptPassword = TokenUtil.decryptPassword(password, authProperties.getPublicKey(), authProperties.getPrivateKey());
+			// 定义返回结果
 			R<UserInfo> result;
 			// 根据不同用户类型调用对应的接口返回数据，用户可自行拓展
 			if (userType.equals(BladeUserEnum.WEB.getName())) {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			} else if (userType.equals(BladeUserEnum.APP.getName())) {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			} else {
-				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			}
 			userInfo = result.isSuccess() ? result.getData() : null;
 		}

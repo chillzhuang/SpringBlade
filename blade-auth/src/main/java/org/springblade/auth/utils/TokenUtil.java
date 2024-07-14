@@ -20,6 +20,9 @@ import org.springblade.core.secure.AuthInfo;
 import org.springblade.core.secure.TokenInfo;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.SM2Util;
+import org.springblade.core.tool.utils.StringPool;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 
@@ -43,7 +46,8 @@ public class TokenUtil {
 	public final static String USER_NOT_FOUND = "用户名或密码错误";
 	public final static String HEADER_KEY = "Authorization";
 	public final static String HEADER_PREFIX = "Basic ";
-	public final static String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
+	public final static String ENCRYPT_PREFIX = "04";
+	public final static String DEFAULT_AVATAR = "https://bladex.cn/images/logo.png";
 
 	/**
 	 * 创建认证token
@@ -95,6 +99,33 @@ public class TokenUtil {
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.REFRESH_TOKEN);
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		return SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.REFRESH_TOKEN);
+	}
+
+	/**
+	 * 解析国密sm2加密密码
+	 *
+	 * @param rawPassword 请求时提交的原密码
+	 * @param publicKey   公钥
+	 * @param privateKey  私钥
+	 * @return 解密后的密码
+	 */
+	public static String decryptPassword(String rawPassword, String publicKey, String privateKey) {
+		// 其中有空则匹配失败
+		if (StringUtil.isAnyBlank(publicKey, privateKey)) {
+			return StringPool.EMPTY;
+		}
+		// 处理部分工具类加密不带04前缀的情况
+		if (!StringUtil.startsWithIgnoreCase(rawPassword, ENCRYPT_PREFIX)) {
+			rawPassword = ENCRYPT_PREFIX + rawPassword;
+		}
+		// 解密密码
+		String decryptPassword = SM2Util.decrypt(rawPassword, privateKey);
+		// 签名校验
+		boolean isVerified = SM2Util.verify(decryptPassword, SM2Util.sign(decryptPassword, privateKey), publicKey);
+		if (!isVerified) {
+			return StringPool.EMPTY;
+		}
+		return decryptPassword;
 	}
 
 }

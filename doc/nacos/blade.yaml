@@ -42,6 +42,10 @@ management:
     health:
       show-details: always
 
+#springdoc-openapi配置
+springdoc:
+  default-flat-param-object: true
+
 #knife4j配置
 knife4j:
   #启用
@@ -69,7 +73,7 @@ knife4j:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 4.0.0
+  version: 4.1.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.cn
   terms-of-service-url: https://bladex.cn
@@ -80,11 +84,16 @@ swagger:
 
 #blade配置
 blade:
+  auth:
+    #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2验签,需和前端保持一致
+    public-key: 请配置sm2公钥
+    #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2解密,前端无需配置
+    private-key: 请配置sm2私钥
   token:
-    #使用 blade-auth服务 @org.springblade.test.SignKeyGenerator 获取
-    sign-key: 请配置32位签名提高安全性
-    #使用 blade-auth服务 @org.springblade.test.AesKeyGenerator 获取
-    aes-key: 请配置Aes的密钥
+    #使用 @org.springblade.test.SignKeyGenerator 获取
+    sign-key: 请配置32位签名
+    #使用 @org.springblade.test.SignKeyGenerator 获取
+    aes-key: 请配置cryptoKey
   xss:
     enabled: true
     skip-url:

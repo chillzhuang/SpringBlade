@@ -114,7 +114,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "逻辑删除", description = "传入notice")
-	public R remove(@Parameter(name = "主键集合") @RequestParam String ids) {
+	public R remove(@Parameter(description = "主键集合") @RequestParam String ids) {
 		boolean temp = noticeService.deleteLogic(Func.toLongList(ids));
 		return R.status(temp);
 	}
