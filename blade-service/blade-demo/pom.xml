@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-service</artifactId>
         <groupId>org.springblade</groupId>
-        <version>4.1.0</version>
+        <version>4.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-swagger</artifactId>
+            <artifactId>blade-starter-swagger</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
@@ -32,8 +32,8 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>2.5.6</version>
+            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+            <version>4.3.0</version>
         </dependency>
     </dependencies>
 

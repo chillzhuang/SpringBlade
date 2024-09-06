@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.controller;
+package org.springblade.system.controller;
 
 
 import com.alibaba.excel.EasyExcel;
@@ -40,11 +40,11 @@ import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.user.entity.User;
-import org.springblade.system.user.excel.UserExcel;
-import org.springblade.system.user.excel.UserImportListener;
-import org.springblade.system.user.service.IUserService;
+import org.springblade.system.excel.UserExcel;
+import org.springblade.system.excel.UserImportListener;
+import org.springblade.system.service.IUserService;
 import org.springblade.system.user.vo.UserVO;
-import org.springblade.system.user.wrapper.UserWrapper;
+import org.springblade.system.wrapper.UserWrapper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Chill
  */
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
 

@@ -8,7 +8,7 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>4.1.0</version>
+        <version>4.2.0</version>
     </parent>
 
     <artifactId>blade-auth</artifactId>
@@ -35,12 +35,12 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-log</artifactId>
+            <artifactId>blade-starter-log</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-social</artifactId>
+            <artifactId>blade-starter-social</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-swagger</artifactId>
+            <artifactId>blade-starter-swagger</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
         <!-- Captcha -->

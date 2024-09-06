@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.springblade.system.user.mapper.UserMapper">
+<mapper namespace="org.springblade.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
     <resultMap id="userResultMap" type="org.springblade.system.user.entity.User">
@@ -89,7 +89,7 @@
         and is_deleted = 0
     </select>
 
-    <select id="exportUser" resultType="org.springblade.system.user.excel.UserExcel">
+    <select id="exportUser" resultType="org.springblade.system.excel.UserExcel">
         SELECT id, tenant_id, account, name, real_name, email, phone, birthday, role_id, dept_id, post_id FROM blade_user ${ew.customSqlSegment}
     </select>
 

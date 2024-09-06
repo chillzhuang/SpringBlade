@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.service.impl;
+package org.springblade.system.service;
 
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.springblade.system.user.entity.UserOauth;
-import org.springblade.system.user.mapper.UserOauthMapper;
-import org.springblade.system.user.service.IUserOauthService;
-import org.springframework.stereotype.Service;
 
 /**
- * 服务实现类
+ * 服务类
  *
  * @author Chill
  */
-@Service
-@AllArgsConstructor
-public class UserOauthServiceImpl extends ServiceImpl<UserOauthMapper, UserOauth> implements IUserOauthService {
+public interface IUserOauthService extends IService<UserOauth> {
 
 }

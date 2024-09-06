@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.wrapper;
+package org.springblade.system.wrapper;
 
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.api.R;
@@ -22,7 +22,7 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.system.feign.IDictClient;
 import org.springblade.system.user.entity.User;
-import org.springblade.system.user.service.IUserService;
+import org.springblade.system.service.IUserService;
 import org.springblade.system.user.vo.UserVO;
 
 import java.util.List;

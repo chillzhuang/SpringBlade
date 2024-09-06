@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.service.impl;
+package org.springblade.system.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -30,10 +30,10 @@ import org.springblade.system.feign.ISysClient;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 import org.springblade.system.user.entity.UserOauth;
-import org.springblade.system.user.excel.UserExcel;
-import org.springblade.system.user.mapper.UserMapper;
-import org.springblade.system.user.service.IUserOauthService;
-import org.springblade.system.user.service.IUserService;
+import org.springblade.system.excel.UserExcel;
+import org.springblade.system.mapper.UserMapper;
+import org.springblade.system.service.IUserOauthService;
+import org.springblade.system.service.IUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

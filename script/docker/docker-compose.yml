@@ -133,13 +133,6 @@ services:
     networks:
     - blade_net
 
-  blade-user:
-    image: "${REGISTER}/blade-user:${TAG}"
-    privileged: true
-    restart: always
-    networks:
-    - blade_net
-
   blade-system:
     image: "${REGISTER}/blade-system:${TAG}"
     privileged: true

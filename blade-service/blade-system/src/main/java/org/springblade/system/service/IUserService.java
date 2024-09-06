@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user.service;
+package org.springblade.system.service;
 
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -22,7 +22,7 @@ import org.springblade.core.mp.base.BaseService;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 import org.springblade.system.user.entity.UserOauth;
-import org.springblade.system.user.excel.UserExcel;
+import org.springblade.system.excel.UserExcel;
 
 import java.util.List;
 

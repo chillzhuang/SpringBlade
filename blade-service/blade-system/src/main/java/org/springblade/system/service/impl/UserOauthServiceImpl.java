@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.system.user;
+package org.springblade.system.service.impl;
 
-import org.springblade.core.cloud.client.BladeCloudApplication;
-import org.springblade.core.launch.BladeApplication;
-import org.springblade.core.launch.constant.AppConstant;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springblade.system.user.entity.UserOauth;
+import org.springblade.system.mapper.UserOauthMapper;
+import org.springblade.system.service.IUserOauthService;
+import org.springframework.stereotype.Service;
 
 /**
- * 用户启动器
+ * 服务实现类
  *
  * @author Chill
  */
-@BladeCloudApplication
-public class UserApplication {
-
-	public static void main(String[] args) {
-		BladeApplication.run(AppConstant.APPLICATION_USER_NAME, UserApplication.class, args);
-	}
+@Service
+@AllArgsConstructor
+public class UserOauthServiceImpl extends ServiceImpl<UserOauthMapper, UserOauth> implements IUserOauthService {
 
 }

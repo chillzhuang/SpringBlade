@@ -1,11 +1,11 @@
-package org.springblade.system.user.excel;
+package org.springblade.system.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import org.springblade.system.user.service.IUserService;
+import org.springblade.system.service.IUserService;
 
 import java.util.ArrayList;
 import java.util.List;
