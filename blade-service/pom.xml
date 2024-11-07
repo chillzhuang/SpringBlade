@@ -7,12 +7,11 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>SpringBlade</artifactId>
-        <version>4.2.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>blade-service</artifactId>
     <name>${project.artifactId}</name>
-    <version>4.2.0</version>
     <packaging>pom</packaging>
     <description>SpringBlade 微服务集合</description>
 
@@ -27,12 +26,10 @@
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-common</artifactId>
-            <version>${blade.project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-scope-api</artifactId>
-            <version>${blade.project.version}</version>
         </dependency>
     </dependencies>
 

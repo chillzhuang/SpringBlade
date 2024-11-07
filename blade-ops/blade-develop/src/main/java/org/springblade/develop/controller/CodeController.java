@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -126,7 +126,7 @@ public class CodeController extends BladeController {
 	@PostMapping("/gen-code")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "代码生成", description = "传入ids")
-	public R genCode(@Parameter(description = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "sword") String system) {
+	public R genCode(@Parameter(description = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "saber3") String system) {
 		Collection<Code> codes = codeService.listByIds(Func.toLongList(ids));
 		codes.forEach(code -> {
 			BladeCodeGenerator generator = new BladeCodeGenerator();

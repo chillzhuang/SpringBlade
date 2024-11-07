@@ -25,3 +25,7 @@ Thumbs.db
 *.war
 *.ear
 /target
+
+# Flattened pom
+.flattened-pom.xml
+/**/.flattened-pom.xml

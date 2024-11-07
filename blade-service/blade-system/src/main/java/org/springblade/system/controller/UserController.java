@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,6 +76,7 @@ public class UserController {
 	@ApiOperationSupport(order = 1)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/detail")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<UserVO> detail(User user) {
 		User detail = userService.getOne(Condition.getQueryWrapper(user));
 		return R.data(UserWrapper.build().entityVO(detail));
@@ -102,6 +103,7 @@ public class UserController {
 	})
 	@ApiOperationSupport(order = 3)
 	@Operation(summary = "列表", description = "传入account和realName")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<UserVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> user, Query query, BladeUser bladeUser) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
 		IPage<User> pages = userService.page(Condition.getPage(query), (!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId()) : queryWrapper);
@@ -114,6 +116,7 @@ public class UserController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增或修改", description = "传入User")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R submit(@Valid @RequestBody User user) {
 		return R.status(userService.submit(user));
 	}
@@ -124,6 +127,7 @@ public class UserController {
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "修改", description = "传入User")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R update(@Valid @RequestBody User user) {
 		return R.status(userService.updateById(user));
 	}
@@ -134,6 +138,7 @@ public class UserController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "删除", description = "传入地基和")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R remove(@RequestParam String ids) {
 		return R.status(userService.deleteLogic(Func.toLongList(ids)));
 	}
@@ -149,6 +154,7 @@ public class UserController {
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 7)
 	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R grant(@Parameter(description = "userId集合", required = true) @RequestParam String userIds,
 				   @Parameter(description = "roleId集合", required = true) @RequestParam String roleIds) {
 		boolean temp = userService.grant(userIds, roleIds);
@@ -158,6 +164,7 @@ public class UserController {
 	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 8)
 	@Operation(summary = "初始化密码", description = "传入userId集合")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R resetPassword(@Parameter(description = "userId集合", required = true) @RequestParam String userIds) {
 		boolean temp = userService.resetPassword(userIds);
 		return R.status(temp);
@@ -189,10 +196,11 @@ public class UserController {
 	 */
 	@GetMapping("/user-list")
 	@ApiOperationSupport(order = 10)
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@Operation(summary = "用户列表", description = "传入user")
-	public R<List<User>> userList(User user) {
+	public R<List<UserVO>> userList(User user) {
 		List<User> list = userService.list(Condition.getQueryWrapper(user));
-		return R.data(list);
+		return R.data(UserWrapper.build().listVO(list));
 	}
 
 

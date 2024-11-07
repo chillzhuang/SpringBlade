@@ -5,30 +5,26 @@
     <parent>
         <artifactId>SpringBlade</artifactId>
         <groupId>org.springblade</groupId>
-        <version>4.2.0</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>blade-common</artifactId>
     <name>${project.artifactId}</name>
-    <version>${blade.project.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-launch</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-starter-loadbalancer</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-auto</artifactId>
-            <version>${mica.auto.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

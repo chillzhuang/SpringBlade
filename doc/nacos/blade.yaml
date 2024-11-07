@@ -73,13 +73,13 @@ knife4j:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 4.2.0
+  version: 4.3.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.cn
   terms-of-service-url: https://bladex.cn
   contact:
     name: smallchill
-    email: smallchill@163.com
+    email: bladejava@qq.com
     url: https://gitee.com/smallc
 
 #blade配置
