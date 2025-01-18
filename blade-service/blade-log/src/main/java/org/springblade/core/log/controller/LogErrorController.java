@@ -17,29 +17,25 @@ package org.springblade.core.log.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.model.LogError;
-import org.springblade.core.log.model.LogErrorVo;
+import org.springblade.core.log.pojo.LogErrorVO;
 import org.springblade.core.log.service.ILogErrorService;
+import org.springblade.core.log.wrapper.LogErrorWrapper;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
-import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 控制器
@@ -59,8 +55,10 @@ public class LogErrorController {
 	 * 查询单条
 	 */
 	@GetMapping("/detail")
-	public R<LogError> detail(LogError logError) {
-		return R.data(errorLogService.getOne(Condition.getQueryWrapper(logError)));
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	public R<LogError> detail(LogError log) {
+		LogError logError = errorLogService.getOne(Condition.getQueryWrapper(log));
+		return R.data(LogErrorWrapper.build().entity(logError));
 	}
 
 	/**
@@ -68,18 +66,11 @@ public class LogErrorController {
 	 */
 	@GetMapping("/list")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public R<IPage<LogErrorVo>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> logError, Query query) {
+	public R<IPage<LogErrorVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> logError, Query query) {
 		query.setAscs("create_time");
 		query.setDescs(StringPool.EMPTY);
 		IPage<LogError> pages = errorLogService.page(Condition.getPage(query), Condition.getQueryWrapper(logError, LogError.class));
-		List<LogErrorVo> records = pages.getRecords().stream().map(logApi -> {
-			LogErrorVo vo = BeanUtil.copyProperties(logApi, LogErrorVo.class);
-			vo.setStrId(Func.toStr(logApi.getId()));
-			return vo;
-		}).collect(Collectors.toList());
-		IPage<LogErrorVo> pageVo = new Page<>(pages.getCurrent(), pages.getSize(), pages.getTotal());
-		pageVo.setRecords(records);
-		return R.data(pageVo);
+		return R.data(LogErrorWrapper.build().pageVO(pages));
 	}
 
 }

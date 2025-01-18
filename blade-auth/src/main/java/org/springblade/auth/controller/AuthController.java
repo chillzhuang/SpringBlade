@@ -25,11 +25,11 @@ import org.springblade.auth.granter.TokenGranterBuilder;
 import org.springblade.auth.granter.TokenParameter;
 import org.springblade.auth.utils.TokenUtil;
 import org.springblade.common.cache.CacheNames;
+import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.AuthInfo;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.RedisUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springblade.system.user.entity.UserInfo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit;
 @Tag(name = "用户授权认证", description = "授权接口")
 public class AuthController {
 
-	private RedisUtil redisUtil;
+	private BladeRedis bladeRedis;
 
 	@PostMapping("token")
 	@Operation(summary = "获取认证token", description = "传入租户ID:tenantId,账号:account,密码:password")
@@ -87,7 +87,7 @@ public class AuthController {
 		String verCode = specCaptcha.text().toLowerCase();
 		String key = UUID.randomUUID().toString();
 		// 存入redis并设置过期时间为30分钟
-		redisUtil.set(CacheNames.CAPTCHA_KEY + key, verCode, 30L, TimeUnit.MINUTES);
+		bladeRedis.setEx(CacheNames.CAPTCHA_KEY + key, verCode, 30L, TimeUnit.MINUTES);
 		// 将key和base64返回给前端
 		return R.data(Kv.init().set("key", key).set("image", specCaptcha.toBase64()));
 	}

@@ -20,6 +20,7 @@ import org.springblade.auth.enums.BladeUserEnum;
 import org.springblade.auth.utils.TokenUtil;
 import org.springblade.common.cache.CacheNames;
 import org.springblade.core.log.exception.ServiceException;
+import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.props.BladeAuthProperties;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.*;
@@ -41,7 +42,7 @@ public class CaptchaTokenGranter implements ITokenGranter {
 	public static final String GRANT_TYPE = "captcha";
 
 	private IUserClient userClient;
-	private RedisUtil redisUtil;
+	private BladeRedis bladeRedis;
 
 	private BladeAuthProperties authProperties;
 
@@ -52,7 +53,7 @@ public class CaptchaTokenGranter implements ITokenGranter {
 		String key = request.getHeader(TokenUtil.CAPTCHA_HEADER_KEY);
 		String code = request.getHeader(TokenUtil.CAPTCHA_HEADER_CODE);
 		// 获取验证码
-		String redisCode = String.valueOf(redisUtil.get(CacheNames.CAPTCHA_KEY + key));
+		String redisCode = Func.toStr(bladeRedis.get(CacheNames.CAPTCHA_KEY + key));
 		// 判断验证码
 		if (code == null || !StringUtil.equalsIgnoreCase(redisCode, code)) {
 			throw new ServiceException(TokenUtil.CAPTCHA_NOT_CORRECT);

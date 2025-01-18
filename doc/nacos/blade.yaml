@@ -73,7 +73,7 @@ knife4j:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 4.3.0
+  version: 4.4.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.cn
   terms-of-service-url: https://bladex.cn
@@ -86,14 +86,14 @@ swagger:
 blade:
   auth:
     #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2验签,需和前端保持一致
-    public-key: 请配置sm2公钥
+    public-key: ${BLADE_OAUTH2_PUBLIC_KEY}
     #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2解密,前端无需配置
-    private-key: 请配置sm2私钥
+    private-key: ${BLADE_OAUTH2_PRIVATE_KEY}
   token:
     #使用 @org.springblade.test.SignKeyGenerator 获取
-    sign-key: 请配置32位签名
+    sign-key: ${BLADE_TOKEN_SIGN_KEY}
     #使用 @org.springblade.test.SignKeyGenerator 获取
-    aes-key: 请配置cryptoKey
+    aes-key: ${BLADE_TOKEN_CRYPTO_KEY}
   xss:
     enabled: true
     skip-url:

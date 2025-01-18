@@ -1,5 +1,5 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V4.3.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V4.4.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
@@ -33,8 +33,8 @@
 |----------------------|------------|
 | Java                 | 17+        |
 | NodeJS               | 18+        |
-| Spring               | 6.1.14     |
-| Spring Boot          | 3.2.10     |
+| Spring               | 6.1.15     |
+| Spring Boot          | 3.2.12     |
 | Spring Cloud         | 2023.0.3   |
 | Spring Cloud Alibaba | 2023.0.1.2 |
 | Nacos Alibaba        | 2.3.2      |

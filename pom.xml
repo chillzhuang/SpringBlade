@@ -9,7 +9,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>4.3.0</revision>
+        <revision>4.4.0</revision>
+
+        <blade.tool.version>4.4.2</blade.tool.version>
 
         <java.version>17</java.version>
         <maven.plugin.version>3.11.0</maven.plugin.version>
@@ -41,7 +43,7 @@
             <dependency>
                 <groupId>org.springblade</groupId>
                 <artifactId>blade-core-bom</artifactId>
-                <version>${revision}</version>
+                <version>${blade.tool.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

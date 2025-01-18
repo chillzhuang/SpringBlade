@@ -39,6 +39,10 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
             <artifactId>blade-user-api</artifactId>
         </dependency>
         <dependency>
