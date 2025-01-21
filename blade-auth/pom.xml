@@ -49,6 +49,10 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-starter-swagger</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot-autoconfigure</artifactId>
+        </dependency>
         <!-- Captcha -->
         <dependency>
             <groupId>com.github.whvcse</groupId>
