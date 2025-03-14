@@ -27,6 +27,26 @@ public interface CacheNames {
 	String DICT_VALUE = "dict:value";
 	String DICT_LIST = "dict:list";
 
-	String CAPTCHA_KEY = "blade:auth::captcha:";
+	/**
+	 * 验证码key
+	 */
+	String CAPTCHA_KEY = "blade:auth::blade:captcha:";
+
+	/**
+	 * 登录失败key
+	 */
+	String USER_FAIL_KEY = "blade:user::blade:fail:";
+
+	/**
+	 * 返回租户格式的key
+	 *
+	 * @param tenantId      租户编号
+	 * @param cacheKey      缓存key
+	 * @param cacheKeyValue 缓存key值
+	 * @return tenantKey
+	 */
+	static String tenantKey(String tenantId, String cacheKey, String cacheKeyValue) {
+		return tenantId.concat(":").concat(cacheKey).concat(cacheKeyValue);
+	}
 
 }

@@ -20,6 +20,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,8 +31,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springblade.common.cache.CacheNames;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
+import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.secure.utils.SecureUtil;
@@ -39,6 +42,7 @@ import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.excel.UserExcel;
 import org.springblade.system.excel.UserImportListener;
@@ -69,6 +73,7 @@ import java.util.Map;
 public class UserController {
 
 	private IUserService userService;
+	private BladeRedis bladeRedis;
 
 	/**
 	 * 查询单条
@@ -85,7 +90,7 @@ public class UserController {
 	/**
 	 * 查询单条
 	 */
-	@ApiOperationSupport(order =2)
+	@ApiOperationSupport(order = 2)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/info")
 	public R<UserVO> info(BladeUser user) {
@@ -212,7 +217,7 @@ public class UserController {
 	@Operation(summary = "导入用户", description = "传入excel")
 	public R importUser(MultipartFile file, Integer isCovered) {
 		String filename = file.getOriginalFilename();
-		if (StringUtils.isEmpty(filename)) {
+		if (StringUtil.isBlank(filename)) {
 			throw new RuntimeException("请上传文件!");
 		}
 		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls") && !StringUtils.endsWithIgnoreCase(filename, ".xlsx"))) {
@@ -240,14 +245,14 @@ public class UserController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public void exportUser(@Parameter(hidden = true) @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
 		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
-		if (!SecureUtil.isAdministrator()){
+		if (!SecureUtil.isAdministrator()) {
 			queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId());
 		}
 		queryWrapper.lambda().eq(User::getIsDeleted, BladeConstant.DB_NOT_DELETED);
 		List<UserExcel> list = userService.exportUser(queryWrapper);
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8);
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
@@ -263,7 +268,7 @@ public class UserController {
 		List<UserExcel> list = new ArrayList<>();
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8.name());
+		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8);
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
@@ -278,5 +283,21 @@ public class UserController {
 		return R.status(userService.registerGuest(user, oauthId));
 	}
 
+
+	/**
+	 * 用户解锁
+	 */
+	@PostMapping("/unlock")
+	@ApiOperationSupport(order = 16)
+	@Operation(summary = "账号解锁")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+	public R unlock(String userIds) {
+		if (StringUtil.isBlank(userIds)) {
+			return R.fail("请至少选择一个用户");
+		}
+		List<User> userList = userService.list(Wrappers.<User>lambdaQuery().in(User::getId, Func.toLongList(userIds)));
+		userList.forEach(user -> bladeRedis.del(CacheNames.tenantKey(user.getTenantId(), CacheNames.USER_FAIL_KEY, user.getAccount())));
+		return R.success("操作成功");
+	}
 
 }

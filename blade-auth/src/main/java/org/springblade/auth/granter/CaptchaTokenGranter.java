@@ -16,6 +16,7 @@
 package org.springblade.auth.granter;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springblade.auth.enums.BladeUserEnum;
 import org.springblade.auth.utils.TokenUtil;
 import org.springblade.common.cache.CacheNames;
@@ -30,16 +31,20 @@ import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.Duration;
+
 /**
  * 验证码TokenGranter
  *
  * @author Chill
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class CaptchaTokenGranter implements ITokenGranter {
 
 	public static final String GRANT_TYPE = "captcha";
+	public static final Integer FAIL_COUNT = 5;
 
 	private IUserClient userClient;
 	private BladeRedis bladeRedis;
@@ -53,7 +58,7 @@ public class CaptchaTokenGranter implements ITokenGranter {
 		String key = request.getHeader(TokenUtil.CAPTCHA_HEADER_KEY);
 		String code = request.getHeader(TokenUtil.CAPTCHA_HEADER_CODE);
 		// 获取验证码
-		String redisCode = Func.toStr(bladeRedis.get(CacheNames.CAPTCHA_KEY + key));
+		String redisCode = Func.toStr(bladeRedis.getAndDel(CacheNames.CAPTCHA_KEY + key));
 		// 判断验证码
 		if (code == null || !StringUtil.equalsIgnoreCase(redisCode, code)) {
 			throw new ServiceException(TokenUtil.CAPTCHA_NOT_CORRECT);
@@ -62,6 +67,14 @@ public class CaptchaTokenGranter implements ITokenGranter {
 		String tenantId = tokenParameter.getArgs().getStr("tenantId");
 		String account = tokenParameter.getArgs().getStr("account");
 		String password = tokenParameter.getArgs().getStr("password");
+
+		// 判断登录是否锁定
+		int cnt = Func.toInt(bladeRedis.get(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account)), 0);
+		if (cnt >= FAIL_COUNT) {
+			log.error("用户登录失败次数过多, 账号:{}, IP:{}", account, WebUtil.getIP());
+			throw new ServiceException(TokenUtil.USER_HAS_TOO_MANY_FAILS);
+		}
+
 		UserInfo userInfo = null;
 		if (Func.isNoneBlank(account, password)) {
 			// 获取用户类型
@@ -79,6 +92,14 @@ public class CaptchaTokenGranter implements ITokenGranter {
 				result = userClient.userInfo(tenantId, account, DigestUtil.encrypt(decryptPassword));
 			}
 			userInfo = result.isSuccess() ? result.getData() : null;
+		}
+
+		if (userInfo == null || userInfo.getUser() == null) {
+			// 增加错误锁定次数
+			bladeRedis.setEx(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account), cnt + 1, Duration.ofMinutes(30));
+		} else {
+			// 成功则清除登录缓存
+			bladeRedis.del(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account));
 		}
 		return userInfo;
 	}

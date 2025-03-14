@@ -1,5 +1,5 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Release-V4.4.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V4.5.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
@@ -81,19 +81,20 @@ SpringBlade
 
 ## 官方产品
 
-| 简介            | 演示地址                                                 |
-|---------------|------------------------------------------------------|
-| BladeX企业级开发平台 | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
-| BladeX可视化数据大屏 | [https://data.bladex.cn](https://data.bladex.cn)     |
-| BladeX物联网开发平台 | [https://iot.bladex.cn](https://iot.bladex.cn)       |
+| 简介              | 演示地址                                                 |
+|-----------------|------------------------------------------------------|
+| BladeX企业级开发平台   | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
+| BladeX可视化数据大屏   | [https://data.bladex.cn](https://data.bladex.cn)     |
+| BladeX物联网开发平台   | [https://iot.bladex.cn](https://iot.bladex.cn)       |
+| BladeXAI大模型平台 | [https://aigc.bladex.cn/](https://aigc.bladex.cn/)       |
 
 ## 前端项目
 
-| 简介                 | 地址                                                                                                 |
-|--------------------|----------------------------------------------------------------------------------------------------|
-| 前端框架Sword(基于React) | [https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)                                   |
-| 前端框架Saber(基于Vue2)  | [https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)                                   |
-| 前端框架Saber3(基于Vue3) | [https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber/tree/3.x/)                        |
+| 简介                 | 地址                                                                           |
+|--------------------|------------------------------------------------------------------------------|
+| 前端框架Saber3(基于Vue3) | [https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber)            |
+| 前端框架Saber(基于Vue2)  | [https://gitee.com/smallc/Saber2](https://gitee.com/smallc/Saber/tree/vue2/) |
+| 前端框架Sword(基于React) | [https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)             |
 
 ## 后端项目
 | 简介            | 地址                                                                                                 |

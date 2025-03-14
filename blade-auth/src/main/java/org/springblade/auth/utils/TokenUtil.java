@@ -47,6 +47,7 @@ public class TokenUtil {
 	public final static String HEADER_KEY = "Authorization";
 	public final static String HEADER_PREFIX = "Basic ";
 	public final static String ENCRYPT_PREFIX = "04";
+	public final static String USER_HAS_TOO_MANY_FAILS = "用户登录失败次数过多";
 	public final static String DEFAULT_AVATAR = "https://bladex.cn/images/logo.png";
 
 	/**
