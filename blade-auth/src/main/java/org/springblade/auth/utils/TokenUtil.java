@@ -15,17 +15,18 @@
  */
 package org.springblade.auth.utils;
 
+import org.springblade.common.cache.CacheNames;
 import org.springblade.core.launch.constant.TokenConstant;
+import org.springblade.core.log.exception.ServiceException;
+import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.AuthInfo;
 import org.springblade.core.secure.TokenInfo;
 import org.springblade.core.secure.utils.SecureUtil;
-import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.SM2Util;
-import org.springblade.core.tool.utils.StringPool;
-import org.springblade.core.tool.utils.StringUtil;
+import org.springblade.core.tool.utils.*;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class TokenUtil {
 	public final static String HEADER_PREFIX = "Basic ";
 	public final static String ENCRYPT_PREFIX = "04";
 	public final static String USER_HAS_TOO_MANY_FAILS = "用户登录失败次数过多";
+	public final static String IP_HAS_TOO_MANY_FAILS = "用户登录失败次数过多，请稍后再试";
 	public final static String DEFAULT_AVATAR = "https://bladex.cn/images/logo.png";
 
 	/**
@@ -127,6 +129,70 @@ public class TokenUtil {
 			return StringPool.EMPTY;
 		}
 		return decryptPassword;
+	}
+
+	/**
+	 * 失败次数上限
+	 */
+	public final static Integer FAIL_COUNT = 5;
+
+	/**
+	 * 检查账号和IP是否被锁定
+	 *
+	 * @param bladeRedis Redis缓存
+	 * @param tenantId   租户ID
+	 * @param account    账号
+	 */
+	public static void checkAccountAndIpLock(BladeRedis bladeRedis, String tenantId, String account) {
+		String ip = WebUtil.getIP();
+
+		// 检查账号锁定
+		int userFailCount = Func.toInt(bladeRedis.get(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account)), 0);
+		if (userFailCount >= FAIL_COUNT) {
+			throw new ServiceException(USER_HAS_TOO_MANY_FAILS);
+		}
+
+		// 检查IP锁定
+		int ipFailCount = Func.toInt(bladeRedis.get(CacheNames.IP_FAIL_KEY + ip), 0);
+		if (ipFailCount >= FAIL_COUNT) {
+			throw new ServiceException(IP_HAS_TOO_MANY_FAILS);
+		}
+	}
+
+	/**
+	 * 处理登录失败，增加失败次数
+	 *
+	 * @param bladeRedis Redis缓存
+	 * @param tenantId   租户ID
+	 * @param account    账号
+	 */
+	public static void handleLoginFailure(BladeRedis bladeRedis, String tenantId, String account) {
+		String ip = WebUtil.getIP();
+
+		// 增加账号错误锁定次数
+		int userFailCount = Func.toInt(bladeRedis.get(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account)), 0);
+		bladeRedis.setEx(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account), userFailCount + 1, Duration.ofMinutes(30));
+
+		// 增加IP错误锁定次数
+		int ipFailCount = Func.toInt(bladeRedis.get(CacheNames.IP_FAIL_KEY + ip), 0);
+		bladeRedis.setEx(CacheNames.IP_FAIL_KEY + ip, ipFailCount + 1, Duration.ofMinutes(30));
+	}
+
+	/**
+	 * 处理登录成功，清除失败缓存
+	 *
+	 * @param bladeRedis Redis缓存
+	 * @param tenantId   租户ID
+	 * @param account    账号
+	 */
+	public static void handleLoginSuccess(BladeRedis bladeRedis, String tenantId, String account) {
+		String ip = WebUtil.getIP();
+
+		// 清除账号登录失败缓存
+		bladeRedis.del(CacheNames.tenantKey(tenantId, CacheNames.USER_FAIL_KEY, account));
+
+		// 清除IP登录失败缓存
+		bladeRedis.del(CacheNames.IP_FAIL_KEY + ip);
 	}
 
 }

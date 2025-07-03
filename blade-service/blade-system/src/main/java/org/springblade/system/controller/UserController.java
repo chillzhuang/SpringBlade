@@ -16,8 +16,8 @@
 package org.springblade.system.controller;
 
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.builder.ExcelReaderBuilder;
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -27,6 +27,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,10 +44,10 @@ import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
-import org.springblade.system.user.entity.User;
 import org.springblade.system.excel.UserExcel;
 import org.springblade.system.excel.UserImportListener;
 import org.springblade.system.service.IUserService;
+import org.springblade.system.user.entity.User;
 import org.springblade.system.user.vo.UserVO;
 import org.springblade.system.wrapper.UserWrapper;
 import org.springframework.util.StringUtils;
@@ -70,6 +71,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
+@Tag(name = "用户管理", description = "接口")
 public class UserController {
 
 	private IUserService userService;
@@ -227,7 +229,7 @@ public class UserController {
 		try {
 			UserImportListener importListener = new UserImportListener(userService);
 			inputStream = new BufferedInputStream(file.getInputStream());
-			ExcelReaderBuilder builder = EasyExcel.read(inputStream, UserExcel.class, importListener);
+			ExcelReaderBuilder builder = FastExcel.read(inputStream, UserExcel.class, importListener);
 			builder.doReadAll();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -254,7 +256,7 @@ public class UserController {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8);
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+		FastExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
 
 	/**
@@ -270,7 +272,7 @@ public class UserController {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8);
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+		FastExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
 	}
 
 	/**

@@ -4,9 +4,11 @@ server:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
     loadbalancer:
       retry:
         enabled: true

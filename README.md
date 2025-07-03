@@ -1,16 +1,20 @@
- <p align="center">
-      <img src="https://img.shields.io/badge/Release-V4.5.0-green.svg" alt="Downloads">
-      <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
+<p align="center">
+  <img src="https://img.shields.io/badge/Release-V4.6.0-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-3.2-blue.svg" alt="Downloads">
-   <a target="_blank" href="https://bladex.cn">
-   <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
- </a>
- <a target="_blank" href="https://bladex.cn">
-   <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
- </a>
- </p>  
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2025-blue.svg" alt="Coverage Status">
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.5-blue.svg" alt="Downloads">
+  <a href="https://central.sonatype.com/artifact/org.springblade/blade-core-bom/versions">
+    <img src="https://img.shields.io/nexus/r/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
+  </a>
+  <br/>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
+  </a>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
+  </a>
+</p>  
 
 ## SpringBlade微服务开发平台
 * 采用前后端分离的模式，前端开源两个框架：[Sword](https://gitee.com/smallc/Sword) (基于 React、Ant Design)、[Saber](https://gitee.com/smallc/Saber) (基于 Vue、Element-UI)
@@ -33,12 +37,12 @@
 |----------------------|------------|
 | Java                 | 17+        |
 | NodeJS               | 18+        |
-| Spring               | 6.1.15     |
-| Spring Boot          | 3.2.12     |
-| Spring Cloud         | 2023.0.3   |
-| Spring Cloud Alibaba | 2023.0.1.2 |
-| Nacos Alibaba        | 2.3.2      |
-| Mybatis Plus         | 3.5.8      |
+| Spring               | 6.2.8      |
+| Spring Boot          | 3.5.3      |
+| Spring Cloud         | 2025.0.0   |
+| Spring Cloud Alibaba | 2023.0.3.3 |
+| Nacos Alibaba        | 3.0.2      |
+| Mybatis Plus         | 3.5.12     |
 
 
 ## 工程结构
@@ -50,16 +54,20 @@ SpringBlade
 ├── blade-ops -- 运维中心
 ├    ├── blade-admin -- spring-cloud后台管理
 ├    ├── blade-develop -- 代码生成
-├    ├── blade-resource -- 资源管理
+├    ├── blade-report -- 报表模块
+├    ├── blade-resource -- 资源模块
 ├    ├── blade-seata-order -- seata分布式事务demo
 ├    ├── blade-seata-storage -- seata分布式事务demo
 ├── blade-service -- 业务模块
+├    ├── blade-demo -- 示例模块 
 ├    ├── blade-desk -- 工作台模块 
 ├    ├── blade-log -- 日志模块 
 ├    └── blade-system -- 系统模块 
 ├── blade-service-api -- 业务模块api封装
+├    ├── blade-demo-api -- 示例api 
 ├    ├── blade-desk-api -- 工作台api 
 ├    ├── blade-dict-api -- 字典api 
+├    ├── blade-scope-api -- 权限api 
 ├    ├── blade-system-api -- 系统api 
 └──  └── blade-user-api -- 用户api 
 ```
@@ -86,7 +94,7 @@ SpringBlade
 | BladeX企业级开发平台   | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
 | BladeX可视化数据大屏   | [https://data.bladex.cn](https://data.bladex.cn)     |
 | BladeX物联网开发平台   | [https://iot.bladex.cn](https://iot.bladex.cn)       |
-| BladeXAI大模型平台 | [https://aigc.bladex.cn/](https://aigc.bladex.cn/)       |
+| BladeXAI大模型平台 | [https://ai.bladex.cn/](https://ai.bladex.cn/)      |
 
 ## 前端项目
 

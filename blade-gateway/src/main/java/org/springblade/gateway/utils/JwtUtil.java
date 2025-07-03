@@ -17,6 +17,7 @@ package org.springblade.gateway.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.gateway.props.JwtProperties;
@@ -103,9 +104,10 @@ public class JwtUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parserBuilder()
-				.setSigningKey(Base64.getDecoder().decode(getBase64Security())).build()
-				.parseClaimsJws(jsonWebToken).getBody();
+			return Jwts.parser()
+				.verifyWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(getBase64Security()))).build()
+				.parseSignedClaims(jsonWebToken)
+				.getPayload();
 		} catch (Exception ex) {
 			return null;
 		}

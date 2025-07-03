@@ -38,6 +38,11 @@ public interface CacheNames {
 	String USER_FAIL_KEY = "blade:user::blade:fail:";
 
 	/**
+	 * IP锁定key
+	 */
+	String IP_FAIL_KEY = "blade:ip::blade:fail:";
+
+	/**
 	 * 返回租户格式的key
 	 *
 	 * @param tenantId      租户编号
