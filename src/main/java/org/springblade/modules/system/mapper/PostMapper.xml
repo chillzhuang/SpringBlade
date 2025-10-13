@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.system.mapper.PostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="postResultMap" type="org.springblade.modules.system.entity.Post">
+        <result column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="category" property="category"/>
+        <result column="post_code" property="postCode"/>
+        <result column="post_name" property="postName"/>
+        <result column="sort" property="sort"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectPostPage" resultMap="postResultMap">
+        select * from blade_post where is_deleted = 0
+    </select>
+
+    <select id="getPostNames" resultType="java.lang.String">
+        SELECT
+            post_name
+        FROM
+            blade_post
+        WHERE
+            id IN
+            <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+                #{ids}
+            </foreach>
+            and is_deleted = 0
+    </select>
+
+</mapper>

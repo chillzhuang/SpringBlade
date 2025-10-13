@@ -1,0 +1,180 @@
+#服务器配置
+server:
+  port: 80
+  undertow:
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    buffer-size: 1024
+    # 是否分配的直接内存
+    direct-buffers: true
+    # 线程配置
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 16
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 400
+  servlet:
+    # 编码配置
+    encoding:
+      charset: UTF-8
+      force: true
+
+#spring配置
+spring:
+  cache:
+    ehcache:
+      config: classpath:config/ehcache.xml
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 1024MB
+  web:
+    resources:
+      add-mappings: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#配置日志地址
+logging:
+  config: classpath:log/logback_${blade.env}.xml
+
+# mybatis
+mybatis-plus:
+  mapper-locations: classpath:org/springblade/**/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: org.springblade.**.entity
+  #typeEnumsPackage: org.springblade.dashboard.entity.enums
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: assign_id
+      #字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      where-strategy: not_null
+      #驼峰下划线转换
+      table-underline: true
+      # 逻辑删除配置
+      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
+      logic-delete-value: 1
+      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+#报表配置
+report:
+  enabled: false
+  database:
+    provider:
+      prefix: blade-
+
+#springdoc-openapi配置
+springdoc:
+  default-flat-param-object: true
+
+#knife4j配置
+knife4j:
+  #启用
+  enable: true
+  #基础认证
+  basic:
+    enable: false
+    username: blade
+    password: blade
+  #增强配置
+  setting:
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    enableHost: false
+    enableHostText: http://localhost
+    enableRequestCache: true
+    enableFilterMultipartApis: false
+    enableFilterMultipartApiMethodType: POST
+    language: zh_cn
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Copyright © 2024 SpringBlade All Rights Reserved
+
+#swagger配置信息
+swagger:
+  title: SpringBlade 接口文档系统
+  description: SpringBlade 接口文档系统
+  version: 4.7.0
+  license: Powered By SpringBlade
+  licenseUrl: https://bladex.cn
+  terms-of-service-url: https://bladex.cn
+  contact:
+    name: smallchill
+    email: bladejava@qq.com
+    url: https://gitee.com/smallc
+
+#oss配置
+oss:
+  enabled: true
+  name: qiniu
+  tenant-mode: true
+  endpoint: http://prt1thnw3.bkt.clouddn.com
+  access-key: N_Loh1ngBqcJovwiAJqR91Ifj2vgOWHOf8AwBA_h
+  secret-key: AuzuA1KHAbkIndCU0dB3Zfii2O3crHNODDmpxHRS
+  bucket-name: blade
+
+#第三方登陆配置
+social:
+  oauth:
+    GITHUB:
+      client-id: 233************
+      client-secret: 233************************************
+      redirect-uri: ${social.domain}/oauth/redirect/github
+    GITEE:
+      client-id: 233************
+      client-secret: 233************************************
+      redirect-uri: ${social.domain}/oauth/redirect/gitee
+    WECHAT_OPEN:
+      client-id: 233************
+      client-secret: 233************************************
+      redirect-uri: ${social.domain}/oauth/redirect/wechat
+    QQ:
+      client-id: 233************
+      client-secret: 233************************************
+      redirect-uri: ${social.domain}/oauth/redirect/qq
+    DINGTALK:
+      client-id: 233************
+      client-secret: 233************************************
+      redirect-uri: ${social.domain}/oauth/redirect/dingtalk
+
+
+#blade配置
+blade:
+  auth:
+    #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2验签,需和前端保持一致
+    public-key: ${BLADE_OAUTH2_PUBLIC_KEY}
+    #使用 @org.springblade.test.Sm2KeyGenerator 获取,用于国密sm2解密,前端无需配置
+    private-key: ${BLADE_OAUTH2_PRIVATE_KEY}
+  token:
+    #使用 @org.springblade.test.SignKeyGenerator 获取
+    sign-key: ${BLADE_TOKEN_SIGN_KEY}
+    #使用 @org.springblade.test.SignKeyGenerator 获取
+    aes-key: ${BLADE_TOKEN_CRYPTO_KEY}
+  xss:
+    enabled: true
+    skip-url:
+      - /blade-test/**
+  secure:
+    skip-url:
+      - /blade-test/**
+    client:
+      - client-id: sword
+        path-patterns:
+          - /blade-sword/**
+      - client-id: saber
+        path-patterns:
+          - /blade-saber/**
+  tenant:
+    column: tenant_id
+    tables:
+      - blade_notice
+

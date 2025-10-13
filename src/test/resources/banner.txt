@@ -1,0 +1,10 @@
+${AnsiColor.BRIGHT_CYAN} _____               _                ${AnsiColor.BLUE} ______  _             _
+${AnsiColor.BRIGHT_CYAN}/  ___|             (_)               ${AnsiColor.BLUE} | ___ \| |           | |
+${AnsiColor.BRIGHT_CYAN}\ `--.  _ __   _ __  _  _ __    __ _  ${AnsiColor.BLUE} | |_/ /| |  __ _   __| |  ___
+${AnsiColor.BRIGHT_CYAN} `--. \| '_ \ | '__|| || '_ \  / _` | ${AnsiColor.BLUE} | ___ \| | / _` | / _` | / _ \
+${AnsiColor.BRIGHT_CYAN}/\__/ /| |_) || |   | || | | || (_| | ${AnsiColor.BLUE} | |_/ /| || (_| || (_| ||  __/
+${AnsiColor.BRIGHT_CYAN}\____/ | .__/ |_|   |_||_| |_| \__, | ${AnsiColor.BLUE} \____/ |_| \__,_| \__,_| \___|
+${AnsiColor.BRIGHT_CYAN}       | |                      __/ |
+${AnsiColor.BRIGHT_CYAN}       |_|                     |___/
+
+${AnsiColor.BLUE}:: SpringBlade :: ${spring.application.name}:${AnsiColor.RED}${blade.env}${AnsiColor.BLUE} :: Running SpringBoot ${spring-boot.version} :: ${AnsiColor.BRIGHT_BLACK}

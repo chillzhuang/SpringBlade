@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.system.mapper.LogUsualMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="logResultMap" type="org.springblade.core.log.model.LogUsual">
+        <result column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="service_id" property="serviceId"/>
+        <result column="server_host" property="serverHost"/>
+        <result column="server_ip" property="serverIp"/>
+        <result column="env" property="env"/>
+        <result column="log_level" property="logLevel"/>
+        <result column="log_data" property="logData"/>
+        <result column="method" property="method"/>
+        <result column="request_uri" property="requestUri"/>
+        <result column="user_agent" property="userAgent"/>
+        <result column="params" property="params"/>
+        <result column="create_by" property="createBy"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="baseColumnList">
+        select id,
+        create_time AS createTime,
+        service_id, server_host, server_ip, env, log_level, log_data, method, request_uri, user_agent, params, create_by
+    </sql>
+
+</mapper>

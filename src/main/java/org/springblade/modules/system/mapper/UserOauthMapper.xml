@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.system.mapper.UserOauthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="userResultMap" type="org.springblade.modules.system.entity.UserOauth">
+        <result column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
+        <result column="avatar" property="avatar"/>
+        <result column="blog" property="blog"/>
+        <result column="company" property="company"/>
+        <result column="location" property="location"/>
+        <result column="email" property="email"/>
+        <result column="remark" property="remark"/>
+        <result column="gender" property="gender"/>
+        <result column="source" property="source"/>
+    </resultMap>
+
+</mapper>
