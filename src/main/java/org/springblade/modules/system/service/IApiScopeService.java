@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.modules.system.vo;
+package org.springblade.modules.system.service;
 
-import lombok.Data;
-
-import java.util.List;
+import org.springblade.core.mp.base.BaseService;
+import org.springblade.modules.system.entity.ApiScope;
 
 /**
- * CheckedTreeVO
+ *  服务类
  *
- * @author Chill
+ * @author BladeX
  */
-@Data
-public class CheckedTreeVO {
-
-	private List<String> menu;
-
-	private List<String> dataScope;
-
-	private List<String> apiScope;
+public interface IApiScopeService extends BaseService<ApiScope> {
 
 }

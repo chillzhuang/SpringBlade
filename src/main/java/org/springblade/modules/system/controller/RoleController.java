@@ -32,7 +32,7 @@ import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.utils.CacheUtil;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.Role;
 import org.springblade.modules.system.service.IRoleService;
@@ -44,7 +44,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static org.springblade.core.tool.utils.CacheUtil.SYS_CACHE;
+import static org.springblade.core.cache.utils.CacheUtil.SYS_CACHE;
+
 
 /**
  * 控制器
@@ -136,14 +137,14 @@ public class RoleController extends BladeController {
 	}
 
 	/**
-	 * 设置菜单权限
+	 * 设置角色权限
 	 */
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 7)
 	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
 	public R grant(@RequestBody GrantVO grantVO) {
 		CacheUtil.clear(SYS_CACHE);
-		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds(), grantVO.getDataScopeIds());
+		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds(), grantVO.getDataScopeIds(), grantVO.getApiScopeIds());
 		return R.status(temp);
 	}
 

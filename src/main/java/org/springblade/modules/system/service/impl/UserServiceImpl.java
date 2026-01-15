@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.base.BaseServiceImpl;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.*;
 import org.springblade.modules.system.entity.Tenant;
 import org.springblade.modules.system.entity.User;
@@ -65,6 +66,23 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 			throw new ServiceException("当前用户已存在!");
 		}
 		return saveOrUpdate(user);
+	}
+
+	@Override
+	public boolean updateUserInfo(User user) {
+		// 用户修改自身信息强制指定当前请求账号的ID
+		user.setId(SecureUtil.getUserId());
+		User currentUser = getById(user.getId());
+		if (currentUser == null) {
+			throw new ServiceException("用户不存在!");
+		}
+		// 用户修改自身信息强制忽略角色、部门、账号等字段
+		user.setRoleId(null);
+		user.setDeptId(null);
+		user.setAccount(null);
+		user.setPassword(null);
+		user.setUpdateTime(DateUtil.now());
+		return updateById(user);
 	}
 
 	@Override

@@ -15,57 +15,58 @@
  */
 package org.springblade.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springblade.core.mp.base.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * 实体类
  *
- * @author Chill
+ * @author BladeX
  */
 @Data
-@TableName("blade_role_scope")
-@Schema(description = "RoleScope对象")
-public class RoleScope implements Serializable {
+@TableName("blade_scope_api")
+@EqualsAndHashCode(callSuper = true)
+@Schema(description = "ApiScope对象")
+public class ApiScope extends BaseEntity {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键
+	 * 菜单主键
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "主键")
-	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
-
+	@Schema(description = "菜单主键")
+	private Long menuId;
 	/**
-	 * 权限类型
+	 * 资源编号
 	 */
-	@Schema(description = "权限类型")
-	private Integer scopeCategory;
-
+	@Schema(description = "资源编号")
+	private String resourceCode;
 	/**
-	 * 权限id
+	 * 接口权限名称
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "权限id")
-	private Long scopeId;
-
+	@Schema(description = "接口权限名称")
+	private String scopeName;
 	/**
-	 * 角色id
+	 * 接口权限字段
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "角色id")
-	private Long roleId;
+	@Schema(description = "接口权限字段")
+	private String scopePath;
+	/**
+	 * 接口权限类型
+	 */
+	@Schema(description = "接口权限类型")
+	private Integer scopeType;
+	/**
+	 * 接口权限备注
+	 */
+	@Schema(description = "接口权限备注")
+	private String remark;
 
 
 }

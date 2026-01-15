@@ -91,6 +91,14 @@ public interface IMenuService extends IService<Menu> {
 	List<MenuVO> grantDataScopeTree(BladeUser user);
 
 	/**
+	 * 接口权限授权树形结构
+	 *
+	 * @param user
+	 * @return
+	 */
+	List<MenuVO> grantApiScopeTree(BladeUser user);
+
+	/**
 	 * 默认选中节点
 	 *
 	 * @param roleIds
@@ -105,6 +113,14 @@ public interface IMenuService extends IService<Menu> {
 	 * @return
 	 */
 	List<String> dataScopeTreeKeys(String roleIds);
+
+	/**
+	 * 接口权限默认选中节点
+	 *
+	 * @param roleIds
+	 * @return
+	 */
+	List<String> apiScopeTreeKeys(String roleIds);
 
 	/**
 	 * 获取配置的角色权限

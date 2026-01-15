@@ -47,4 +47,14 @@ public interface CommonConstant {
 	 */
 	String DEFAULT_PASSWORD = "123456";
 
+	/**
+	 * 数据权限类型
+	 */
+	Integer DATA_SCOPE_CATEGORY = 1;
+
+	/**
+	 * 接口权限类型
+	 */
+	Integer API_SCOPE_CATEGORY = 2;
+
 }

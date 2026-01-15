@@ -301,4 +301,14 @@ public class UserController {
 		return R.success("操作成功");
 	}
 
+	/**
+	 * 修改基本信息
+	 */
+	@PostMapping("/update-info")
+	@ApiOperationSupport(order = 17)
+	@Operation(summary = "修改基本信息", description = "传入User")
+	public R updateInfo(@RequestBody User user) {
+		return R.status(userService.updateUserInfo(user));
+	}
+
 }

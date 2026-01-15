@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.modules.system.vo;
+package org.springblade.modules.system.mapper;
 
-import lombok.Data;
-
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springblade.modules.system.entity.ApiScope;
 
 /**
- * CheckedTreeVO
+ *  Mapper 接口
  *
- * @author Chill
+ * @author BladeX
  */
-@Data
-public class CheckedTreeVO {
-
-	private List<String> menu;
-
-	private List<String> dataScope;
-
-	private List<String> apiScope;
+public interface ApiScopeMapper extends BaseMapper<ApiScope> {
 
 }

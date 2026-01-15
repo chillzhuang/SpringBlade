@@ -35,4 +35,6 @@ public class GrantTreeVO implements Serializable {
 
 	private List<MenuVO> dataScope;
 
+	private List<MenuVO> apiScope;
+
 }

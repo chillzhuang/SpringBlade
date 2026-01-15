@@ -304,6 +304,15 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 是否已授权
+	 *
+	 * @return boolean
+	 */
+	public static boolean hasAuth() {
+		return getUser() != null;
+	}
+
+	/**
 	 * 获取Claims
 	 *
 	 * @param request request

@@ -22,7 +22,7 @@ import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.node.ForestNodeMerger;
-import org.springblade.core.tool.utils.CacheUtil;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.modules.system.entity.Dept;
