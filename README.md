@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Release-V4.8.0-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/Release-V4.9.0-blue.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/Spring%20Cloud-2025-blue.svg" alt="Coverage Status">
@@ -17,7 +17,7 @@
 </p>  
 
 ## SpringBlade微服务开发平台
-* 采用前后端分离的模式，前端开源两个框架：[Sword](https://gitee.com/smallc/Sword) (基于 React、Ant Design)、[Saber](https://gitee.com/smallc/Saber) (基于 Vue、Element-UI)
+* 采用前后端分离的模式，前端架构 [Saber](https://gitee.com/smallc/Saber) (基于 Vue3、Element-Plus)
 * 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://gitee.com/smallc/blade-tool)
 * [BladeTool](https://github.com/chillzhuang/blade-tool)已推送至Maven中央库，直接引入即可，减少了工程的臃肿，也可更注重于业务开发
 * 集成Sentinel从流量控制、熔断降级、系统负载等多个维度保护服务的稳定性。
@@ -37,12 +37,12 @@
 |----------------------|------------|
 | Java                 | 17+        |
 | NodeJS               | 18+        |
-| Spring               | 6.2.15     |
-| Spring Boot          | 3.5.9      |
-| Spring Cloud         | 2025.0.1   |
+| Spring               | 6.2.17     |
+| Spring Boot          | 3.5.13     |
+| Spring Cloud         | 2025.0.2   |
 | Spring Cloud Alibaba | 2025.0.0.0 |
-| Nacos Alibaba        | 3.1.1      |
-| Mybatis Plus         | 3.5.19     |
+| Nacos Alibaba        | 3.1.2      |
+| Mybatis Plus         | 3.5.14     |
 
 
 ## 工程结构
@@ -90,7 +90,8 @@ SpringBlade
 | 交流四群 | `1034621754` (满)                                                              |
 | 交流五群 | `946350912` (满)                                                               |
 | 交流六群 | `511624269` (满)                                                               |
-| 交流七群 | `298061704`                                                                   |
+| 交流七群 | `298061704` (满)                                                              |
+| 交流八群 | `1078507904`                                                                  |
 
 ## 官方产品
 

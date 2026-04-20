@@ -7,10 +7,10 @@
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
     <packaging>jar</packaging>
-    <version>4.8.0</version>
+    <version>4.9.0</version>
 
     <properties>
-        <blade.tool.version>4.8.0</blade.tool.version>
+        <blade.tool.version>4.9.0</blade.tool.version>
 
         <java.version>17</java.version>
         <maven.plugin.version>3.11.0</maven.plugin.version>
