@@ -29,6 +29,8 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.jackson.BladeView;
+import org.springblade.core.tool.jackson.Views;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.desk.entity.Notice;
 import org.springblade.desk.service.INoticeService;
@@ -56,6 +58,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 详情
 	 */
 	@GetMapping("/detail")
+	@BladeView(Views.Detail.class)
 	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入notice")
 	public R<NoticeVO> detail(Notice notice) {
@@ -67,6 +70,7 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 分页
 	 */
 	@GetMapping("/list")
+	@BladeView(Views.Summary.class)
 	@Parameters({
 		@Parameter(name = "category", description = "公告类型", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
 		@Parameter(name = "title", description = "公告标题", in = ParameterIn.QUERY, schema = @Schema(type = "string"))

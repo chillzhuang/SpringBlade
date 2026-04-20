@@ -42,6 +42,8 @@ import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.constant.RoleConstant;
+import org.springblade.core.tool.jackson.BladeView;
+import org.springblade.core.tool.jackson.Views;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.system.excel.UserExcel;
@@ -83,6 +85,7 @@ public class UserController {
 	@ApiOperationSupport(order = 1)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/detail")
+	@BladeView(Views.Admin.class)
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<UserVO> detail(User user) {
 		User detail = userService.getOne(Condition.getQueryWrapper(user));
@@ -95,6 +98,7 @@ public class UserController {
 	@ApiOperationSupport(order = 2)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/info")
+	@BladeView
 	public R<UserVO> info(BladeUser user) {
 		User detail = userService.getById(user.getUserId());
 		return R.data(UserWrapper.build().entityVO(detail));
@@ -104,6 +108,7 @@ public class UserController {
 	 * 用户列表
 	 */
 	@GetMapping("/list")
+	@BladeView(Views.Admin.class)
 	@Parameters({
 		@Parameter(name = "account", description = "账号名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "realName", description = "姓名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
@@ -202,6 +207,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/user-list")
+	@BladeView(Views.Admin.class)
 	@ApiOperationSupport(order = 10)
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@Operation(summary = "用户列表", description = "传入user")

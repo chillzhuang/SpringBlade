@@ -73,7 +73,7 @@ knife4j:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 4.8.0
+  version: 4.9.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.cn
   terms-of-service-url: https://bladex.cn
@@ -94,6 +94,24 @@ blade:
     sign-key: ${BLADE_TOKEN_SIGN_KEY}
     #使用 @org.springblade.test.SignKeyGenerator 获取
     aes-key: ${BLADE_TOKEN_CRYPTO_KEY}
+  #jackson配置
+  jackson:
+    #null自动转空值
+    null-to-empty: true
+    #大数字自动转字符串
+    big-num-to-string: true
+    #支持text文本请求,与报文加密同时开启
+    support-text-plain: false
+    #视图配置
+    view:
+      #动态模式的默认视图
+      default-view: summary
+      #角色→视图映射
+      role-mapping:
+        administrator: administrator
+        admin: admin
+        user: detail
+        guest: summary
   xss:
     enabled: true
     skip-url:

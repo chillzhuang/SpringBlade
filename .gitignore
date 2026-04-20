@@ -29,3 +29,8 @@ Thumbs.db
 # Flattened pom
 .flattened-pom.xml
 /**/.flattened-pom.xml
+
+# Claude Code：排除本地配置/缓存，保留团队共享的 skills
+.claude/*
+!.claude/skills/
+

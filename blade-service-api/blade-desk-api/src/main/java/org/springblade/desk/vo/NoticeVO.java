@@ -3,6 +3,8 @@ package org.springblade.desk.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springblade.core.tool.jackson.BladeView;
+import org.springblade.core.tool.jackson.Views;
 import org.springblade.desk.entity.Notice;
 
 /**
@@ -14,6 +16,7 @@ import org.springblade.desk.entity.Notice;
 @EqualsAndHashCode(callSuper = true)
 public class NoticeVO extends Notice {
 
+	@BladeView(Views.Summary.class)
 	@Schema(description = "通知类型名")
 	private String categoryName;
 
