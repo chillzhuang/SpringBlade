@@ -22,6 +22,7 @@ import org.springblade.modules.system.vo.RoleVO;
 
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务类
@@ -40,12 +41,34 @@ public interface IRoleService extends IService<Role> {
 	IPage<RoleVO> selectRolePage(IPage<RoleVO> page, RoleVO role);
 
 	/**
-	 * 树形结构
+	 * 树形结构（含超管判定 + 当前租户隔离）
+	 * <p>
+	 * 仅超级管理员可指定任意 tenantId 查询；其他用户传入的 tenantId 一律被忽略，
+	 * 强制使用当前会话租户。
 	 *
-	 * @param tenantId
-	 * @return
+	 * @param tenantId 入参 tenantId（仅超管生效）
+	 * @return 角色树
 	 */
 	List<RoleVO> tree(String tenantId);
+
+	/**
+	 * 通过 roleId 获取对应租户的角色树（含超管路由判定）
+	 * <p>
+	 * 仅超级管理员可通过任意 roleId 跳转到对应租户的角色树（用于跨租户管理）；
+	 * 其他用户忽略 roleId 参数，强制返回自身租户的角色树。
+	 *
+	 * @param roleId 角色 ID（仅超管生效，用于反推 tenantId）
+	 * @return 角色树
+	 */
+	List<RoleVO> treeById(Long roleId);
+
+	/**
+	 * 列表（含超管判定 + 当前租户隔离）
+	 *
+	 * @param role 查询条件 Map
+	 * @return 列表 VO，非超管时仅命中当前会话租户
+	 */
+	List<RoleVO> selectList(Map<String, Object> role);
 
 	/**
 	 * 权限配置
@@ -57,6 +80,22 @@ public interface IRoleService extends IService<Role> {
 	 * @return 是否成功
 	 */
 	boolean grant(@NotEmpty List<Long> roleIds, List<Long> menuIds, List<Long> dataScopeIds, List<Long> apiScopeIds);
+
+	/**
+	 * 新增或修改角色（带租户归属校验）
+	 *
+	 * @param role 角色实体
+	 * @return 是否成功
+	 */
+	boolean submit(Role role);
+
+	/**
+	 * 删除角色（带租户归属校验）
+	 *
+	 * @param ids 角色主键集合
+	 * @return 是否成功
+	 */
+	boolean remove(List<Long> ids);
 
 	/**
 	 * 获取角色ID

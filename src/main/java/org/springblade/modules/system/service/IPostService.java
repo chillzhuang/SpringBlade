@@ -55,4 +55,31 @@ public interface IPostService extends BaseService<Post> {
 	 */
 	List<String> getPostNames(String postIds);
 
+	/**
+	 * 新增或修改岗位（带租户归属校验）
+	 *
+	 * @param post 岗位实体
+	 * @return 是否成功
+	 */
+	boolean submit(Post post);
+
+	/**
+	 * 删除岗位（带租户归属校验）
+	 *
+	 * @param ids 岗位主键集合
+	 * @return 是否成功
+	 */
+	boolean remove(List<Long> ids);
+
+	/**
+	 * 下拉数据源（含超管判定 + 当前租户隔离）
+	 * <p>
+	 * 仅超级管理员可指定任意 tenantId 查询；其他用户传入的 tenantId 一律被忽略，
+	 * 强制使用当前会话租户。
+	 *
+	 * @param tenantId 入参 tenantId（仅超管生效）
+	 * @return 岗位列表
+	 */
+	List<Post> selectByTenant(String tenantId);
+
 }

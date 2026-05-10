@@ -174,6 +174,15 @@ public class SecureUtil {
 	 * @return boolean
 	 */
 	public static boolean isAdministrator() {
+		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMINISTRATOR);
+	}
+
+	/**
+	 * 是否为管理员
+	 *
+	 * @return boolean
+	 */
+	public static boolean isAdmin() {
 		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMIN);
 	}
 

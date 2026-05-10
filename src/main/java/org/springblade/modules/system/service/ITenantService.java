@@ -17,7 +17,11 @@ package org.springblade.modules.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springblade.core.mp.base.BaseService;
+import org.springblade.core.mp.support.Query;
 import org.springblade.modules.system.entity.Tenant;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 服务类
@@ -42,5 +46,30 @@ public interface ITenantService extends BaseService<Tenant> {
 	 * @return
 	 */
 	boolean saveTenant(Tenant tenant);
+
+	/**
+	 * 详情查询（含超管判定 + 当前租户隔离）
+	 *
+	 * @param tenant 查询条件
+	 * @return 单条记录，非超管时仅命中当前会话租户
+	 */
+	Tenant getDetail(Tenant tenant);
+
+	/**
+	 * 分页列表（含超管判定 + 当前租户隔离）
+	 *
+	 * @param tenant 查询条件 Map
+	 * @param query  分页参数
+	 * @return 分页结果，非超管时仅命中当前会话租户
+	 */
+	IPage<Tenant> selectPage(Map<String, Object> tenant, Query query);
+
+	/**
+	 * 下拉数据源（含超管判定 + 当前租户隔离）
+	 *
+	 * @param tenant 查询条件
+	 * @return 列表，非超管时仅命中当前会话租户
+	 */
+	List<Tenant> selectList(Tenant tenant);
 
 }

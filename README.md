@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Release-V4.9.0-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/Release-V4.10.0-blue.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-Apache%202-blue.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/Spring%20Cloud-2025-blue.svg" alt="Coverage Status">

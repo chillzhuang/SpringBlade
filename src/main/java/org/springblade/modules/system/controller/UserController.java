@@ -18,9 +18,7 @@ package org.springblade.modules.system.controller;
 
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.builder.ExcelReaderBuilder;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,16 +30,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springblade.common.cache.CacheNames;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
-import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.annotation.PreAuth;
-import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.jackson.BladeView;
 import org.springblade.core.tool.jackson.Views;
@@ -77,7 +71,6 @@ import java.util.Map;
 public class UserController {
 
 	private IUserService userService;
-	private BladeRedis bladeRedis;
 
 	/**
 	 * 查询单条
@@ -116,10 +109,8 @@ public class UserController {
 	@ApiOperationSupport(order = 3)
 	@Operation(summary = "列表", description = "传入account和realName")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public R<IPage<UserVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> user, Query query, BladeUser bladeUser) {
-		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
-		IPage<User> pages = userService.page(Condition.getPage(query), (!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId()) : queryWrapper);
-		return R.data(UserWrapper.build().pageVO(pages));
+	public R<IPage<UserVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> user, Query query) {
+		return R.data(userService.selectPage(user, query));
 	}
 
 	/**
@@ -141,7 +132,7 @@ public class UserController {
 	@Operation(summary = "修改", description = "传入User")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R update(@Valid @RequestBody User user) {
-		return R.status(userService.updateById(user));
+		return R.status(userService.update(user));
 	}
 
 	/**
@@ -152,7 +143,7 @@ public class UserController {
 	@Operation(summary = "删除", description = "传入地基和")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R remove(@RequestParam String ids) {
-		return R.status(userService.deleteLogic(Func.toLongList(ids)));
+		return R.status(userService.remove(Func.toLongList(ids)));
 	}
 
 
@@ -223,6 +214,7 @@ public class UserController {
 	@PostMapping("import-user")
 	@ApiOperationSupport(order = 12)
 	@Operation(summary = "导入用户", description = "传入excel")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R importUser(MultipartFile file, Integer isCovered) {
 		String filename = file.getOriginalFilename();
 		if (StringUtil.isBlank(filename)) {
@@ -251,13 +243,8 @@ public class UserController {
 	@ApiOperationSupport(order = 13)
 	@Operation(summary = "导出用户", description = "传入user")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	public void exportUser(@Parameter(hidden = true) @RequestParam Map<String, Object> user, BladeUser bladeUser, HttpServletResponse response) {
-		QueryWrapper<User> queryWrapper = Condition.getQueryWrapper(user, User.class);
-		if (!SecureUtil.isAdministrator()) {
-			queryWrapper.lambda().eq(User::getTenantId, bladeUser.getTenantId());
-		}
-		queryWrapper.lambda().eq(User::getIsDeleted, BladeConstant.DB_NOT_DELETED);
-		List<UserExcel> list = userService.exportUser(queryWrapper);
+	public void exportUser(@Parameter(hidden = true) @RequestParam Map<String, Object> user, HttpServletResponse response) {
+		List<UserExcel> list = userService.exportUser(user);
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8);
@@ -302,9 +289,7 @@ public class UserController {
 		if (StringUtil.isBlank(userIds)) {
 			return R.fail("请至少选择一个用户");
 		}
-		List<User> userList = userService.list(Wrappers.<User>lambdaQuery().in(User::getId, Func.toLongList(userIds)));
-		userList.forEach(user -> bladeRedis.del(CacheNames.tenantKey(user.getTenantId(), CacheNames.USER_FAIL_KEY, user.getAccount())));
-		return R.success("操作成功");
+		return R.status(userService.unlock(Func.toLongList(userIds)));
 	}
 
 	/**

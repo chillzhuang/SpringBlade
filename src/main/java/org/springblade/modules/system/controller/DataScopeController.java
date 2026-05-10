@@ -27,7 +27,9 @@ import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.DataScope;
 import org.springblade.modules.system.service.IDataScopeService;
@@ -46,6 +48,7 @@ import static org.springblade.core.cache.utils.CacheUtil.SYS_CACHE;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/data-scope")
+@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @Tag(name = "数据权限", description = "数据权限")
 public class DataScopeController extends BladeController {
 

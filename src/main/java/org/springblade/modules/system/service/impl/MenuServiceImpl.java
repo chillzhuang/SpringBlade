@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springblade.core.secure.BladeUser;
-import org.springblade.core.tool.constant.BladeConstant;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
@@ -142,17 +142,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 	@Override
 	public List<MenuVO> grantTree(BladeUser user) {
-		return ForestNodeMerger.merge(user.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID) ? baseMapper.grantTree() : baseMapper.grantTreeByRole(Func.toLongList(user.getRoleId())));
+		return ForestNodeMerger.merge(SecureUtil.isAdministrator() ? baseMapper.grantTree() : baseMapper.grantTreeByRole(Func.toLongList(user.getRoleId())));
 	}
 
 	@Override
 	public List<MenuVO> grantDataScopeTree(BladeUser user) {
-		return ForestNodeMerger.merge(user.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID) ? baseMapper.grantDataScopeTree() : baseMapper.grantDataScopeTreeByRole(Func.toLongList(user.getRoleId())));
+		return ForestNodeMerger.merge(SecureUtil.isAdministrator() ? baseMapper.grantDataScopeTree() : baseMapper.grantDataScopeTreeByRole(Func.toLongList(user.getRoleId())));
 	}
 
 	@Override
 	public List<MenuVO> grantApiScopeTree(BladeUser user) {
-		return ForestNodeMerger.merge(user.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID) ? baseMapper.grantApiScopeTree() : baseMapper.grantApiScopeTreeByRole(Func.toLongList(user.getRoleId())));
+		return ForestNodeMerger.merge(SecureUtil.isAdministrator() ? baseMapper.grantApiScopeTree() : baseMapper.grantApiScopeTreeByRole(Func.toLongList(user.getRoleId())));
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 	@Override
 	public List<MenuVO> grantTopTree(BladeUser user) {
-		return ForestNodeMerger.merge(user.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID) ? baseMapper.grantTopTree() : baseMapper.grantTopTreeByRole(Func.toLongList(user.getRoleId())));
+		return ForestNodeMerger.merge(SecureUtil.isAdministrator() ? baseMapper.grantTopTree() : baseMapper.grantTopTreeByRole(Func.toLongList(user.getRoleId())));
 	}
 
 	@Override

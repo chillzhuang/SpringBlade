@@ -17,7 +17,10 @@ package org.springblade.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.springblade.core.tenant.TenantGuard;
+import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.base.BaseServiceImpl;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.Post;
 import org.springblade.modules.system.mapper.PostMapper;
@@ -27,6 +30,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springblade.core.tenant.TenantGuard.EntityType.POST;
 
 /**
  * 岗位表 服务实现类
@@ -44,7 +49,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 	@Override
 	public String getPostIds(String tenantId, String postNames) {
 		List<Post> postList = baseMapper.selectList(Wrappers.<Post>query().lambda().eq(Post::getTenantId, tenantId).in(Post::getPostName, Func.toStrList(postNames)));
-		if (postList != null && postList.size() > 0) {
+		if (postList != null && !postList.isEmpty()) {
 			return postList.stream().map(post -> Func.toStr(post.getId())).distinct().collect(Collectors.joining(","));
 		}
 		return null;
@@ -53,6 +58,29 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 	@Override
 	public List<String> getPostNames(String postIds) {
 		return baseMapper.getPostNames(Func.toLongArray(postIds));
+	}
+
+	@Override
+	public boolean submit(Post post) {
+		TenantGuard.bindTenant(this, post, POST);
+		if (Func.isEmpty(post.getTenantId())) {
+			throw new ServiceException("租户ID不能为空");
+		}
+		return saveOrUpdate(post);
+	}
+
+	@Override
+	public boolean remove(List<Long> ids) {
+		TenantGuard.verifyBatch(this, ids, POST);
+		return deleteLogic(ids);
+	}
+
+	@Override
+	public List<Post> selectByTenant(String tenantId) {
+		String resolvedTenantId = SecureUtil.isAdministrator()
+			? Func.toStr(tenantId, SecureUtil.getTenantId())
+			: SecureUtil.getTenantId();
+		return list(Wrappers.<Post>query().lambda().eq(Post::getTenantId, resolvedTenantId));
 	}
 
 }

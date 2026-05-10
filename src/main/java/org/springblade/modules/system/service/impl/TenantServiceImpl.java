@@ -15,10 +15,14 @@
  */
 package org.springblade.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import org.springblade.core.mp.base.BaseServiceImpl;
+import org.springblade.core.mp.support.Condition;
+import org.springblade.core.mp.support.Query;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tenant.TenantId;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.DigestUtil;
@@ -35,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -115,6 +120,36 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			return getTenantId(codes);
 		}
 		return code;
+	}
+
+	@Override
+	public Tenant getDetail(Tenant tenant) {
+		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant);
+		applyTenantScope(queryWrapper);
+		return getOne(queryWrapper);
+	}
+
+	@Override
+	public IPage<Tenant> selectPage(Map<String, Object> tenant, Query query) {
+		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant, Tenant.class);
+		applyTenantScope(queryWrapper);
+		return page(Condition.getPage(query), queryWrapper);
+	}
+
+	@Override
+	public List<Tenant> selectList(Tenant tenant) {
+		QueryWrapper<Tenant> queryWrapper = Condition.getQueryWrapper(tenant);
+		applyTenantScope(queryWrapper);
+		return list(queryWrapper);
+	}
+
+	/**
+	 * 统一的租户范围过滤：超管放行，其他用户强制限定为当前会话租户。
+	 */
+	private void applyTenantScope(QueryWrapper<Tenant> queryWrapper) {
+		if (!SecureUtil.isAdministrator()) {
+			queryWrapper.lambda().eq(Tenant::getTenantId, SecureUtil.getTenantId());
+		}
 	}
 
 }

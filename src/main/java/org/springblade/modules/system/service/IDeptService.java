@@ -21,6 +21,7 @@ import org.springblade.modules.system.entity.Dept;
 import org.springblade.modules.system.vo.DeptVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务类
@@ -39,12 +40,23 @@ public interface IDeptService extends IService<Dept> {
 	IPage<DeptVO> selectDeptPage(IPage<DeptVO> page, DeptVO dept);
 
 	/**
-	 * 树形结构
+	 * 树形结构（含超管判定 + 当前租户隔离）
+	 * <p>
+	 * 仅超级管理员可指定任意 tenantId 查询；其他用户传入的 tenantId 一律被忽略，
+	 * 强制使用当前会话租户。
 	 *
-	 * @param tenantId
-	 * @return
+	 * @param tenantId 入参 tenantId（仅超管生效）
+	 * @return 部门树
 	 */
 	List<DeptVO> tree(String tenantId);
+
+	/**
+	 * 列表（含超管判定 + 当前租户隔离）
+	 *
+	 * @param dept 查询条件 Map
+	 * @return 列表 VO，非超管时仅命中当前会话租户
+	 */
+	List<DeptVO> selectList(Map<String, Object> dept);
 
 	/**
 	 * 获取部门ID
@@ -64,11 +76,19 @@ public interface IDeptService extends IService<Dept> {
 	List<String> getDeptNames(String deptIds);
 
 	/**
-	 * 提交
+	 * 新增或修改部门（带租户归属校验）
 	 *
-	 * @param dept
-	 * @return
+	 * @param dept 部门实体
+	 * @return 是否成功
 	 */
 	boolean submit(Dept dept);
+
+	/**
+	 * 删除部门（带租户归属校验）
+	 *
+	 * @param ids 部门主键集合
+	 * @return 是否成功
+	 */
+	boolean remove(List<Long> ids);
 
 }

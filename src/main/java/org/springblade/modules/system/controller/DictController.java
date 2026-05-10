@@ -28,7 +28,9 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.Dict;
 import org.springblade.modules.system.service.IDictService;
@@ -52,6 +54,7 @@ import static org.springblade.common.cache.CacheNames.DICT_VALUE;
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/dict")
 @Hidden
+@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @Tag(name = "字典", description = "字典")
 public class DictController extends BladeController {
 

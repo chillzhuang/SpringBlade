@@ -15,7 +15,6 @@
  */
 package org.springblade.modules.system.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,9 +28,9 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
-import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.constant.BladeConstant;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.Dept;
 import org.springblade.modules.system.service.IDeptService;
@@ -51,6 +50,7 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/dept")
 @Hidden
+@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @Tag(name = "部门", description = "部门")
 public class DeptController extends BladeController {
 
@@ -77,10 +77,8 @@ public class DeptController extends BladeController {
 	})
 	@ApiOperationSupport(order = 2)
 	@Operation(summary = "列表", description = "传入dept")
-	public R<List<DeptVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> dept, BladeUser bladeUser) {
-		QueryWrapper<Dept> queryWrapper = Condition.getQueryWrapper(dept, Dept.class);
-		List<Dept> list = deptService.list((!bladeUser.getTenantId().equals(BladeConstant.ADMIN_TENANT_ID)) ? queryWrapper.lambda().eq(Dept::getTenantId, bladeUser.getTenantId()) : queryWrapper);
-		return R.data(DeptWrapper.build().listNodeVO(list));
+	public R<List<DeptVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> dept) {
+		return R.data(deptService.selectList(dept));
 	}
 
 	/**
@@ -91,9 +89,8 @@ public class DeptController extends BladeController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@Operation(summary = "树形结构", description = "树形结构")
-	public R<List<DeptVO>> tree(String tenantId, BladeUser bladeUser) {
-		List<DeptVO> tree = deptService.tree(Func.toStr(tenantId, bladeUser.getTenantId()));
-		return R.data(tree);
+	public R<List<DeptVO>> tree(String tenantId) {
+		return R.data(deptService.tree(tenantId));
 	}
 
 	/**
@@ -113,7 +110,7 @@ public class DeptController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(deptService.removeByIds(Func.toLongList(ids)));
+		return R.status(deptService.remove(Func.toLongList(ids)));
 	}
 
 

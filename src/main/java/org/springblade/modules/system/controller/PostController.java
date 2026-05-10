@@ -16,7 +16,6 @@
 package org.springblade.modules.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,9 +25,9 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
-import org.springblade.core.secure.BladeUser;
-import org.springblade.core.secure.utils.SecureUtil;
+import org.springblade.core.secure.annotation.PreAuth;
 import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.modules.system.entity.Post;
 import org.springblade.modules.system.service.IPostService;
@@ -58,6 +57,7 @@ public class PostController extends BladeController {
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<PostVO> detail(Post post) {
 		Post detail = postService.getOne(Condition.getQueryWrapper(post));
 		return R.data(PostWrapper.build().entityVO(detail));
@@ -69,6 +69,7 @@ public class PostController extends BladeController {
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
 	@Operation(summary = "分页", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<PostVO>> list(Post post, Query query) {
 		IPage<Post> pages = postService.page(Condition.getPage(query), Condition.getQueryWrapper(post));
 		return R.data(PostWrapper.build().pageVO(pages));
@@ -81,6 +82,7 @@ public class PostController extends BladeController {
 	@GetMapping("/page")
 	@ApiOperationSupport(order = 3)
 	@Operation(summary = "分页", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<PostVO>> page(PostVO post, Query query) {
 		IPage<PostVO> pages = postService.selectPostPage(Condition.getPage(query), post);
 		return R.data(pages);
@@ -92,8 +94,9 @@ public class PostController extends BladeController {
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R save(@Valid @RequestBody Post post) {
-		return R.status(postService.save(post));
+		return R.status(postService.submit(post));
 	}
 
 	/**
@@ -102,8 +105,9 @@ public class PostController extends BladeController {
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
 	@Operation(summary = "修改", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R update(@Valid @RequestBody Post post) {
-		return R.status(postService.updateById(post));
+		return R.status(postService.submit(post));
 	}
 
 	/**
@@ -112,9 +116,9 @@ public class PostController extends BladeController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
 	@Operation(summary = "新增或修改", description = "传入post")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R submit(@Valid @RequestBody Post post) {
-		post.setTenantId(SecureUtil.getTenantId());
-		return R.status(postService.saveOrUpdate(post));
+		return R.status(postService.submit(post));
 	}
 
 
@@ -124,8 +128,9 @@ public class PostController extends BladeController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)
 	@Operation(summary = "逻辑删除", description = "传入ids")
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(postService.deleteLogic(Func.toLongList(ids)));
+		return R.status(postService.remove(Func.toLongList(ids)));
 	}
 
 	/**
@@ -134,9 +139,8 @@ public class PostController extends BladeController {
 	@GetMapping("/select")
 	@ApiOperationSupport(order = 8)
 	@Operation(summary = "下拉数据源", description = "传入post")
-	public R<List<Post>> select(String tenantId, BladeUser bladeUser) {
-		List<Post> list = postService.list(Wrappers.<Post>query().lambda().eq(Post::getTenantId, Func.toStr(tenantId, bladeUser.getTenantId())));
-		return R.data(list);
+	public R<List<Post>> select(String tenantId) {
+		return R.data(postService.selectByTenant(tenantId));
 	}
 
 }

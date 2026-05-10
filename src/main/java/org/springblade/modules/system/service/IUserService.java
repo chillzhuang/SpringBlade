@@ -19,12 +19,15 @@ package org.springblade.modules.system.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springblade.core.mp.base.BaseService;
+import org.springblade.core.mp.support.Query;
 import org.springblade.modules.system.entity.User;
 import org.springblade.modules.system.entity.UserInfo;
 import org.springblade.modules.system.entity.UserOauth;
 import org.springblade.modules.system.excel.UserExcel;
+import org.springblade.modules.system.vo.UserVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务类
@@ -34,11 +37,36 @@ import java.util.List;
 public interface IUserService extends BaseService<User> {
 
 	/**
-	 * 新增或修改用户
-	 * @param user
-	 * @return
+	 * 新增或修改用户（带租户归属校验）
+	 *
+	 * @param user 用户实体
+	 * @return 是否成功
 	 */
 	boolean submit(User user);
+
+	/**
+	 * 修改用户（带租户归属校验）
+	 *
+	 * @param user 用户实体
+	 * @return 是否成功
+	 */
+	boolean update(User user);
+
+	/**
+	 * 删除用户（带租户归属校验）
+	 *
+	 * @param userIds 用户主键集合
+	 * @return 是否成功
+	 */
+	boolean remove(List<Long> userIds);
+
+	/**
+	 * 解锁用户登录失败计数（带租户归属校验）
+	 *
+	 * @param userIds 用户主键集合
+	 * @return 是否成功
+	 */
+	boolean unlock(List<Long> userIds);
 
 	/**
 	 * 修改用户基本信息
@@ -56,6 +84,18 @@ public interface IUserService extends BaseService<User> {
 	 * @return
 	 */
 	IPage<User> selectUserPage(IPage<User> page, User user);
+
+	/**
+	 * 分页列表（含超管判定 + 当前租户隔离）
+	 * <p>
+	 * 仅超级管理员可指定任意 tenantId 查询；其他用户传入的 tenantId 一律被忽略，
+	 * 强制使用当前会话租户。
+	 *
+	 * @param user  查询条件 Map
+	 * @param query 分页参数
+	 * @return 分页结果 VO，非超管时仅命中当前会话租户
+	 */
+	IPage<UserVO> selectPage(Map<String, Object> user, Query query);
 
 	/**
 	 * 用户信息
@@ -142,6 +182,17 @@ public interface IUserService extends BaseService<User> {
 	 * @return
 	 */
 	List<UserExcel> exportUser(Wrapper<User> queryWrapper);
+
+	/**
+	 * 获取导出用户数据（含超管判定 + 当前租户隔离）
+	 * <p>
+	 * 仅超级管理员可导出全量数据；其他用户被强制限定在自身租户范围内。
+	 * 自动叠加未删除条件。
+	 *
+	 * @param user 查询条件 Map
+	 * @return 导出数据，非超管时仅命中当前会话租户
+	 */
+	List<UserExcel> exportUser(Map<String, Object> user);
 
 	/**
 	 * 注册用户

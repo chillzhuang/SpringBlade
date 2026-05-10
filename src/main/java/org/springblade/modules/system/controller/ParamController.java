@@ -48,6 +48,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/param")
+@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @Tag(name = "参数管理", description = "接口")
 public class ParamController extends BladeController {
 
@@ -73,7 +74,6 @@ public class ParamController extends BladeController {
 		@Parameter(name = "paramValue", description = "参数键值", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
 	@Operation(summary = "分页", description = "传入param")
-	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<Param>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> param, Query query) {
 		IPage<Param> pages = paramService.page(Condition.getPage(query), Condition.getQueryWrapper(param, Param.class));
 		return R.data(pages);
