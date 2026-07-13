@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.support.Kv;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(AppConstant.APPLICATION_DESK_NAME + "/dashboard")
 @AllArgsConstructor
+@ApiOrder
 @Tag(name = "首页", description = "首页")
 public class DashBoardController {
 
 	/**
 	 * 活跃用户
-	 *
-	 * @return
 	 */
 	@GetMapping("/activities")
 	@Operation(summary = "活跃用户", description = "活跃用户")
@@ -61,8 +61,6 @@ public class DashBoardController {
 
 	/**
 	 * 获取消息
-	 *
-	 * @return
 	 */
 	@GetMapping("/notices")
 	@Operation(summary = "消息", description = "消息")
@@ -121,8 +119,6 @@ public class DashBoardController {
 
 	/**
 	 * 获取我的消息
-	 *
-	 * @return
 	 */
 	@GetMapping("/my-notices")
 	@Operation(summary = "消息", description = "消息")

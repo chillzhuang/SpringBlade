@@ -17,8 +17,9 @@ package org.springblade.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.node.ForestNodeMerger;
@@ -190,6 +191,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	public List<String> topTreeKeys(String topMenuIds) {
 		List<TopMenuSetting> settings = topMenuSettingService.list(Wrappers.<TopMenuSetting>query().lambda().in(TopMenuSetting::getTopMenuId, Func.toLongList(topMenuIds)));
 		return settings.stream().map(setting -> Func.toStr(setting.getMenuId())).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean submit(Menu menu) {
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
+		return saveOrUpdate(menu);
+	}
+
+	@Override
+	public boolean removeMenu(List<Long> ids) {
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
+		return removeByIds(ids);
 	}
 
 }

@@ -32,9 +32,9 @@ public interface ParamMapper extends BaseMapper<Param> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param param
-	 * @return
+	 * @param page  分页参数
+	 * @param param 参数查询条件
+	 * @return 参数分页数据
 	 */
 	List<ParamVO> selectParamPage(IPage page, ParamVO param);
 

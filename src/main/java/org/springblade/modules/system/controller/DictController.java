@@ -15,7 +15,6 @@
  */
 package org.springblade.modules.system.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,10 +24,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springblade.common.cache.DictCache;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -36,14 +37,10 @@ import org.springblade.modules.system.entity.Dict;
 import org.springblade.modules.system.service.IDictService;
 import org.springblade.modules.system.vo.DictVO;
 import org.springblade.modules.system.wrapper.DictWrapper;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.springblade.common.cache.CacheNames.DICT_LIST;
-import static org.springblade.common.cache.CacheNames.DICT_VALUE;
 
 /**
  * 控制器
@@ -55,6 +52,7 @@ import static org.springblade.common.cache.CacheNames.DICT_VALUE;
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/dict")
 @Hidden
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+@ApiOrder
 @Tag(name = "字典", description = "字典")
 public class DictController extends BladeController {
 
@@ -64,7 +62,6 @@ public class DictController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入dict")
 	public R<DictVO> detail(Dict dict) {
 		Dict detail = dictService.getOne(Condition.getQueryWrapper(dict));
@@ -79,7 +76,6 @@ public class DictController extends BladeController {
 		@Parameter(name = "code", description = "字典编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "dictValue", description = "字典名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "列表", description = "传入dict")
 	public R<List<DictVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> dict) {
 		List<Dict> list = dictService.list(Condition.getQueryWrapper(dict, Dict.class).lambda().orderByAsc(Dict::getSort));
@@ -88,11 +84,8 @@ public class DictController extends BladeController {
 
 	/**
 	 * 获取字典树形结构
-	 *
-	 * @return
 	 */
 	@GetMapping("/tree")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<DictVO>> tree() {
 		List<DictVO> tree = dictService.tree();
@@ -103,7 +96,6 @@ public class DictController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增或修改", description = "传入dict")
 	public R submit(@Valid @RequestBody Dict dict) {
 		return R.status(dictService.submit(dict));
@@ -114,23 +106,18 @@ public class DictController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 5)
-	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(dictService.removeByIds(Func.toLongList(ids)));
+		return R.status(dictService.removeDict(Func.toLongList(ids)));
 	}
 
 	/**
 	 * 获取字典
-	 *
-	 * @return
 	 */
 	@GetMapping("/dictionary")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "获取字典", description = "获取字典")
 	public R<List<Dict>> dictionary(String code) {
-		List<Dict> tree = dictService.getList(code);
+		List<Dict> tree = DictCache.getList(code);
 		return R.data(tree);
 	}
 

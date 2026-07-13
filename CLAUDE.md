@@ -5,7 +5,7 @@
 作为 AI 助手参与本项目开发时，你必须：
 
 - 动手前先看一看目标模块的现有实现，模仿它的结构与风格通常是最快的路径
-- 需要外部知识时，优先查阅 Spring Boot、MyBatis-Plus、Knife4j 等官方文档，而不是凭记忆作答
+- 需要外部知识时，优先查阅 Spring Boot、MyBatis-Plus、springdoc 等官方文档，而不是凭记忆作答
 - 需求不够清晰时，先复述已知信息、抛出关键澄清问题，再动手
 - 面对复杂改动，拆成可验证的小步骤逐步推进比一气呵成更稳妥
 
@@ -63,16 +63,16 @@ SpringBlade/
 
 | 类别 | 技术 |
 | --- | --- |
-| JDK | Java 17+ |
+| JDK | Java 21 |
 | 基础框架 | Spring Boot / Maven |
 | 核心库 | blade-core-boot、blade-core-bom |
 | Starter | develop / oss / report / social / datascope / excel |
 | ORM | MyBatis-Plus（禁止 JDBC 直连） |
-| Web 服务器 | Undertow |
+| Web 服务器 | Tomcat |
 | 安全 | blade-core-secure（JWT + 可选 AES 加密 + SM2 国密登录） |
 | 缓存 | BladeRedis（Protostuff 序列化） + Ehcache 本地 |
 | 数据权限 | blade-starter-datascope（DataScopeHandler 行级过滤） |
-| 文档 | Knife4j OpenAPI 3 UI |
+| 文档 | springdoc OpenAPI UI |
 | 报表 | UReport2（blade-starter-report） |
 | 导入导出 | FastExcel（blade-starter-excel） |
 | 验证码 | easy-captcha |
@@ -138,8 +138,8 @@ SpringBlade/
 
 ### 6.1 注解顺序
 
-- **Controller 类**：`@RestController` → Lombok（`@AllArgsConstructor`） → 安全注解（`@PreAuth(RoleConstant.HAS_ROLE_ADMIN)`，如果整类受限）→ `@RequestMapping(AppConstant.APPLICATION_XXX_NAME + "/yyy")` → `@ApiSort` → `@Tag`
-- **Controller 方法**：HTTP 方法注解（`@GetMapping`/`@PostMapping`）→ `@ApiOperationSupport(order = N)` → `@Operation` → `@PreAuth`（如果方法级受限）
+- **Controller 类**：`@RestController` → Lombok（`@AllArgsConstructor`） → 安全注解（`@PreAuth(RoleConstant.HAS_ROLE_ADMIN)`，如果整类受限）→ `@RequestMapping(AppConstant.APPLICATION_XXX_NAME + "/yyy")` → `@Tag`
+- **Controller 方法**：HTTP 方法注解（`@GetMapping`/`@PostMapping`）→ `@Operation` → `@PreAuth`（如果方法级受限）
 - **Entity 类**：`@Data` → `@EqualsAndHashCode(callSuper = true)`（继承 BaseEntity/TenantEntity 时必须） → `@TableName` → `@Schema`（字段级使用）
 - **VO 类**：`@Data` → `@EqualsAndHashCode(callSuper = true)` → `@Schema`
 
@@ -178,12 +178,12 @@ Entity 基类的选择**直接决定** Service 和 ServiceImpl 的继承方式�
 
 禁止手写 getter/setter，统一使用 `@Data`、`@EqualsAndHashCode(callSuper = true)`、`@AllArgsConstructor`、`@RequiredArgsConstructor`、`@Slf4j`、`@SneakyThrows` 等
 
-### 6.6 Java 17 特性
+### 6.6 Java 21 特性
 
-- 可使用增强 switch、Text Blocks、Pattern Matching for instanceof、`@Serial`（参见 `Notice`/`User`）
-- **禁止** `var` 类型推断，所有变量显式声明类型
-- 优先使用 Stream API，Lambda 保持简洁
-- `serialVersionUID` 必须加 `@Serial` 注解
+- **基线 JDK 21 LTS**，优先采用已稳定的现代语言特性提升可读性：`switch` 表达式与模式匹配（含 Record Patterns）、`instanceof` 模式匹配、Text Blocks（承载多行 SQL / JSON 字面量）、`@Serial`（标注 `serialVersionUID` 与序列化方法）
+- 实体 / VO 沿用 Lombok（`@Data` 等），**不改用 record**——需保留可变字段与无参构造以适配 MyBatis-Plus 映射
+- **禁止 `var`**，所有变量显式声明类型；优先使用 Stream API，Lambda 保持简洁
+- 虚拟线程（Virtual Threads）属运行期能力，由 Spring Boot 4 配置 `spring.threads.virtual.enabled` 按需开启，非编码约定
 
 ### 6.7 MyBatis-Plus
 
@@ -326,7 +326,7 @@ BLADE_TOKEN_CRYPTO_KEY     # Token AES 加密密钥
 | `Func` / `BeanUtil` / `StringUtil` | 通用工具类 |
 | `ServiceException` | 业务异常 |
 | `@PreAuth` | 角色权限注解（`RoleConstant.HAS_ROLE_ADMIN`） |
-| `@ApiOperationSupport` / `@Operation` / `@Tag` / `@Schema` | Knife4j + OpenAPI 3 文档注解 |
+| `@Operation` / `@Tag` / `@Schema` | springdoc / OpenAPI 3 文档注解 |
 | `@Hidden` | 隐藏 Swagger 接口展示 |
 | `LauncherConstant` / `AppConstant` | 应用常量（模块名前缀、应用名） |
 

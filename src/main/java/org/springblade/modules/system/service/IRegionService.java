@@ -15,7 +15,7 @@
  */
 package org.springblade.modules.system.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.modules.system.entity.Region;
 import org.springblade.modules.system.vo.RoleVO;
 
@@ -32,34 +32,34 @@ public interface IRegionService extends IService<Region> {
 	/**
 	 * 提交
 	 *
-	 * @param region
-	 * @return
+	 * @param region 行政区划实体
+	 * @return 是否成功
 	 */
 	boolean submit(Region region);
 
 	/**
 	 * 删除
 	 *
-	 * @param id
-	 * @return
+	 * @param id 行政区划主键
+	 * @return 是否成功
 	 */
 	boolean removeRegion(String id);
 
 	/**
 	 * 懒加载列表
 	 *
-	 * @param parentCode
-	 * @param param
-	 * @return
+	 * @param parentCode 父区划编号
+	 * @param param      查询条件
+	 * @return 行政区划列表
 	 */
 	List<RoleVO> lazyList(String parentCode, Map<String, Object> param);
 
 	/**
 	 * 懒加载列表
 	 *
-	 * @param parentCode
-	 * @param param
-	 * @return
+	 * @param parentCode 父区划编号
+	 * @param param      查询条件
+	 * @return 行政区划树
 	 */
 	List<RoleVO> lazyTree(String parentCode, Map<String, Object> param);
 

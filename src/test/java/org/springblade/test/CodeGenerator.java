@@ -36,15 +36,19 @@ public class CodeGenerator {
 	/**
 	 * 代码生成的包名
 	 */
-	public static String PACKAGE_NAME = "org.springblade.desk";
+	public static String PACKAGE_NAME = "org.springblade.notice";
 	/**
 	 * 前端代码生成所属系统
 	 */
-	public static String SYSTEM_NAME = "sword";
+	public static String SYSTEM_NAME = "saber";
+	/**
+	 * 后端代码生成地址
+	 */
+	public static String PACKAGE_DIR = System.getProperty("user.dir");
 	/**
 	 * 前端代码生成地址
 	 */
-	public static String PACKAGE_WEB_DIR = "/Users/chill/Workspaces/product/Sword";
+	public static String PACKAGE_WEB_DIR = "/Users/chill/Workspaces/test/Saber";
 	/**
 	 * 需要去掉的表前缀
 	 */
@@ -75,6 +79,7 @@ public class CodeGenerator {
 		generator.setServiceName(SERVICE_NAME);
 		generator.setSystemName(SYSTEM_NAME);
 		generator.setPackageName(PACKAGE_NAME);
+		generator.setPackageDir(PACKAGE_DIR);
 		generator.setPackageWebDir(PACKAGE_WEB_DIR);
 		generator.setTablePrefix(TABLE_PREFIX);
 		generator.setIncludeTables(INCLUDE_TABLES);

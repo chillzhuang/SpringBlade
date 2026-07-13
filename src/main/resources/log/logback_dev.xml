@@ -40,7 +40,7 @@
 
 
     <!-- MyBatis log configure -->
-    <logger name="com.apache.ibatis" level="INFO"/>
+    <logger name="org.apache.ibatis" level="INFO"/>
     <logger name="org.mybatis.spring" level="DEBUG"/>
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
@@ -48,7 +48,6 @@
 
     <!-- 减少部分debug日志 -->
     <logger name="druid.sql" level="INFO"/>
-    <logger name="org.apache.shiro" level="INFO"/>
     <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.springframework.context" level="WARN"/>
@@ -56,23 +55,16 @@
     <logger name="com.baomidou.mybatisplus" level="INFO"/>
     <logger name="org.apache.ibatis.io" level="INFO"/>
     <logger name="org.apache.velocity" level="INFO"/>
-    <logger name="org.eclipse.jetty" level="INFO"/>
-    <logger name="io.undertow" level="INFO"/>
-    <logger name="org.xnio.nio" level="INFO"/>
+    <logger name="org.apache.catalina" level="INFO"/>
+    <logger name="org.apache.coyote" level="INFO"/>
     <logger name="org.thymeleaf" level="INFO"/>
-    <logger name="springfox.documentation" level="INFO"/>
     <logger name="org.hibernate.validator" level="INFO"/>
-    <logger name="com.netflix.loadbalancer" level="INFO"/>
-    <logger name="com.netflix.hystrix" level="INFO"/>
-    <logger name="com.netflix.zuul" level="INFO"/>
     <logger name="de.codecentric" level="INFO"/>
     <!-- cache INFO -->
     <logger name="net.sf.ehcache" level="INFO"/>
     <logger name="org.springframework.cache" level="INFO"/>
     <!-- cloud -->
     <logger name="org.apache.http" level="INFO"/>
-    <logger name="com.netflix.discovery" level="INFO"/>
-    <logger name="com.netflix.eureka" level="INFO"/>
     <!-- 业务日志 -->
     <Logger name="org.springblade" level="DEBUG" />
     <Logger name="org.springblade.core.version" level="INFO"/>

@@ -22,6 +22,7 @@ import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.oss.QiniuTemplate;
 import org.springblade.core.oss.model.BladeFile;
 import org.springblade.core.oss.model.OssFile;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.Func;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_RESOURCE_NAME + "/oss/endpoint")
+@ApiOrder
 @Tag(name = "对象存储端点", description = "对象存储端点")
 public class OssEndpoint {
 
@@ -42,9 +44,6 @@ public class OssEndpoint {
 
 	/**
 	 * 创建存储桶
-	 *
-	 * @param bucketName 存储桶名称
-	 * @return Bucket
 	 */
 	@SneakyThrows
 	@PostMapping("/make-bucket")
@@ -55,9 +54,6 @@ public class OssEndpoint {
 
 	/**
 	 * 创建存储桶
-	 *
-	 * @param bucketName 存储桶名称
-	 * @return R
 	 */
 	@SneakyThrows
 	@PostMapping("/remove-bucket")
@@ -68,11 +64,6 @@ public class OssEndpoint {
 
 	/**
 	 * 拷贝文件
-	 *
-	 * @param fileName       存储桶对象名称
-	 * @param destBucketName 目标存储桶名称
-	 * @param destFileName   目标存储桶对象名称
-	 * @return R
 	 */
 	@SneakyThrows
 	@PostMapping("/copy-file")
@@ -83,9 +74,6 @@ public class OssEndpoint {
 
 	/**
 	 * 获取文件信息
-	 *
-	 * @param fileName 存储桶对象名称
-	 * @return InputStream
 	 */
 	@SneakyThrows
 	@GetMapping("/stat-file")
@@ -95,9 +83,6 @@ public class OssEndpoint {
 
 	/**
 	 * 获取文件相对路径
-	 *
-	 * @param fileName 存储桶对象名称
-	 * @return String
 	 */
 	@SneakyThrows
 	@GetMapping("/file-path")
@@ -108,9 +93,6 @@ public class OssEndpoint {
 
 	/**
 	 * 获取文件外链
-	 *
-	 * @param fileName 存储桶对象名称
-	 * @return String
 	 */
 	@SneakyThrows
 	@GetMapping("/file-link")
@@ -120,9 +102,6 @@ public class OssEndpoint {
 
 	/**
 	 * 上传文件
-	 *
-	 * @param file 文件
-	 * @return ObjectStat
 	 */
 	@SneakyThrows
 	@PostMapping("/put-file")
@@ -133,10 +112,6 @@ public class OssEndpoint {
 
 	/**
 	 * 上传文件
-	 *
-	 * @param fileName 存储桶对象名称
-	 * @param file     文件
-	 * @return ObjectStat
 	 */
 	@SneakyThrows
 	@PostMapping("/put-file-by-name")
@@ -147,9 +122,6 @@ public class OssEndpoint {
 
 	/**
 	 * 删除文件
-	 *
-	 * @param fileName 存储桶对象名称
-	 * @return R
 	 */
 	@SneakyThrows
 	@PostMapping("/remove-file")
@@ -160,9 +132,6 @@ public class OssEndpoint {
 
 	/**
 	 * 批量删除文件
-	 *
-	 * @param fileNames 存储桶对象名称集合
-	 * @return R
 	 */
 	@SneakyThrows
 	@PostMapping("/remove-files")

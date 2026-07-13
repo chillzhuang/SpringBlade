@@ -16,7 +16,7 @@
 package org.springblade.modules.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.modules.system.entity.Role;
 import org.springblade.modules.system.vo.RoleVO;
 
@@ -34,9 +34,9 @@ public interface IRoleService extends IService<Role> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param role
-	 * @return
+	 * @param page 分页参数
+	 * @param role 查询条件
+	 * @return 分页数据
 	 */
 	IPage<RoleVO> selectRolePage(IPage<RoleVO> page, RoleVO role);
 
@@ -100,17 +100,17 @@ public interface IRoleService extends IService<Role> {
 	/**
 	 * 获取角色ID
 	 *
-	 * @param tenantId
-	 * @param roleNames
-	 * @return
+	 * @param tenantId  租户ID
+	 * @param roleNames 角色名称集合
+	 * @return 角色主键字符串（逗号分隔）
 	 */
 	String getRoleIds(String tenantId, String roleNames);
 
 	/**
 	 * 获取角色名
 	 *
-	 * @param roleIds
-	 * @return
+	 * @param roleIds 角色主键集合
+	 * @return 角色名称集合
 	 */
 	List<String> getRoleNames(String roleIds);
 

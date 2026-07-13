@@ -32,18 +32,18 @@ public interface RegionMapper extends BaseMapper<Region> {
 	/**
 	 * 懒加载列表
 	 *
-	 * @param parentCode
-	 * @param param
-	 * @return
+	 * @param parentCode 父级区划编号
+	 * @param param      查询参数
+	 * @return 行政区划列表
 	 */
 	List<RoleVO> lazyList(String parentCode, Map<String, Object> param);
 
 	/**
 	 * 懒加载列表
 	 *
-	 * @param parentCode
-	 * @param param
-	 * @return
+	 * @param parentCode 父级区划编号
+	 * @param param      查询参数
+	 * @return 行政区划树形节点列表
 	 */
 	List<RoleVO> lazyTree(String parentCode, Map<String, Object> param);
 

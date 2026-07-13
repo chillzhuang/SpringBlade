@@ -31,9 +31,9 @@ public interface TenantMapper extends BaseMapper<Tenant> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param tenant
-	 * @return
+	 * @param page   分页参数
+	 * @param tenant 租户查询条件
+	 * @return 租户分页数据
 	 */
 	List<Tenant> selectTenantPage(IPage page, Tenant tenant);
 

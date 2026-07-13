@@ -16,7 +16,7 @@
 package org.springblade.modules.system.service.impl;
 
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springblade.modules.system.entity.UserOauth;
 import org.springblade.modules.system.mapper.UserOauthMapper;

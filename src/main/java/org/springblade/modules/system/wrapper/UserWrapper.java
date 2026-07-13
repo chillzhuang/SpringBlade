@@ -15,13 +15,12 @@
  */
 package org.springblade.modules.system.wrapper;
 
+import org.springblade.common.cache.DictCache;
+import org.springblade.common.cache.SysCache;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.modules.system.entity.User;
-import org.springblade.modules.system.service.IDictService;
-import org.springblade.modules.system.service.IUserService;
 import org.springblade.modules.system.vo.UserVO;
 
 import java.util.List;
@@ -33,15 +32,6 @@ import java.util.List;
  */
 public class UserWrapper extends BaseEntityWrapper<User, UserVO> {
 
-	private static IUserService userService;
-
-	private static IDictService dictService;
-
-	static {
-		userService = SpringUtil.getBean(IUserService.class);
-		dictService = SpringUtil.getBean(IDictService.class);
-	}
-
 	public static UserWrapper build() {
 		return new UserWrapper();
 	}
@@ -49,11 +39,11 @@ public class UserWrapper extends BaseEntityWrapper<User, UserVO> {
 	@Override
 	public UserVO entityVO(User user) {
 		UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
-		List<String> roleName = userService.getRoleName(user.getRoleId());
-		List<String> deptName = userService.getDeptName(user.getDeptId());
+		List<String> roleName = SysCache.getRoleNames(user.getRoleId());
+		List<String> deptName = SysCache.getDeptNames(user.getDeptId());
 		userVO.setRoleName(Func.join(roleName));
 		userVO.setDeptName(Func.join(deptName));
-		userVO.setSexName(dictService.getValue("sex", Func.toInt(user.getSex())));
+		userVO.setSexName(DictCache.getValue("sex", Func.toInt(user.getSex())));
 		return userVO;
 	}
 

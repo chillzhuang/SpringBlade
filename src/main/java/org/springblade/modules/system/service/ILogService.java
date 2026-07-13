@@ -29,24 +29,24 @@ public interface ILogService {
 	/**
 	 * 保存通用日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 通用日志实体
+	 * @return 是否成功
 	 */
 	Boolean saveUsualLog(LogUsual log);
 
 	/**
 	 * 保存操作日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 操作日志实体
+	 * @return 是否成功
 	 */
 	Boolean saveApiLog(LogApi log);
 
 	/**
 	 * 保存错误日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 错误日志实体
+	 * @return 是否成功
 	 */
 	Boolean saveErrorLog(LogError log);
 

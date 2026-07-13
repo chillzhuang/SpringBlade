@@ -17,7 +17,6 @@ package org.springblade.modules.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +29,7 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.modules.system.entity.Region;
 import org.springblade.modules.system.service.IRegionService;
@@ -49,6 +49,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_SYSTEM_NAME + "/region")
+@ApiOrder
 @Tag(name = "行政区划表", description = "行政区划表接口")
 public class RegionController extends BladeController {
 
@@ -58,7 +59,6 @@ public class RegionController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入region")
 	public R<RegionVO> detail(Region region) {
 		Region detail = regionService.getOne(Condition.getQueryWrapper(region));
@@ -69,7 +69,6 @@ public class RegionController extends BladeController {
 	 * 分页 行政区划表
 	 */
 	@GetMapping("/list")
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "分页", description = "传入region")
 	public R<IPage<Region>> list(Region region, Query query) {
 		IPage<Region> pages = regionService.page(Condition.getPage(query), Condition.getQueryWrapper(region));
@@ -84,7 +83,6 @@ public class RegionController extends BladeController {
 		@Parameter(name = "code", description = "区划编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "name", description = "区划名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "懒加载列表", description = "传入menu")
 	public R<List<RoleVO>> lazyList(String parentCode, @Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<RoleVO> list = regionService.lazyList(parentCode, menu);
@@ -99,7 +97,6 @@ public class RegionController extends BladeController {
 		@Parameter(name = "code", description = "区划编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "name", description = "区划名称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "懒加载列表", description = "传入menu")
 	public R<List<RoleVO>> lazyTree(String parentCode, @Parameter(hidden = true) @RequestParam Map<String, Object> menu) {
 		List<RoleVO> list = regionService.lazyTree(parentCode, menu);
@@ -110,7 +107,6 @@ public class RegionController extends BladeController {
 	 * 新增 行政区划表
 	 */
 	@PostMapping("/save")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "新增", description = "传入region")
 	public R save(@Valid @RequestBody Region region) {
 		return R.status(regionService.save(region));
@@ -120,7 +116,6 @@ public class RegionController extends BladeController {
 	 * 修改 行政区划表
 	 */
 	@PostMapping("/update")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "修改", description = "传入region")
 	public R update(@Valid @RequestBody Region region) {
 		return R.status(regionService.updateById(region));
@@ -130,7 +125,6 @@ public class RegionController extends BladeController {
 	 * 新增或修改 行政区划表
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 7)
 	@Operation(summary = "新增或修改", description = "传入region")
 	public R submit(@Valid @RequestBody Region region) {
 		return R.status(regionService.submit(region));
@@ -141,7 +135,6 @@ public class RegionController extends BladeController {
 	 * 删除 行政区划表
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 8)
 	@Operation(summary = "删除", description = "传入主键")
 	public R remove(@Parameter(description = "主键", required = true) @RequestParam String id) {
 		return R.status(regionService.removeRegion(id));
@@ -151,7 +144,6 @@ public class RegionController extends BladeController {
 	 * 行政区划下拉数据源
 	 */
 	@GetMapping("/select")
-	@ApiOperationSupport(order = 9)
 	@Operation(summary = "下拉数据源", description = "传入tenant")
 	public R<List<Region>> select(@RequestParam(required = false, defaultValue = "00") String code) {
 		List<Region> list = regionService.list(Wrappers.<Region>query().lambda().eq(Region::getParentCode, code));

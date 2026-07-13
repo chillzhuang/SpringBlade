@@ -19,7 +19,6 @@ package org.springblade.modules.system.controller;
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -75,7 +74,6 @@ public class UserController {
 	/**
 	 * 查询单条
 	 */
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/detail")
 	@BladeView(Views.Admin.class)
@@ -88,7 +86,6 @@ public class UserController {
 	/**
 	 * 查询单条
 	 */
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "查看详情", description = "传入id")
 	@GetMapping("/info")
 	@BladeView
@@ -106,7 +103,6 @@ public class UserController {
 		@Parameter(name = "account", description = "账号名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "realName", description = "姓名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "列表", description = "传入account和realName")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<UserVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> user, Query query) {
@@ -117,7 +113,6 @@ public class UserController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增或修改", description = "传入User")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R submit(@Valid @RequestBody User user) {
@@ -128,7 +123,6 @@ public class UserController {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "修改", description = "传入User")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R update(@Valid @RequestBody User user) {
@@ -139,7 +133,6 @@ public class UserController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "删除", description = "传入地基和")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R remove(@RequestParam String ids) {
@@ -149,13 +142,8 @@ public class UserController {
 
 	/**
 	 * 设置菜单权限
-	 *
-	 * @param userIds
-	 * @param roleIds
-	 * @return
 	 */
 	@PostMapping("/grant")
-	@ApiOperationSupport(order = 7)
 	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R grant(@Parameter(description = "userId集合", required = true) @RequestParam String userIds,
@@ -165,7 +153,6 @@ public class UserController {
 	}
 
 	@PostMapping("/reset-password")
-	@ApiOperationSupport(order = 8)
 	@Operation(summary = "初始化密码", description = "传入userId集合")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R resetPassword(@Parameter(description = "userId集合", required = true) @RequestParam String userIds) {
@@ -175,14 +162,8 @@ public class UserController {
 
 	/**
 	 * 修改密码
-	 *
-	 * @param oldPassword
-	 * @param newPassword
-	 * @param newPassword1
-	 * @return
 	 */
 	@PostMapping("/update-password")
-	@ApiOperationSupport(order = 9)
 	@Operation(summary = "修改密码", description = "传入密码")
 	public R updatePassword(BladeUser user, @Parameter(description = "旧密码", required = true) @RequestParam String oldPassword,
 							@Parameter(description = "新密码", required = true) @RequestParam String newPassword,
@@ -193,13 +174,9 @@ public class UserController {
 
 	/**
 	 * 用户列表
-	 *
-	 * @param user
-	 * @return
 	 */
 	@GetMapping("/user-list")
 	@BladeView(Views.Admin.class)
-	@ApiOperationSupport(order = 10)
 	@Operation(summary = "用户列表", description = "传入user")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<List<UserVO>> userList(User user) {
@@ -212,7 +189,6 @@ public class UserController {
 	 * 导入用户
 	 */
 	@PostMapping("import-user")
-	@ApiOperationSupport(order = 12)
 	@Operation(summary = "导入用户", description = "传入excel")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R importUser(MultipartFile file, Integer isCovered) {
@@ -240,7 +216,6 @@ public class UserController {
 	 */
 	@SneakyThrows
 	@GetMapping("export-user")
-	@ApiOperationSupport(order = 13)
 	@Operation(summary = "导出用户", description = "传入user")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public void exportUser(@Parameter(hidden = true) @RequestParam Map<String, Object> user, HttpServletResponse response) {
@@ -257,7 +232,6 @@ public class UserController {
 	 */
 	@SneakyThrows
 	@GetMapping("export-template")
-	@ApiOperationSupport(order = 14)
 	@Operation(summary = "导出模板")
 	public void exportUser(HttpServletResponse response) {
 		List<UserExcel> list = new ArrayList<>();
@@ -272,7 +246,6 @@ public class UserController {
 	 * 第三方注册用户
 	 */
 	@PostMapping("/register-guest")
-	@ApiOperationSupport(order = 15)
 	@Operation(summary = "第三方注册用户", description = "传入user")
 	public R registerGuest(User user, Long oauthId) {
 		return R.status(userService.registerGuest(user, oauthId));
@@ -282,7 +255,6 @@ public class UserController {
 	 * 用户解锁
 	 */
 	@PostMapping("/unlock")
-	@ApiOperationSupport(order = 16)
 	@Operation(summary = "账号解锁")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R unlock(String userIds) {
@@ -296,7 +268,6 @@ public class UserController {
 	 * 修改基本信息
 	 */
 	@PostMapping("/update-info")
-	@ApiOperationSupport(order = 17)
 	@Operation(summary = "修改基本信息", description = "传入User")
 	public R updateInfo(@RequestBody User user) {
 		return R.status(userService.updateUserInfo(user));

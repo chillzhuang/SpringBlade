@@ -15,7 +15,7 @@
  */
 package org.springblade.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.core.log.model.LogApi;
 import org.springblade.modules.system.mapper.LogApiMapper;
 import org.springblade.modules.system.service.ILogApiService;

@@ -26,9 +26,6 @@ public interface CacheNames {
 
 	String NOTICE_ONE = "notice:one";
 
-	String DICT_VALUE = "dict:value";
-	String DICT_LIST = "dict:list";
-
 	/**
 	 * 验证码key
 	 */

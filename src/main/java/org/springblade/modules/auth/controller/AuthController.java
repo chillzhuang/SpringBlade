@@ -24,6 +24,7 @@ import org.springblade.common.cache.CacheNames;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.secure.AuthInfo;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.Func;
@@ -46,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_AUTH_NAME)
+@ApiOrder
 @Tag(name = "用户授权认证", description = "授权接口")
 public class AuthController {
 

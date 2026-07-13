@@ -15,7 +15,7 @@
  */
 package org.springblade.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.core.log.model.LogError;
 import org.springblade.modules.system.mapper.LogErrorMapper;
 import org.springblade.modules.system.service.ILogErrorService;

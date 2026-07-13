@@ -7,13 +7,13 @@
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
     <packaging>jar</packaging>
-    <version>4.10.0</version>
+    <version>5.0.0</version>
 
     <properties>
-        <blade.tool.version>4.10.0</blade.tool.version>
+        <blade.tool.version>5.0.0</blade.tool.version>
 
-        <java.version>17</java.version>
-        <maven.plugin.version>3.11.0</maven.plugin.version>
+        <java.version>21</java.version>
+        <maven.plugin.version>3.15.0</maven.plugin.version>
 
         <!-- 推荐使用Harbor -->
         <docker.registry.url>192.168.186.129</docker.registry.url>
@@ -74,9 +74,10 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-starter-excel</artifactId>
         </dependency>
+        <!--Swagger-->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-ui</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.whvcse</groupId>
@@ -112,7 +113,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>3.2.10</version>
+                    <version>4.1.0</version>
                     <configuration>
                         <finalName>${project.build.finalName}</finalName>
                     </configuration>

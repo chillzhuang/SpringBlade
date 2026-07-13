@@ -30,16 +30,16 @@ public interface NoticeMapper extends BaseMapper<Notice> {
 
 	/**
 	 * 前N条数据
-	 * @param number
-	 * @return
+	 * @param number 查询数量
+	 * @return 公告数据集合
 	 */
 	List<Notice> topList(Integer number);
 
 	/**
 	 * 自定义分页
-	 * @param page
-	 * @param notice
-	 * @return
+	 * @param page   分页参数
+	 * @param notice 公告查询条件
+	 * @return 公告数据集合
 	 */
 	List<Notice> selectNoticePage(IPage page, Notice notice);
 

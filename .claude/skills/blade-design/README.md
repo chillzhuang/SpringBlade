@@ -127,7 +127,7 @@ blade-design/
 1. Long 类型 ID 必须 `@JsonSerialize(using = ToStringSerializer.class)` 防精度丢失
 2. Date 字段同时添加 `@DateTimeFormat` 和 `@JsonFormat`
 3. 逻辑删除字段 `isDeleted` 添加 `@TableLogic`（基类自动处理）
-4. Swagger 使用 OpenAPI 3 注解 + Knife4j `@ApiOperationSupport`
+4. Swagger 使用 OpenAPI 3 注解（`@Tag`/`@Operation`/`@Schema`/`@Parameter`），接口排序用 `@ApiOrder(n)`
 5. 响应统一使用 `R<T>` 包装
 6. Wrapper 中通过 `DictCache.getValue()` 翻译字典字段
 7. 前端权限标识格式：`{modelCode}_{action}`

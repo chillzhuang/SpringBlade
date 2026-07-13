@@ -33,19 +33,27 @@ public interface ITenantService extends BaseService<Tenant> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param tenant
-	 * @return
+	 * @param page   分页参数
+	 * @param tenant 查询条件
+	 * @return 分页数据
 	 */
 	IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant);
 
 	/**
 	 * 新增
 	 *
-	 * @param tenant
-	 * @return
+	 * @param tenant 租户实体
+	 * @return 是否成功
 	 */
 	boolean saveTenant(Tenant tenant);
+
+	/**
+	 * 删除租户并清理缓存
+	 *
+	 * @param ids 主键集合
+	 * @return 是否成功
+	 */
+	boolean removeTenant(List<Long> ids);
 
 	/**
 	 * 详情查询（含超管判定 + 当前租户隔离）

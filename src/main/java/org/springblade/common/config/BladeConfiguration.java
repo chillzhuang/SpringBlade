@@ -37,10 +37,11 @@ public class BladeConfiguration implements WebMvcConfigurer {
 		secureRegistry.excludePathPatterns("/blade-auth/**");
 		secureRegistry.excludePathPatterns("/blade-system/menu/auth-routes");
 		secureRegistry.excludePathPatterns("/blade-system/tenant/info");
-		secureRegistry.excludePathPatterns("/doc.html");
 		secureRegistry.excludePathPatterns("/js/**");
 		secureRegistry.excludePathPatterns("/webjars/**");
-		secureRegistry.excludePathPatterns("/swagger-resources/**");
+		secureRegistry.excludePathPatterns("/v3/api-docs/**");
+		secureRegistry.excludePathPatterns("/swagger-ui/**");
+		secureRegistry.excludePathPatterns("/swagger-ui.html");
 		return secureRegistry;
 	}
 
