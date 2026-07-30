@@ -36,7 +36,7 @@ import java.util.List;
 )
 public interface IDictClient {
 
-	String API_PREFIX = "/dict";
+	String API_PREFIX = "/feign/client/dict";
 
 	/**
 	 * 获取字典表对应值

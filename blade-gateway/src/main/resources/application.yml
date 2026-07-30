@@ -1,16 +1,18 @@
-knife4j:
-  gateway:
+# 接口文档聚合:各微服务经网关同源路由 /{serviceId}/v3/api-docs 暴露,由网关 Swagger-UI 下拉聚合
+springdoc:
+  api-docs:
+    # 必须保持开启,关闭会连锁禁用聚合所依赖的 SwaggerUiConfigProperties
     enabled: true
-    tags-sorter: order
-    operations-sorter: order
-    # 指定服务发现的模式聚合微服务文档，并且是默认`default`分组
-    strategy: discover
-    discover:
-      enabled: true
-      # 指定版本号(Swagger2|OpenAPI3)
-      version : openapi3
-      # 需要排除的微服务(eg:网关服务)
+  swagger-ui:
+    # 去掉默认的 petstore 示例下拉项
+    disable-swagger-default-url: true
+blade:
+  swagger:
+    discovery:
+      # 聚合下拉项刷新间隔(毫秒)
+      refresh-interval: 30000
+      # 无业务文档、不纳入聚合的服务
       excluded-services:
-        - blade-admin
         - blade-gateway
+        - blade-admin
         - blade-log

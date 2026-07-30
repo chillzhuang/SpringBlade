@@ -1,0 +1,10 @@
+INSERT INTO `blade_menu`(`id`, `parent_id`, `code`, `name`, `alias`, `path`, `source`, `sort`, `category`, `action`, `is_open`, `remark`, `is_deleted`)
+VALUES ('$!{menuId}', 1123598815738675201, '$!{entityKey}', '$!{codeName}', 'menu', '/$!{servicePackage}/$!{entityKey}', NULL, 1, 1, 0, 1, NULL, 0);
+INSERT INTO `blade_menu`(`id`, `parent_id`, `code`, `name`, `alias`, `path`, `source`, `sort`, `category`, `action`, `is_open`, `remark`, `is_deleted`)
+VALUES ('$!{addMenuId}', '$!{menuId}', '$!{entityKey}_add', '新增', 'add', '/$!{servicePackage}/$!{entityKey}/add', 'plus', 1, 2, 1, 1, NULL, 0);
+INSERT INTO `blade_menu`(`id`, `parent_id`, `code`, `name`, `alias`, `path`, `source`, `sort`, `category`, `action`, `is_open`, `remark`, `is_deleted`)
+VALUES ('$!{editMenuId}', '$!{menuId}', '$!{entityKey}_edit', '修改', 'edit', '/$!{servicePackage}/$!{entityKey}/edit', 'form', 2, 2, 2, 1, NULL, 0);
+INSERT INTO `blade_menu`(`id`, `parent_id`, `code`, `name`, `alias`, `path`, `source`, `sort`, `category`, `action`, `is_open`, `remark`, `is_deleted`)
+VALUES ('$!{removeMenuId}', '$!{menuId}', '$!{entityKey}_delete', '删除', 'delete', '/api/$!{serviceName}/$!{entityKey}/remove', 'delete', 3, 2, 3, 1, NULL, 0);
+INSERT INTO `blade_menu`(`id`, `parent_id`, `code`, `name`, `alias`, `path`, `source`, `sort`, `category`, `action`, `is_open`, `remark`, `is_deleted`)
+VALUES ('$!{viewMenuId}', '$!{menuId}', '$!{entityKey}_view', '查看', 'view', '/$!{servicePackage}/$!{entityKey}/view', 'file-text', 4, 2, 2, 1, NULL, 0);

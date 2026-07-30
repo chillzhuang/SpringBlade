@@ -15,7 +15,7 @@
  */
 package org.springblade.develop.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.develop.entity.Code;
 import org.springblade.develop.mapper.CodeMapper;

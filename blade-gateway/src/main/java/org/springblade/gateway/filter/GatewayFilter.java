@@ -23,7 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.cors.reactive.CorsUtils;
@@ -68,7 +68,7 @@ public class GatewayFilter implements WebFilter, Ordered {
 	/**
 	 * 这里为支持的请求头，如果有自定义的header字段请自己添加
 	 */
-	private static final String ALLOWED_HEADERS = "X-Requested-With, Tenant-Id, Blade-Auth, Content-Type, Authorization, credential, X-XSRF-TOKEN, token, username, client, knfie4j-gateway-request, knife4j-gateway-code, request-origion";
+	private static final String ALLOWED_HEADERS = "X-Requested-With, Tenant-Id, Blade-Auth, Content-Type, Authorization, credential, X-XSRF-TOKEN, token, username, client, request-origion";
 	private static final String ALLOWED_METHODS = "GET,POST,PUT,DELETE,OPTIONS,HEAD";
 	private static final String ALLOWED_ORIGIN = "*";
 	private static final String ALLOWED_EXPOSE = "*";

@@ -18,7 +18,9 @@ package org.springblade.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
+import org.springblade.core.cache.constant.CacheConstant;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.utils.Func;
@@ -27,14 +29,9 @@ import org.springblade.system.entity.Dict;
 import org.springblade.system.mapper.DictMapper;
 import org.springblade.system.service.IDictService;
 import org.springblade.system.vo.DictVO;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.springblade.common.cache.CacheNames.DICT_LIST;
-import static org.springblade.common.cache.CacheNames.DICT_VALUE;
 
 /**
  * 服务实现类
@@ -55,20 +52,18 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 	}
 
 	@Override
-	@Cacheable(cacheNames = DICT_VALUE, key = "#code+'_'+#dictKey")
 	public String getValue(String code, Integer dictKey) {
 		return Func.toStr(baseMapper.getValue(code, dictKey), StringPool.EMPTY);
 	}
 
 	@Override
-	@Cacheable(cacheNames = DICT_LIST, key = "#code")
 	public List<Dict> getList(String code) {
 		return baseMapper.getList(code);
 	}
 
 	@Override
-	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	public boolean submit(Dict dict) {
+		CacheUtil.clear(CacheConstant.DICT_CACHE);
 		LambdaQueryWrapper<Dict> lqw = Wrappers.<Dict>query().lambda().eq(Dict::getCode, dict.getCode()).eq(Dict::getDictKey, dict.getDictKey());
 		Long cnt = baseMapper.selectCount((Func.isEmpty(dict.getId())) ? lqw : lqw.notIn(Dict::getId, dict.getId()));
 		if (cnt > 0) {
@@ -76,4 +71,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 		}
 		return saveOrUpdate(dict);
 	}
+
+	@Override
+	public boolean removeDict(List<Long> ids) {
+		CacheUtil.clear(CacheConstant.DICT_CACHE);
+		return removeByIds(ids);
+	}
+
 }

@@ -32,25 +32,25 @@ public interface DeptMapper extends BaseMapper<Dept> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param dept
-	 * @return
+	 * @param page  分页参数
+	 * @param dept  部门查询条件
+	 * @return 部门分页数据
 	 */
 	List<DeptVO> selectDeptPage(IPage page, DeptVO dept);
 
 	/**
 	 * 获取树形节点
 	 *
-	 * @param tenantId
-	 * @return
+	 * @param tenantId 租户ID
+	 * @return 部门树形结构
 	 */
 	List<DeptVO> tree(String tenantId);
 
 	/**
 	 * 获取部门名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 部门ID数组
+	 * @return 部门名称集合
 	 */
 	List<String> getDeptNames(Long[] ids);
 

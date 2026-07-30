@@ -17,9 +17,8 @@ package org.springblade.system.wrapper;
 
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.core.tool.utils.SpringUtil;
+import org.springblade.system.cache.DictCache;
 import org.springblade.system.entity.DataScope;
-import org.springblade.system.service.IDictService;
 import org.springblade.system.vo.DataScopeVO;
 
 import java.util.Objects;
@@ -32,12 +31,6 @@ import java.util.Objects;
  */
 public class DataScopeWrapper extends BaseEntityWrapper<DataScope, DataScopeVO> {
 
-	private static IDictService dictService;
-
-	static {
-		dictService = SpringUtil.getBean(IDictService.class);
-	}
-
 	public static DataScopeWrapper build() {
 		return new DataScopeWrapper();
 	}
@@ -45,7 +38,7 @@ public class DataScopeWrapper extends BaseEntityWrapper<DataScope, DataScopeVO> 
 	@Override
 	public DataScopeVO entityVO(DataScope dataScope) {
 		DataScopeVO dataScopeVO = Objects.requireNonNull(BeanUtil.copyProperties(dataScope, DataScopeVO.class));
-		String scopeTypeName = dictService.getValue("data_scope_type", dataScope.getScopeType());
+		String scopeTypeName = DictCache.getValue("data_scope_type", dataScope.getScopeType());
 		dataScopeVO.setScopeTypeName(scopeTypeName);
 		return dataScopeVO;
 	}

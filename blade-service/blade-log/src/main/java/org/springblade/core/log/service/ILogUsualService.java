@@ -15,7 +15,7 @@
  */
 package org.springblade.core.log.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.core.log.model.LogUsual;
 
 /**

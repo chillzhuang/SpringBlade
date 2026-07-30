@@ -19,27 +19,25 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
-import org.springblade.core.log.exception.ServiceException;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.mp.base.BaseServiceImpl;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tenant.TenantId;
-import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.utils.DigestUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.entity.Post;
 import org.springblade.system.entity.Role;
 import org.springblade.system.entity.Tenant;
-import org.springblade.system.mapper.DeptMapper;
-import org.springblade.system.mapper.RoleMapper;
 import org.springblade.system.mapper.TenantMapper;
+import org.springblade.system.service.IDeptService;
 import org.springblade.system.service.IPostService;
+import org.springblade.system.service.IRoleService;
 import org.springblade.system.service.ITenantService;
+import org.springblade.system.service.IUserService;
 import org.springblade.system.user.entity.User;
-import org.springblade.system.user.feign.IUserClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,10 +56,10 @@ import java.util.stream.Collectors;
 public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> implements ITenantService {
 
 	private final TenantId tenantId;
-	private final RoleMapper roleMapper;
-	private final DeptMapper deptMapper;
+	private final IRoleService roleService;
+	private final IDeptService deptService;
 	private final IPostService postService;
-	private final IUserClient userClient;
+	private final IUserService userService;
 
 	@Override
 	public IPage<Tenant> selectTenantPage(IPage<Tenant> page, Tenant tenant) {
@@ -89,7 +87,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			role.setRoleAlias("admin");
 			role.setSort(2);
 			role.setIsDeleted(0);
-			roleMapper.insert(role);
+			roleService.save(role);
 			// 新建租户对应的默认部门
 			Dept dept = new Dept();
 			dept.setTenantId(tenantId);
@@ -98,7 +96,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			dept.setFullName(tenant.getTenantName());
 			dept.setSort(2);
 			dept.setIsDeleted(0);
-			deptMapper.insert(dept);
+			deptService.save(dept);
 			// 新建租户对应的默认岗位
 			Post post = new Post();
 			post.setTenantId(tenantId);
@@ -113,7 +111,7 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			user.setName("admin");
 			user.setRealName("admin");
 			user.setAccount("admin");
-			user.setPassword(DigestUtil.encrypt("admin"));
+			user.setPassword("admin");
 			user.setRoleId(String.valueOf(role.getId()));
 			user.setDeptId(String.valueOf(dept.getId()));
 			user.setPostId(String.valueOf(post.getId()));
@@ -121,15 +119,29 @@ public class TenantServiceImpl extends BaseServiceImpl<TenantMapper, Tenant> imp
 			user.setSex(1);
 			user.setIsDeleted(BladeConstant.DB_NOT_DELETED);
 			boolean temp = super.saveOrUpdate(tenant);
-			R<Boolean> result = userClient.saveUser(user);
-			if (!result.isSuccess()) {
-				throw new ServiceException(result.getMsg());
-			}
-			return temp;
+			boolean result = userService.submit(user);
+			return temp && result;
 		}
-		return super.saveOrUpdate(tenant);
+		boolean tenantResult = super.saveOrUpdate(tenant);
+		// 租户信息变更后清理系统缓存，保证 SysCache 中的租户数据一致性
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
+		return tenantResult;
 	}
 
+	@Override
+	public boolean removeTenant(List<Long> ids) {
+		boolean result = deleteLogic(ids);
+		// 租户删除后清理系统缓存，避免 SysCache 中残留已删除租户导致游客注册等场景误放行
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
+		return result;
+	}
+
+	/**
+	 * 生成不与已有集合冲突的租户编号
+	 *
+	 * @param codes 已存在的租户编号集合，用于排重
+	 * @return 未被占用的租户编号
+	 */
 	private String getTenantId(List<String> codes) {
 		String code = tenantId.generate();
 		if (codes.contains(code)) {

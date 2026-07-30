@@ -16,7 +16,7 @@
 package org.springblade.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.system.entity.Dict;
 import org.springblade.system.vo.DictVO;
 
@@ -32,16 +32,16 @@ public interface IDictService extends IService<Dict> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param dict
-	 * @return
+	 * @param page 分页参数
+	 * @param dict 字典查询条件
+	 * @return 字典分页数据
 	 */
 	IPage<DictVO> selectDictPage(IPage<DictVO> page, DictVO dict);
 
 	/**
 	 * 树形结构
 	 *
-	 * @return
+	 * @return 字典树
 	 */
 	List<DictVO> tree();
 
@@ -50,7 +50,7 @@ public interface IDictService extends IService<Dict> {
 	 *
 	 * @param code    字典编号
 	 * @param dictKey 字典序号
-	 * @return
+	 * @return 字典值对应的中文
 	 */
 	String getValue(String code, Integer dictKey);
 
@@ -58,15 +58,23 @@ public interface IDictService extends IService<Dict> {
 	 * 获取字典表
 	 *
 	 * @param code 字典编号
-	 * @return
+	 * @return 字典集合
 	 */
 	List<Dict> getList(String code);
 
 	/**
 	 * 新增或修改
-	 * @param dict
-	 * @return
+	 * @param dict 字典实体
+	 * @return 是否成功
 	 */
 	boolean submit(Dict dict);
+
+	/**
+	 * 删除字典并清理缓存
+	 *
+	 * @param ids 主键集合
+	 * @return 是否成功
+	 */
+	boolean removeDict(List<Long> ids);
 
 }

@@ -19,7 +19,7 @@ public interface IStorageClient {
 	 * @param count         数量
 	 * @return boolean
 	 */
-	@GetMapping("/storage/deduct")
+	@GetMapping("/feign/client/storage/deduct")
 	int deduct(@RequestParam("commodityCode") String commodityCode, @RequestParam("count") Integer count);
 
 }

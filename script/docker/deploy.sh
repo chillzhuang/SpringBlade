@@ -37,6 +37,9 @@ mount(){
 		mkdir -p /docker/nacos/conf
 		cp nacos/conf/application.properties /docker/nacos/conf/application.properties
 	fi
+	if test ! -d "/docker/nacos/data" ;then
+		mkdir -p /docker/nacos/data
+	fi
 }
 
 #启动基础模块

@@ -16,7 +16,6 @@
 package org.springblade.develop.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +29,7 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -52,6 +52,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/code")
+@ApiOrder
 @Tag(name = "代码生成", description = "代码生成")
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 public class CodeController extends BladeController {
@@ -63,7 +64,6 @@ public class CodeController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入code")
 	public R<Code> detail(Code code) {
 		Code detail = codeService.getOne(Condition.getQueryWrapper(code));
@@ -79,7 +79,6 @@ public class CodeController extends BladeController {
 		@Parameter(name = "tableName", description = "表名", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "modelName", description = "实体名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "分页", description = "传入code")
 	public R<IPage<Code>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> code, Query query) {
 		IPage<Code> pages = codeService.page(Condition.getPage(query), Condition.getQueryWrapper(code, Code.class));
@@ -90,7 +89,6 @@ public class CodeController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "新增或修改", description = "传入code")
 	public R submit(@Valid @RequestBody Code code) {
 		return R.status(codeService.submit(code));
@@ -101,7 +99,6 @@ public class CodeController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(codeService.removeByIds(Func.toLongList(ids)));
@@ -111,7 +108,6 @@ public class CodeController extends BladeController {
 	 * 复制
 	 */
 	@PostMapping("/copy")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "复制", description = "传入id")
 	public R copy(@Parameter(description = "主键", required = true) @RequestParam Long id) {
 		Code code = codeService.getById(id);
@@ -124,7 +120,6 @@ public class CodeController extends BladeController {
 	 * 代码生成
 	 */
 	@PostMapping("/gen-code")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "代码生成", description = "传入ids")
 	public R genCode(@Parameter(description = "主键集合", required = true) @RequestParam String ids, @RequestParam(defaultValue = "saber3") String system) {
 		Collection<Code> codes = codeService.listByIds(Func.toLongList(ids));

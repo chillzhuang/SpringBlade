@@ -25,6 +25,7 @@ import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springblade.core.social.props.SocialProperties;
 import org.springblade.core.social.utils.SocialUtil;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,7 @@ import java.io.IOException;
 @RestController
 @AllArgsConstructor
 @ConditionalOnProperty(value = "social.enabled", havingValue = "true")
+@ApiOrder
 @Tag(name = "第三方登陆", description = "第三方登陆端点")
 public class SocialController {
 

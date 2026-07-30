@@ -1,6 +1,6 @@
 package org.springblade.seata.order.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.exception.ServiceException;

@@ -1,16 +1,12 @@
 #服务器配置
 server:
-  undertow:
-    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
-    buffer-size: 1024
-    # 是否分配的直接内存
-    direct-buffers: true
+  tomcat:
     # 线程配置
     threads:
-      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
-      io: 16
-      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
-      worker: 400
+      # 最大工作线程数(可同时处理请求的线程上限)
+      max: 400
+      # 最小空闲工作线程数(保持存活的常驻线程数)
+      min-spare: 16
 
 #spring配置
 spring:
@@ -27,10 +23,6 @@ spring:
 feign:
   sentinel:
     enabled: true
-  okhttp:
-    enabled: true
-  httpclient:
-    enabled: false
 
 #对外暴露端口
 management:
@@ -46,34 +38,11 @@ management:
 springdoc:
   default-flat-param-object: true
 
-#knife4j配置
-knife4j:
-  #启用
-  enable: true
-  #基础认证
-  basic:
-    enable: false
-    username: blade
-    password: blade
-  #增强配置
-  setting:
-    enableSwaggerModels: true
-    enableDocumentManage: true
-    enableHost: false
-    enableHostText: http://localhost
-    enableRequestCache: true
-    enableFilterMultipartApis: false
-    enableFilterMultipartApiMethodType: POST
-    language: zh_cn
-    enableFooter: false
-    enableFooterCustom: true
-    footerCustomContent: Copyright © 2026 SpringBlade All Rights Reserved
-
 #swagger配置信息
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 4.10.0
+  version: 5.0.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.cn
   terms-of-service-url: https://bladex.cn

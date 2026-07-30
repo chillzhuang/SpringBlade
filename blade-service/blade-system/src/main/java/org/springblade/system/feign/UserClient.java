@@ -19,7 +19,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.api.R;
 import org.springblade.system.service.IUserService;
-import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 import org.springblade.system.user.entity.UserOauth;
 import org.springblade.system.user.feign.IUserClient;
@@ -54,12 +53,6 @@ public class UserClient implements IUserClient {
 	@PostMapping(API_PREFIX + "/user-auth-info")
 	public R<UserInfo> userAuthInfo(UserOauth userOauth) {
 		return R.data(service.userInfo(userOauth));
-	}
-
-	@Override
-	@PostMapping(API_PREFIX + "/save-user")
-	public R<Boolean> saveUser(User user) {
-		return R.data(service.save(user));
 	}
 
 }

@@ -15,7 +15,7 @@
  */
 package org.springblade.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.system.entity.RoleScope;
 import org.springblade.system.mapper.RoleScopeMapper;
 import org.springblade.system.service.IRoleScopeService;

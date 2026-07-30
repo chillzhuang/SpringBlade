@@ -20,9 +20,8 @@ import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.SpringUtil;
+import org.springblade.system.cache.SysCache;
 import org.springblade.system.entity.Dept;
-import org.springblade.system.service.IDeptService;
 import org.springblade.system.vo.DeptVO;
 
 import java.util.List;
@@ -35,12 +34,6 @@ import java.util.stream.Collectors;
  */
 public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 
-	private static IDeptService deptService;
-
-	static {
-		deptService = SpringUtil.getBean(IDeptService.class);
-	}
-
 	public static DeptWrapper build() {
 		return new DeptWrapper();
 	}
@@ -51,7 +44,7 @@ public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 		if (Func.equals(dept.getParentId(), CommonConstant.TOP_PARENT_ID)) {
 			deptVO.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
-			Dept parent = deptService.getById(dept.getParentId());
+			Dept parent = SysCache.getDept(dept.getParentId());
 			deptVO.setParentName(parent.getDeptName());
 		}
 		return deptVO;

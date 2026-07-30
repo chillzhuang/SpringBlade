@@ -17,13 +17,12 @@ package org.springblade.system.wrapper;
 
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.mp.support.BaseEntityWrapper;
-import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.SpringUtil;
+import org.springblade.system.cache.DictCache;
 import org.springblade.system.entity.Menu;
-import org.springblade.system.feign.IDictClient;
 import org.springblade.system.service.IMenuService;
 import org.springblade.system.vo.MenuVO;
 
@@ -39,11 +38,8 @@ public class MenuWrapper extends BaseEntityWrapper<Menu, MenuVO> {
 
 	private static IMenuService menuService;
 
-	private static IDictClient dictClient;
-
 	static {
 		menuService = SpringUtil.getBean(IMenuService.class);
-		dictClient = SpringUtil.getBean(IDictClient.class);
 	}
 
 	public static MenuWrapper build() {
@@ -59,18 +55,9 @@ public class MenuWrapper extends BaseEntityWrapper<Menu, MenuVO> {
 			Menu parent = menuService.getById(menu.getParentId());
 			menuVO.setParentName(parent.getName());
 		}
-		R<String> d1 = dictClient.getValue("menu_category", Func.toInt(menuVO.getCategory()));
-		R<String> d2 = dictClient.getValue("button_func", Func.toInt(menuVO.getAction()));
-		R<String> d3 = dictClient.getValue("yes_no", Func.toInt(menuVO.getIsOpen()));
-		if (d1.isSuccess()) {
-			menuVO.setCategoryName(d1.getData());
-		}
-		if (d2.isSuccess()) {
-			menuVO.setActionName(d2.getData());
-		}
-		if (d3.isSuccess()) {
-			menuVO.setIsOpenName(d3.getData());
-		}
+		menuVO.setCategoryName(DictCache.getValue("menu_category", Func.toInt(menuVO.getCategory())));
+		menuVO.setActionName(DictCache.getValue("button_func", Func.toInt(menuVO.getAction())));
+		menuVO.setIsOpenName(DictCache.getValue("yes_no", Func.toInt(menuVO.getIsOpen())));
 		return menuVO;
 	}
 

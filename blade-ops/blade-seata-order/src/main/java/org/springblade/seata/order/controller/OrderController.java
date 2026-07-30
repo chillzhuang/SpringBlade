@@ -20,11 +20,6 @@ public class OrderController {
 
 	/**
 	 * 创建订单
-	 *
-	 * @param userId        用户id
-	 * @param commodityCode 商品代码
-	 * @param count         数量
-	 * @return boolean
 	 */
 	@RequestMapping("/create")
 	public R createOrder(String userId, String commodityCode, Integer count) {

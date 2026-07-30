@@ -16,9 +16,9 @@
 package org.springblade.gateway.utils;
 
 import lombok.SneakyThrows;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import reactor.util.annotation.Nullable;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

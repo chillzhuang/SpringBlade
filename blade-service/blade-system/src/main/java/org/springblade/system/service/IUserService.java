@@ -71,17 +71,17 @@ public interface IUserService extends BaseService<User> {
 	/**
 	 * 修改用户基本信息
 	 *
-	 * @param user
-	 * @return
+	 * @param user 用户实体
+	 * @return 是否成功
 	 */
 	boolean updateUserInfo(User user);
 
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param user
-	 * @return
+	 * @param page 分页参数
+	 * @param user 用户查询条件
+	 * @return 用户分页数据
 	 */
 	IPage<User> selectUserPage(IPage<User> page, User user);
 
@@ -100,86 +100,85 @@ public interface IUserService extends BaseService<User> {
 	/**
 	 * 用户信息
 	 *
-	 * @param userId
-	 * @return
+	 * @param userId 用户主键
+	 * @return 用户信息
 	 */
 	UserInfo userInfo(Long userId);
 
 	/**
 	 * 用户信息
 	 *
-	 * @param tenantId
-	 * @param account
-	 * @param password
-	 * @return
+	 * @param tenantId 租户编号
+	 * @param account  账号
+	 * @param password 密码
+	 * @return 用户信息
 	 */
 	UserInfo userInfo(String tenantId, String account, String password);
 
 	/**
 	 * 用户信息
 	 *
-	 * @param userOauth
-	 * @return
+	 * @param userOauth 第三方授权信息
+	 * @return 用户信息
 	 */
 	UserInfo userInfo(UserOauth userOauth);
 
 	/**
 	 * 给用户设置角色
 	 *
-	 * @param userIds
-	 * @param roleIds
-	 * @return
+	 * @param userIds 用户主键集合
+	 * @param roleIds 角色主键集合
+	 * @return 是否成功
 	 */
 	boolean grant(String userIds, String roleIds);
 
 	/**
 	 * 初始化密码
 	 *
-	 * @param userIds
-	 * @return
+	 * @param userIds 用户主键集合
+	 * @return 是否成功
 	 */
 	boolean resetPassword(String userIds);
 
 	/**
 	 * 修改密码
 	 *
-	 * @param userId
-	 * @param oldPassword
-	 * @param newPassword
-	 * @param newPassword1
-	 * @return
+	 * @param userId       用户主键
+	 * @param oldPassword  原密码
+	 * @param newPassword  新密码
+	 * @param newPassword1 确认密码
+	 * @return 是否成功
 	 */
 	boolean updatePassword(Long userId, String oldPassword, String newPassword, String newPassword1);
 
 	/**
 	 * 获取角色名
 	 *
-	 * @param roleIds
-	 * @return
+	 * @param roleIds 角色主键集合
+	 * @return 角色名称集合
 	 */
 	List<String> getRoleName(String roleIds);
 
 	/**
 	 * 获取部门名
 	 *
-	 * @param deptIds
-	 * @return
+	 * @param deptIds 部门主键集合
+	 * @return 部门名称集合
 	 */
 	List<String> getDeptName(String deptIds);
 
 	/**
 	 * 导入用户数据
 	 *
-	 * @param data
-	 * @return
+	 * @param data 用户导入数据集合
 	 */
 	void importUser(List<UserExcel> data);
 
 	/**
 	 * 获取导出用户数据
 	 *
-	 * @param queryWrapper
-	 * @return
+	 * @param queryWrapper 查询条件构造器
+	 * @return 用户导出数据集合
 	 */
 	List<UserExcel> exportUser(Wrapper<User> queryWrapper);
 
@@ -197,9 +196,9 @@ public interface IUserService extends BaseService<User> {
 	/**
 	 * 注册用户
 	 *
-	 * @param user
-	 * @param oauthId
-	 * @return
+	 * @param user    用户实体
+	 * @param oauthId 第三方授权主键
+	 * @return 是否成功
 	 */
 	boolean registerGuest(User user, Long oauthId);
 }

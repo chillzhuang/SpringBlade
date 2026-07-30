@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Chill
  */
 @RestController
-@RequestMapping("storage")
+@RequestMapping("/feign/client/storage")
 @AllArgsConstructor
 public class StorageController {
 
@@ -19,9 +19,6 @@ public class StorageController {
 
 	/**
 	 * 减库存
-	 *
-	 * @param commodityCode 商品代码
-	 * @param count         数量
 	 */
 	@RequestMapping(path = "/deduct")
 	public int deduct(String commodityCode, Integer count) {

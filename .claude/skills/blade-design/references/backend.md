@@ -526,7 +526,7 @@ public interface I{Name}Service extends BaseService<{Name}> {
 ```java
 package org.springblade.modules.{module}.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.modules.{module}.entity.{Name};
 
 /**
@@ -579,7 +579,7 @@ public class {Name}ServiceImpl extends BaseServiceImpl<{Name}Mapper, {Name}> imp
 ```java
 package org.springblade.modules.{module}.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.modules.{module}.entity.{Name};
 import org.springblade.modules.{module}.mapper.{Name}Mapper;
 import org.springblade.modules.{module}.service.I{Name}Service;
@@ -605,7 +605,6 @@ public class {Name}ServiceImpl extends ServiceImpl<{Name}Mapper, {Name}> impleme
 package org.springblade.modules.{module}.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -616,6 +615,7 @@ import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -644,7 +644,7 @@ public class {Name}Controller extends BladeController {
      * 详情
      */
     @GetMapping("/detail")
-    @ApiOperationSupport(order = 1)
+    @ApiOrder(1)
     @Operation(summary = "详情", description = "传入{modelCode}")
     public R<{Name}VO> detail({Name} {modelCode}) {
         {Name} detail = {modelCode}Service.getOne(Condition.getQueryWrapper({modelCode}));
@@ -655,7 +655,7 @@ public class {Name}Controller extends BladeController {
      * 分页列表
      */
     @GetMapping("/list")
-    @ApiOperationSupport(order = 2)
+    @ApiOrder(2)
     @Operation(summary = "分页", description = "传入{modelCode}")
     @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
     public R<IPage<{Name}VO>> list(@RequestParam Map<String, Object> {modelCode}, Query query) {
@@ -670,7 +670,7 @@ public class {Name}Controller extends BladeController {
      * 自定义分页
      */
     @GetMapping("/page")
-    @ApiOperationSupport(order = 3)
+    @ApiOrder(3)
     @Operation(summary = "自定义分页", description = "传入{modelCode}")
     public R<IPage<{Name}VO>> page({Name}VO {modelCode}, Query query) {
         IPage<{Name}VO> pages = {modelCode}Service.select{Name}Page(Condition.getPage(query), {modelCode});
@@ -681,7 +681,7 @@ public class {Name}Controller extends BladeController {
      * 新增
      */
     @PostMapping("/save")
-    @ApiOperationSupport(order = 4)
+    @ApiOrder(4)
     @Operation(summary = "新增", description = "传入{modelCode}")
     public R save(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.save({modelCode}));
@@ -691,7 +691,7 @@ public class {Name}Controller extends BladeController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOperationSupport(order = 5)
+    @ApiOrder(5)
     @Operation(summary = "修改", description = "传入{modelCode}")
     public R update(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.updateById({modelCode}));
@@ -701,7 +701,7 @@ public class {Name}Controller extends BladeController {
      * 新增或修改
      */
     @PostMapping("/submit")
-    @ApiOperationSupport(order = 6)
+    @ApiOrder(6)
     @Operation(summary = "新增或修改", description = "传入{modelCode}")
     public R submit(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.saveOrUpdate({modelCode}));
@@ -711,7 +711,7 @@ public class {Name}Controller extends BladeController {
      * 删除
      */
     @PostMapping("/remove")
-    @ApiOperationSupport(order = 7)
+    @ApiOrder(7)
     @Operation(summary = "逻辑删除", description = "传入ids")
     public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
         return R.status({modelCode}Service.deleteLogic(Func.toLongList(ids)));
@@ -761,7 +761,7 @@ public R<IPage<{Name}>> list(@RequestParam Map<String, Object> {modelCode}, Quer
 
 ```java
 @PostMapping("/remove")
-@ApiOperationSupport(order = 7)
+@ApiOrder(7)
 @Operation(summary = "删除", description = "传入ids")
 public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
     return R.status({modelCode}Service.removeBatchByIds(Func.toLongList(ids)));
@@ -783,7 +783,7 @@ SpringBlade 开源版仅支持角色级权限：
 
 ```java
 @GetMapping("/export-{modelCode}")
-@ApiOperationSupport(order = 8)
+@ApiOrder(8)
 @Operation(summary = "导出数据", description = "传入{modelCode}")
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 public void export{Name}(@RequestParam Map<String, Object> {modelCode}, HttpServletResponse response) {
@@ -967,7 +967,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 ### Controller 常用 import
 ```java
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -978,6 +977,7 @@ import org.springblade.core.launch.constant.AppConstant;      // Boot 路由前�
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;

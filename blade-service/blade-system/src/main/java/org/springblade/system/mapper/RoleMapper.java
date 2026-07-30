@@ -32,26 +32,26 @@ public interface RoleMapper extends BaseMapper<Role> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param role
-	 * @return
+	 * @param page  分页参数
+	 * @param role  角色查询条件
+	 * @return 角色分页数据
 	 */
 	List<RoleVO> selectRolePage(IPage page, RoleVO role);
 
 	/**
 	 * 获取树形节点
 	 *
-	 * @param tenantId
-	 * @param excludeRole
-	 * @return
+	 * @param tenantId    租户ID
+	 * @param excludeRole 排除的角色别名
+	 * @return 角色树形结构
 	 */
 	List<RoleVO> tree(String tenantId, String excludeRole);
 
 	/**
 	 * 获取角色名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 角色ID数组
+	 * @return 角色名称集合
 	 */
 	List<String> getRoleNames(Long[] ids);
 

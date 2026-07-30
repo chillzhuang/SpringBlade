@@ -16,7 +16,6 @@
 package org.springblade.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,6 +24,7 @@ import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -45,6 +45,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/post")
+@ApiOrder
 @Tag(name = "岗位表", description = "岗位表接口")
 public class PostController extends BladeController {
 
@@ -54,7 +55,6 @@ public class PostController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<PostVO> detail(Post post) {
@@ -66,7 +66,6 @@ public class PostController extends BladeController {
 	 * 分页 岗位表
 	 */
 	@GetMapping("/list")
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "分页", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<PostVO>> list(Post post, Query query) {
@@ -79,7 +78,6 @@ public class PostController extends BladeController {
 	 * 自定义分页 岗位表
 	 */
 	@GetMapping("/page")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "分页", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R<IPage<PostVO>> page(PostVO post, Query query) {
@@ -91,7 +89,6 @@ public class PostController extends BladeController {
 	 * 新增 岗位表
 	 */
 	@PostMapping("/save")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R save(@Valid @RequestBody Post post) {
@@ -102,7 +99,6 @@ public class PostController extends BladeController {
 	 * 修改 岗位表
 	 */
 	@PostMapping("/update")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "修改", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R update(@Valid @RequestBody Post post) {
@@ -113,7 +109,6 @@ public class PostController extends BladeController {
 	 * 新增或修改 岗位表
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "新增或修改", description = "传入post")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R submit(@Valid @RequestBody Post post) {
@@ -125,7 +120,6 @@ public class PostController extends BladeController {
 	 * 删除 岗位表
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 7)
 	@Operation(summary = "逻辑删除", description = "传入ids")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
@@ -136,7 +130,6 @@ public class PostController extends BladeController {
 	 * 下拉数据源
 	 */
 	@GetMapping("/select")
-	@ApiOperationSupport(order = 8)
 	@Operation(summary = "下拉数据源", description = "传入post")
 	public R<List<Post>> select(String tenantId) {
 		return R.data(postService.selectByTenant(tenantId));

@@ -13,29 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springblade.gateway.config;
 
-import com.github.xiaoymin.knife4j.spring.gateway.Knife4jGatewayProperties;
-import com.github.xiaoymin.knife4j.spring.gateway.discover.router.DiscoverClientRouteServiceConvert;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * knife4j自动聚合配置
+ * 网关 Jackson 配置
  *
- * @author BladeX
+ * @author Chill
  */
 @Configuration(proxyBeanMethods = false)
-public class ReactiveDiscoveryConfiguration {
+public class JacksonConfiguration {
 
+	/**
+	 * 为网关鉴权与全局异常处理提供写响应所需的 Jackson 2 ObjectMapper。
+	 * 该 Bean 在 Boot 4 下仅随 spring-boot-jackson2 自动装配，而网关刻意不引入该模块（以免其编解码器干扰 WebFlux），故在此手动声明。
+	 */
 	@Bean
-	@ConditionalOnProperty(name = {"spring.cloud.gateway.server.webflux.discovery.locator.enabled"})
-	public DiscoverClientRouteServiceConvert discoverClientRouteServiceConvert(DiscoveryClientRouteDefinitionLocator discoveryClient,
-																			   Knife4jGatewayProperties knife4jGatewayProperties) {
-		return new DiscoverClientRouteServiceConvert(discoveryClient, knife4jGatewayProperties);
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
 	}
 
 }

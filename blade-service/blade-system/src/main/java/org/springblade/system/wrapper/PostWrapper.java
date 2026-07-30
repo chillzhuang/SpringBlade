@@ -17,9 +17,8 @@ package org.springblade.system.wrapper;
 
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.core.tool.utils.SpringUtil;
+import org.springblade.system.cache.DictCache;
 import org.springblade.system.entity.Post;
-import org.springblade.system.service.IDictService;
 import org.springblade.system.vo.PostVO;
 
 import java.util.Objects;
@@ -31,12 +30,6 @@ import java.util.Objects;
  */
 public class PostWrapper extends BaseEntityWrapper<Post, PostVO> {
 
-	private static IDictService dictService;
-
-	static {
-		dictService = SpringUtil.getBean(IDictService.class);
-	}
-
 	public static PostWrapper build() {
 		return new PostWrapper();
 	}
@@ -44,7 +37,7 @@ public class PostWrapper extends BaseEntityWrapper<Post, PostVO> {
 	@Override
 	public PostVO entityVO(Post post) {
 		PostVO postVO = Objects.requireNonNull(BeanUtil.copyProperties(post, PostVO.class));
-		String categoryName = dictService.getValue("post_category", post.getCategory());
+		String categoryName = DictCache.getValue("post_category", post.getCategory());
 		postVO.setCategoryName(categoryName);
 		return postVO;
 	}

@@ -32,9 +32,9 @@ public interface DictMapper extends BaseMapper<Dict> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param dict
-	 * @return
+	 * @param page  分页参数
+	 * @param dict  字典查询条件
+	 * @return 字典分页数据
 	 */
 	List<DictVO> selectDictPage(IPage page, DictVO dict);
 
@@ -43,7 +43,7 @@ public interface DictMapper extends BaseMapper<Dict> {
 	 *
 	 * @param code    字典编号
 	 * @param dictKey 字典序号
-	 * @return
+	 * @return 字典对应的中文值
 	 */
 	String getValue(String code, Integer dictKey);
 
@@ -51,14 +51,14 @@ public interface DictMapper extends BaseMapper<Dict> {
 	 * 获取字典表
 	 *
 	 * @param code 字典编号
-	 * @return
+	 * @return 字典数据集合
 	 */
 	List<Dict> getList(String code);
 
 	/**
 	 * 获取树形节点
 	 *
-	 * @return
+	 * @return 字典树形结构
 	 */
 	List<DictVO> tree();
 

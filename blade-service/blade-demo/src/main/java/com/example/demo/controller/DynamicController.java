@@ -17,10 +17,10 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Notice;
 import com.example.demo.service.IDynamicService;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +36,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("dynamic")
+@ApiOrder
 @Tag(name = "多数据源接口", description = "多数据源")
 public class DynamicController {
 
@@ -45,7 +46,6 @@ public class DynamicController {
 	 * master列表
 	 */
 	@GetMapping("/master-list")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "master列表", description = "master列表")
 	public R<List<Notice>> masterList() {
 		List<Notice> list = dynamicService.masterList();
@@ -56,7 +56,6 @@ public class DynamicController {
 	 * slave列表
 	 */
 	@GetMapping("/slave-list")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "slave列表", description = "slave列表")
 	public R<List<Notice>> slaveList() {
 		List<Notice> list = dynamicService.slaveList();

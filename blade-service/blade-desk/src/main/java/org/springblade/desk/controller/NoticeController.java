@@ -16,7 +16,6 @@
 package org.springblade.desk.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -28,6 +27,7 @@ import org.springblade.common.cache.CacheNames;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.jackson.BladeView;
 import org.springblade.core.tool.jackson.Views;
@@ -49,6 +49,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("notice")
 @AllArgsConstructor
+@ApiOrder
 @Tag(name = "用户博客", description = "博客接口")
 public class NoticeController extends BladeController implements CacheNames {
 
@@ -59,7 +60,6 @@ public class NoticeController extends BladeController implements CacheNames {
 	 */
 	@GetMapping("/detail")
 	@BladeView(Views.Detail.class)
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入notice")
 	public R<NoticeVO> detail(Notice notice) {
 		Notice detail = noticeService.getOne(Condition.getQueryWrapper(notice));
@@ -75,7 +75,6 @@ public class NoticeController extends BladeController implements CacheNames {
 		@Parameter(name = "category", description = "公告类型", in = ParameterIn.QUERY, schema = @Schema(type = "integer")),
 		@Parameter(name = "title", description = "公告标题", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "分页", description = "传入notice")
 	public R<IPage<NoticeVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> notice, Query query) {
 		IPage<Notice> pages = noticeService.page(Condition.getPage(query), Condition.getQueryWrapper(notice, Notice.class));
@@ -86,7 +85,6 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 新增
 	 */
 	@PostMapping("/save")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "新增", description = "传入notice")
 	public R save(@RequestBody Notice notice) {
 		return R.status(noticeService.save(notice));
@@ -96,7 +94,6 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "修改", description = "传入notice")
 	public R update(@RequestBody Notice notice) {
 		return R.status(noticeService.updateById(notice));
@@ -106,7 +103,6 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "新增或修改", description = "传入notice")
 	public R submit(@RequestBody Notice notice) {
 		return R.status(noticeService.saveOrUpdate(notice));
@@ -116,7 +112,6 @@ public class NoticeController extends BladeController implements CacheNames {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "逻辑删除", description = "传入notice")
 	public R remove(@Parameter(description = "主键集合") @RequestParam String ids) {
 		boolean temp = noticeService.deleteLogic(Func.toLongList(ids));

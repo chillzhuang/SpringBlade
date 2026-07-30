@@ -32,26 +32,26 @@ public interface IPostService extends BaseService<Post> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param post
-	 * @return
+	 * @param page 分页参数
+	 * @param post 岗位查询条件
+	 * @return 岗位分页数据
 	 */
 	IPage<PostVO> selectPostPage(IPage<PostVO> page, PostVO post);
 
 	/**
 	 * 获取岗位ID
 	 *
-	 * @param tenantId
-	 * @param postNames
-	 * @return
+	 * @param tenantId  租户ID
+	 * @param postNames 岗位名称集合
+	 * @return 岗位主键字符串
 	 */
 	String getPostIds(String tenantId, String postNames);
 
 	/**
 	 * 获取岗位名
 	 *
-	 * @param postIds
-	 * @return
+	 * @param postIds 岗位主键集合
+	 * @return 岗位名称集合
 	 */
 	List<String> getPostNames(String postIds);
 

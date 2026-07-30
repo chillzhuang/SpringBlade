@@ -34,7 +34,7 @@ import java.util.List;
 )
 public interface INoticeClient {
 
-	String API_PREFIX = "/dashboard";
+	String API_PREFIX = "/feign/client/notice";
 
 	/**
 	 * 获取notice列表

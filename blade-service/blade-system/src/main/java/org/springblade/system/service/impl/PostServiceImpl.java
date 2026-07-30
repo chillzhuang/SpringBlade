@@ -17,6 +17,7 @@ package org.springblade.system.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.base.BaseServiceImpl;
 import org.springblade.core.secure.utils.SecureUtil;
@@ -62,6 +63,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
 	@Override
 	public boolean submit(Post post) {
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
 		TenantGuard.bindTenant(this, post, POST);
 		if (Func.isEmpty(post.getTenantId())) {
 			throw new ServiceException("租户ID不能为空");
@@ -71,6 +73,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
 	@Override
 	public boolean remove(List<Long> ids) {
+		CacheUtil.clear(CacheUtil.SYS_CACHE);
 		TenantGuard.verifyBatch(this, ids, POST);
 		return deleteLogic(ids);
 	}

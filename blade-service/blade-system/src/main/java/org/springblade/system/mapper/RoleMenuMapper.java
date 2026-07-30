@@ -31,9 +31,9 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
 	/**
 	 * 自定义分页
-	 * @param page
-	 * @param roleMenu
-	 * @return
+	 * @param page     分页参数
+	 * @param roleMenu 角色菜单查询条件
+	 * @return 角色菜单分页数据
 	 */
 	List<RoleMenuVO> selectRoleMenuPage(IPage page, RoleMenuVO roleMenu);
 

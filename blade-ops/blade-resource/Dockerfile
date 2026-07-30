@@ -1,4 +1,4 @@
-FROM bladex/alpine-java:openjdk17_cn_slim
+FROM bladex/alpine-java:openjdk21_cn_slim
 
 MAINTAINER bladejava@qq.com
 

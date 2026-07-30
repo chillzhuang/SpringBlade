@@ -34,7 +34,7 @@ import java.util.List;
 )
 public interface INoticeClient {
 
-	String API_PREFIX = "/client";
+	String API_PREFIX = "/feign/client/notice";
 	String TOP = API_PREFIX + "/top";
 
 	/**

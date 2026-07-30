@@ -1,6 +1,6 @@
 package org.springblade.seata.order.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.seata.order.entity.Order;
 
 /**

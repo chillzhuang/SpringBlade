@@ -30,14 +30,14 @@ public interface IDynamicService extends BaseService<Notice> {
 	/**
 	 * master数据源的列表
 	 *
-	 * @return
+	 * @return master数据源的公告列表
 	 */
 	List<Notice> masterList();
 
 	/**
 	 * slave数据源的列表
 	 *
-	 * @return
+	 * @return slave数据源的公告列表
 	 */
 	List<Notice> slaveList();
 

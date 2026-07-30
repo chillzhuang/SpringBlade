@@ -16,7 +16,7 @@
 package org.springblade.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.system.entity.Dept;
 import org.springblade.system.vo.DeptVO;
 
@@ -33,9 +33,9 @@ public interface IDeptService extends IService<Dept> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param dept
-	 * @return
+	 * @param page 分页参数
+	 * @param dept 部门查询条件
+	 * @return 部门分页数据
 	 */
 	IPage<DeptVO> selectDeptPage(IPage<DeptVO> page, DeptVO dept);
 
@@ -61,17 +61,17 @@ public interface IDeptService extends IService<Dept> {
 	/**
 	 * 获取部门ID
 	 *
-	 * @param tenantId
-	 * @param deptNames
-	 * @return
+	 * @param tenantId  租户ID
+	 * @param deptNames 部门名称集合
+	 * @return 部门主键字符串
 	 */
 	String getDeptIds(String tenantId, String deptNames);
 
 	/**
 	 * 获取部门名
 	 *
-	 * @param deptIds
-	 * @return
+	 * @param deptIds 部门主键集合
+	 * @return 部门名称集合
 	 */
 	List<String> getDeptNames(String deptIds);
 

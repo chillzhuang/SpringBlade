@@ -84,20 +84,20 @@ SpringBlade/                            # Maven 父工程（pom 聚合）
 
 | 类别 | 技术 |
 | --- | --- |
-| JDK | Java 17+ |
+| JDK | Java 21 |
 | 基础框架 | Spring Boot / Spring Cloud / Spring Cloud Alibaba / Maven |
 | 核心库 | blade-core-bom、blade-core-cloud、blade-core-boot |
 | 注册中心 / 配置中心 | Nacos |
 | 熔断限流 | Sentinel（`spring-cloud-starter-alibaba-sentinel`） |
 | 分布式事务 | Seata（`blade-starter-transaction`，见 `blade-seata-order`、`blade-seata-storage`） |
-| RPC | OpenFeign（与 Sentinel / OkHttp 集成） |
+| RPC | OpenFeign（与 Sentinel 集成） |
 | 网关 | Spring Cloud Gateway（WebFlux） |
-| ORM | MyBatis-Plus + dynamic-datasource-spring-boot3-starter |
+| ORM | MyBatis-Plus + dynamic-datasource-spring-boot4-starter |
 | 安全 | blade-core-secure（JWT + 可选 AES 加密 + SM2 国密登录） |
 | 缓存 | BladeRedis（Protostuff 序列化，响应式 Gateway 侧用 Reactive Redis） |
 | 数据权限 | blade-starter-datascope（DataScopeHandler 行级过滤） |
 | 监控 | Spring Boot Admin（`blade-admin`）+ Actuator |
-| 文档 | Knife4j（网关聚合 + 各服务 OpenAPI 3） |
+| 文档 | springdoc（各服务 OpenAPI 3 原生 UI） |
 | 报表 | UReport2（`blade-report`） |
 | 代码生成 | blade-starter-develop + Apache Velocity（`blade-develop`） |
 | 验证码 | easy-captcha |
@@ -162,7 +162,7 @@ SpringBlade/                            # Maven 父工程（pom 聚合）
 ### 6.1 注解顺序
 
 - **Controller 类**：`@RestController` → Lombok（`@AllArgsConstructor`） → `@RequestMapping("/resource")` → `@Tag`
-- **Controller 方法**：HTTP 方法注解（`@GetMapping`/`@PostMapping`）→ `@ApiOperationSupport(order = N)` → `@Operation` → `@PreAuth`（如需角色控制）
+- **Controller 方法**：HTTP 方法注解（`@GetMapping`/`@PostMapping`）→ `@Operation` → `@PreAuth`（如需角色控制）
 - **Feign 接口**：`@FeignClient(value = AppConstant.APPLICATION_XXX_NAME, fallback = IXxxClientFallback.class)`
 - **Feign Fallback**：`@Component` → 实现对应接口
 - **Entity 类**：`@Data` → `@TableName` → `@EqualsAndHashCode(callSuper = true)`（继承 BaseEntity/TenantEntity 时必须） → `@Schema`（字段级使用）
@@ -200,7 +200,7 @@ Entity 基类的选择**直接决定** Service 和 ServiceImpl 的继承方式�
 - 返回类型统一使用 `R<T>`（除非明确只返回原始对象，如 `ISysClient#getDept` 返回 `Dept`）
 - **降级类**：与接口同包，命名 `IXxxClientFallback`，标注 `@Component` 并实现全部方法，方法返回 `null` 或安全缺省值
 - Feign 实现（服务端）位于对应 Service 模块的 `feign/` 包，`@RestController` 实现接口并复用内部 Service
-- Feign + Sentinel 默认开启（`feign.sentinel.enabled=true`）+ OkHttp 连接池（`feign.okhttp.enabled=true`）
+- Feign + Sentinel 默认开启（`feign.sentinel.enabled=true`）
 
 ### 6.5 依赖注入
 
@@ -212,12 +212,12 @@ Entity 基类的选择**直接决定** Service 和 ServiceImpl 的继承方式�
 
 禁止手写 getter/setter，统一使用 `@Data`、`@EqualsAndHashCode(callSuper = true)`、`@AllArgsConstructor`、`@RequiredArgsConstructor`、`@Slf4j`、`@SneakyThrows` 等
 
-### 6.7 Java 17 特性
+### 6.7 Java 21 特性
 
-- 可使用增强 switch、Text Blocks、Pattern Matching for instanceof、`@Serial`
-- **禁止** `var` 类型推断，所有变量显式声明类型
-- 优先使用 Stream API，Lambda 保持简洁
-- `serialVersionUID` 必须加 `@Serial` 注解
+- **基线 JDK 21 LTS**，优先采用已稳定的现代语言特性提升可读性：`switch` 表达式与模式匹配（含 Record Patterns）、`instanceof` 模式匹配、Text Blocks（承载多行 SQL / JSON 字面量）、`@Serial`（标注 `serialVersionUID` 与序列化方法）
+- 实体 / VO 沿用 Lombok（`@Data` 等），**不改用 record**——需保留可变字段与无参构造以适配 MyBatis-Plus 映射
+- **禁止 `var`**，所有变量显式声明类型；优先使用 Stream API，Lambda 保持简洁
+- 虚拟线程（Virtual Threads）属运行期能力，由 Spring Boot 4 配置 `spring.threads.virtual.enabled` 按需开启，非编码约定
 
 ### 6.8 MyBatis-Plus
 
@@ -330,7 +330,7 @@ mvn clean package -DskipTests -pl blade-service/blade-system -am  # 只打包 sy
 ### 11.2 Nacos 配置
 
 - 配置文件位于 `doc/nacos/`：`blade.yaml`（公共配置）+ `blade-dev.yaml`/`blade-test.yaml`/`blade-prod.yaml`（环境差异）
-- 数据源、密钥、Swagger、Knife4j、Sentinel、Feign 等共享参数统一在 Nacos 配置
+- 数据源、密钥、Swagger、Sentinel、Feign 等共享参数统一在 Nacos 配置
 - 各服务 `src/main/resources/application-{env}.yml` 仅保留 `server.port` 与 `spring.datasource.url` 等少量本地覆盖
 
 ### 11.3 Docker 部署
@@ -403,7 +403,7 @@ BLADE_TOKEN_CRYPTO_KEY     # Token AES 加密密钥
 | `@FeignClient` + `AppConstant.APPLICATION_XXX_NAME` | 服务间调用 |
 | `ISysClient` / `IUserClient` / `IDictClient` | 常用 Feign 契约 |
 | `@GlobalTransactional` | Seata 分布式事务 |
-| `@ApiOperationSupport` / `@Operation` / `@Tag` / `@Schema` | Knife4j + OpenAPI 3 文档注解 |
+| `@Operation` / `@Tag` / `@Schema` | springdoc / OpenAPI 3 文档注解 |
 | `LauncherConstant` / `AppConstant` / `CommonConstant` | 启动常量 / 应用名 / 公共常量 |
 
 ---

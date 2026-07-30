@@ -32,17 +32,17 @@ public interface PostMapper extends BaseMapper<Post> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param post
-	 * @return
+	 * @param page  分页参数
+	 * @param post  岗位查询条件
+	 * @return 岗位分页数据
 	 */
 	List<PostVO> selectPostPage(IPage page, PostVO post);
 
 	/**
 	 * 获取岗位名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 岗位ID数组
+	 * @return 岗位名称集合
 	 */
 	List<String> getPostNames(Long[] ids);
 

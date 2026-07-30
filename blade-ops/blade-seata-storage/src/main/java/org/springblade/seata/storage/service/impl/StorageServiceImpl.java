@@ -1,7 +1,7 @@
 package org.springblade.seata.storage.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.seata.storage.entity.Storage;
 import org.springblade.seata.storage.mapper.StorageMapper;
 import org.springblade.seata.storage.service.IStorageService;

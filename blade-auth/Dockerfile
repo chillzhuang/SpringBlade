@@ -1,6 +1,6 @@
 # 网络问题无法下载可以改为阿里云镜像
-# FROM registry.cn-hangzhou.aliyuncs.com/bladex-repo/alpine-java:openjdk17_cn_slim
-FROM bladex/alpine-java:openjdk17_cn_slim
+# FROM registry.cn-hangzhou.aliyuncs.com/bladex-repo/alpine-java:openjdk21_cn_slim
+FROM bladex/alpine-java:openjdk21_cn_slim
 
 MAINTAINER bladejava@qq.com
 

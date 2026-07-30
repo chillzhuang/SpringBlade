@@ -15,7 +15,6 @@
  */
 package org.springblade.system.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -27,6 +26,7 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -48,6 +48,7 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/dept")
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
+@ApiOrder
 @Tag(name = "部门", description = "部门")
 public class DeptController extends BladeController {
 
@@ -57,7 +58,6 @@ public class DeptController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入dept")
 	public R<DeptVO> detail(Dept dept) {
 		Dept detail = deptService.getOne(Condition.getQueryWrapper(dept));
@@ -72,7 +72,6 @@ public class DeptController extends BladeController {
 		@Parameter(name = "deptName", description = "部门名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "fullName", description = "部门全称", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "列表", description = "传入dept")
 	public R<List<DeptVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> dept) {
 		return R.data(deptService.selectList(dept));
@@ -80,11 +79,8 @@ public class DeptController extends BladeController {
 
 	/**
 	 * 获取部门树形结构
-	 *
-	 * @return
 	 */
 	@GetMapping("/tree")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<DeptVO>> tree(String tenantId) {
 		return R.data(deptService.tree(tenantId));
@@ -94,7 +90,6 @@ public class DeptController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "新增或修改", description = "传入dept")
 	public R submit(@Valid @RequestBody Dept dept) {
 		return R.status(deptService.submit(dept));
@@ -104,7 +99,6 @@ public class DeptController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(deptService.remove(Func.toLongList(ids)));

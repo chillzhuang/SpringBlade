@@ -16,7 +16,7 @@
 package org.springblade.develop.service;
 
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.develop.entity.Code;
 
 /**
@@ -29,8 +29,8 @@ public interface ICodeService extends IService<Code> {
 	/**
 	 * 提交
 	 *
-	 * @param code
-	 * @return
+	 * @param code 代码生成配置对象
+	 * @return 是否提交成功
 	 */
 	boolean submit(Code code);
 

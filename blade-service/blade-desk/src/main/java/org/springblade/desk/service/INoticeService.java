@@ -29,9 +29,9 @@ public interface INoticeService extends BaseService<Notice> {
 
 	/**
 	 * 自定义分页
-	 * @param page
-	 * @param notice
-	 * @return
+	 * @param page   分页参数
+	 * @param notice 公告查询条件
+	 * @return 公告分页数据
 	 */
 	IPage<Notice> selectNoticePage(IPage<Notice> page, Notice notice);
 

@@ -18,7 +18,6 @@ package org.springblade.system.user.feign;
 
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.tool.api.R;
-import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
 import org.springblade.system.user.entity.UserOauth;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -38,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 )
 public interface IUserClient {
 
-	String API_PREFIX = "/user";
+	String API_PREFIX = "/feign/client/user";
 
 	/**
 	 * 获取用户信息
@@ -68,14 +67,4 @@ public interface IUserClient {
 	 */
 	@PostMapping(API_PREFIX + "/user-auth-info")
 	R<UserInfo> userAuthInfo(@RequestBody UserOauth userOauth);
-
-	/**
-	 * 新建用户
-	 *
-	 * @param user 用户实体
-	 * @return
-	 */
-	@PostMapping(API_PREFIX + "/save-user")
-	R<Boolean> saveUser(@RequestBody User user);
-
 }

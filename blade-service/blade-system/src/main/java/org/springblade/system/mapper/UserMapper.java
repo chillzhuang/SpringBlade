@@ -34,51 +34,51 @@ public interface UserMapper extends BaseMapper<User> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param user
-	 * @return
+	 * @param page  分页参数
+	 * @param user  用户查询条件
+	 * @return 用户分页数据
 	 */
 	List<User> selectUserPage(IPage page, User user);
 
 	/**
 	 * 获取用户
 	 *
-	 * @param tenantId
-	 * @param account
-	 * @param password
-	 * @return
+	 * @param tenantId 租户ID
+	 * @param account  账号
+	 * @param password 密码
+	 * @return 用户信息
 	 */
 	User getUser(String tenantId, String account, String password);
 
 	/**
 	 * 获取角色名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 角色ID数组
+	 * @return 角色名称集合
 	 */
 	List<String> getRoleName(String[] ids);
 
 	/**
 	 * 获取角色别名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 角色ID数组
+	 * @return 角色别名集合
 	 */
 	List<String> getRoleAlias(String[] ids);
 
 	/**
 	 * 获取部门名
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids 部门ID数组
+	 * @return 部门名称集合
 	 */
 	List<String> getDeptName(String[] ids);
 
 	/**
 	 * 获取导出用户数据
 	 *
-	 * @param queryWrapper
-	 * @return
+	 * @param queryWrapper 查询条件包装器
+	 * @return 用户导出数据集合
 	 */
 	List<UserExcel> exportUser(@Param("ew") Wrapper<User> queryWrapper);
 

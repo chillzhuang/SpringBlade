@@ -18,7 +18,7 @@ package org.springblade.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.log.exception.ServiceException;
@@ -137,6 +137,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return removeByIds(ids);
 	}
 
+	/**
+	 * 全量重置角色的菜单授权
+	 *
+	 * @param roleIds 角色id集合
+	 * @param menuIds 菜单id集合
+	 * @return 是否成功
+	 */
 	private boolean grantRoleMenu(List<Long> roleIds, List<Long> menuIds) {
 		// 删除角色配置的菜单集合
 		roleMenuService.remove(Wrappers.<RoleMenu>update().lambda().in(RoleMenu::getRoleId, roleIds));
@@ -153,6 +160,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return true;
 	}
 
+	/**
+	 * 全量重置角色的数据权限授权
+	 *
+	 * @param roleIds      角色id集合
+	 * @param dataScopeIds 数据权限id集合
+	 * @return 是否成功
+	 */
 	private boolean grantDataScope(List<Long> roleIds, List<Long> dataScopeIds) {
 		// 删除角色配置的数据权限集合
 		roleScopeService.remove(Wrappers.<RoleScope>update().lambda().eq(RoleScope::getScopeCategory, DATA_SCOPE_CATEGORY).in(RoleScope::getRoleId, roleIds));
@@ -170,6 +184,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return true;
 	}
 
+	/**
+	 * 全量重置角色的接口权限授权
+	 *
+	 * @param roleIds     角色id集合
+	 * @param apiScopeIds 接口权限id集合
+	 * @return 是否成功
+	 */
 	private boolean grantApiScope(List<Long> roleIds, List<Long> apiScopeIds) {
 		// 删除角色配置的接口权限集合
 		roleScopeService.remove(Wrappers.<RoleScope>update().lambda().eq(RoleScope::getScopeCategory, API_SCOPE_CATEGORY).in(RoleScope::getRoleId, roleIds));

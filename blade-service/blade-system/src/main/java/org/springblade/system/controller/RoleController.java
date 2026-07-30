@@ -15,7 +15,6 @@
  */
 package org.springblade.system.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -27,6 +26,7 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.annotation.PreAuth;
+import org.springblade.core.swagger.annotation.ApiOrder;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.Func;
@@ -50,6 +50,7 @@ import java.util.Map;
 @AllArgsConstructor
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @RequestMapping("/role")
+@ApiOrder
 @Tag(name = "角色", description = "角色")
 public class RoleController extends BladeController {
 
@@ -59,7 +60,6 @@ public class RoleController extends BladeController {
 	 * 详情
 	 */
 	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
 	@Operation(summary = "详情", description = "传入role")
 	public R<RoleVO> detail(Role role) {
 		Role detail = roleService.getOne(Condition.getQueryWrapper(role));
@@ -74,7 +74,6 @@ public class RoleController extends BladeController {
 		@Parameter(name = "roleName", description = "参数名称", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
 		@Parameter(name = "roleAlias", description = "角色别名", in = ParameterIn.QUERY, schema = @Schema(type = "string"))
 	})
-	@ApiOperationSupport(order = 2)
 	@Operation(summary = "列表", description = "传入role")
 	public R<List<RoleVO>> list(@Parameter(hidden = true) @RequestParam Map<String, Object> role) {
 		return R.data(roleService.selectList(role));
@@ -87,7 +86,6 @@ public class RoleController extends BladeController {
 	 * 防止通过 tenantId 参数越权读取其他租户的角色树。
 	 */
 	@GetMapping("/tree")
-	@ApiOperationSupport(order = 3)
 	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<RoleVO>> tree(String tenantId) {
 		return R.data(roleService.tree(tenantId));
@@ -102,7 +100,6 @@ public class RoleController extends BladeController {
 	 * 防止通过 roleId 越权读取其他租户的角色结构。
 	 */
 	@GetMapping("/tree-by-id")
-	@ApiOperationSupport(order = 4)
 	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<RoleVO>> treeById(Long roleId) {
 		return R.data(roleService.treeById(roleId));
@@ -112,7 +109,6 @@ public class RoleController extends BladeController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperationSupport(order = 5)
 	@Operation(summary = "新增或修改", description = "传入role")
 	public R submit(@Valid @RequestBody Role role) {
 		return R.status(roleService.submit(role));
@@ -122,7 +118,6 @@ public class RoleController extends BladeController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperationSupport(order = 6)
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(roleService.remove(Func.toLongList(ids)));
@@ -132,7 +127,6 @@ public class RoleController extends BladeController {
 	 * 设置角色权限
 	 */
 	@PostMapping("/grant")
-	@ApiOperationSupport(order = 7)
 	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
 	public R grant(@RequestBody GrantVO grantVO) {
 		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds(), grantVO.getDataScopeIds(), grantVO.getApiScopeIds());

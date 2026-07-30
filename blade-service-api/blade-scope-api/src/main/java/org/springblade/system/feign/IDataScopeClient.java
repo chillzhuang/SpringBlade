@@ -34,7 +34,7 @@ import java.util.List;
 )
 public interface IDataScopeClient {
 
-	String API_PREFIX = "/client/data-scope";
+	String API_PREFIX = "/feign/client/data-scope";
 	String GET_DATA_SCOPE_BY_MAPPER = API_PREFIX + "/by-mapper";
 	String GET_DATA_SCOPE_BY_CODE = API_PREFIX + "/by-code";
 	String GET_DEPT_ANCESTORS = API_PREFIX + "/dept-ancestors";

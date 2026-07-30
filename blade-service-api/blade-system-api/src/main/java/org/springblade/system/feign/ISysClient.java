@@ -37,7 +37,7 @@ import java.util.List;
 )
 public interface ISysClient {
 
-	String API_PREFIX = "/sys";
+	String API_PREFIX = "/feign/client/system";
 
 
 	/**

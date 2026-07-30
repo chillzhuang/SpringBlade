@@ -224,7 +224,7 @@ src/views/{module}/{modelCode}.vue
 2. **日期字段**必须同时添加 `@DateTimeFormat` 和 `@JsonFormat`，pattern 统一使用 `DateUtil.PATTERN_DATETIME`
 3. **逻辑删除字段** `isDeleted` 必须添加 `@TableLogic` 注解（继承 BaseEntity / TenantEntity 时由基类自动处理）
 4. **Swagger 文档**使用 OpenAPI 3 注解：`@Tag`、`@Operation`、`@Schema`、`@Parameter`
-5. **Knife4j** 排序使用 `@ApiOperationSupport(order = n)`
+5. **接口排序**：Controller 方法用 `@ApiOrder(n)` 控制展示顺序，值越小越靠前
 6. **响应包装**统一使用 `R<T>` 类
 7. **Wrapper 的 entityVO() 方法**中通过 `DictCache.getValue()` 翻译字典字段
 8. **Controller 的 remove 方法**：TenantEntity / BaseEntity 用 `deleteLogic()`，Raw 模式用 `removeBatchByIds()`

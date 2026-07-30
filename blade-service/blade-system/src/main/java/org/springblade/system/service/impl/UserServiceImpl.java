@@ -23,6 +23,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import org.springblade.common.cache.CacheNames;
 import org.springblade.common.constant.CommonConstant;
+import org.springblade.core.cache.constant.CacheConstant;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.base.BaseServiceImpl;
 import org.springblade.core.mp.support.Condition;
@@ -97,6 +99,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	 * 错误调用会导致跨租户数据泄漏。新增调用点请提交 PR 时 @ 安全负责人 review。
 	 */
 	private boolean doSubmit(User user) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		if (Func.isNotEmpty(user.getPassword())) {
 			user.setPassword(DigestUtil.encrypt(user.getPassword()));
 		}
@@ -114,6 +117,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public boolean remove(List<Long> userIds) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		TenantGuard.verifyBatch(this, userIds, USER);
 		return deleteLogic(userIds);
 	}
@@ -127,6 +131,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public boolean updateUserInfo(User user) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		// 用户修改自身信息强制指定当前请求账号的ID
 		user.setId(SecureUtil.getUserId());
 		User currentUser = getById(user.getId());
@@ -206,6 +211,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public boolean grant(String userIds, String roleIds) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		List<Long> idList = Func.toLongList(userIds);
 		TenantGuard.verifyBatch(this, idList, USER);
 		User user = new User();
@@ -215,6 +221,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public boolean resetPassword(String userIds) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		List<Long> idList = Func.toLongList(userIds);
 		TenantGuard.verifyBatch(this, idList, USER);
 		User user = new User();
@@ -225,6 +232,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public boolean updatePassword(Long userId, String oldPassword, String newPassword, String newPassword1) {
+		CacheUtil.clear(CacheConstant.USER_CACHE);
 		User user = getById(userId);
 		if (!newPassword.equals(newPassword1)) {
 			throw new ServiceException("请输入正确的确认密码!");
