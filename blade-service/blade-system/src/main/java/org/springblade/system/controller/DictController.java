@@ -48,7 +48,6 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dict")
-@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 @ApiOrder
 @Tag(name = "字典", description = "字典")
 public class DictController extends BladeController {
@@ -58,6 +57,7 @@ public class DictController extends BladeController {
 	/**
 	 * 详情
 	 */
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@GetMapping("/detail")
 	@Operation(summary = "详情", description = "传入dict")
 	public R<DictVO> detail(Dict dict) {
@@ -68,6 +68,7 @@ public class DictController extends BladeController {
 	/**
 	 * 列表
 	 */
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@GetMapping("/list")
 	@Parameters({
 		@Parameter(name = "code", description = "字典编号", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
@@ -82,6 +83,7 @@ public class DictController extends BladeController {
 	/**
 	 * 获取字典树形结构
 	 */
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@GetMapping("/tree")
 	@Operation(summary = "树形结构", description = "树形结构")
 	public R<List<DictVO>> tree() {
@@ -92,6 +94,7 @@ public class DictController extends BladeController {
 	/**
 	 * 新增或修改
 	 */
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@PostMapping("/submit")
 	@Operation(summary = "新增或修改", description = "传入dict")
 	public R submit(@Valid @RequestBody Dict dict) {
@@ -102,6 +105,7 @@ public class DictController extends BladeController {
 	/**
 	 * 删除
 	 */
+	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@PostMapping("/remove")
 	@Operation(summary = "删除", description = "传入ids")
 	public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
