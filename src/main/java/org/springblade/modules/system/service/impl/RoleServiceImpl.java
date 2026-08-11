@@ -19,12 +19,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
-import org.springblade.core.tenant.TenantGuard;
 import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.utils.SecureUtil;
+import org.springblade.core.tenant.TenantGuard;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.node.ForestNodeMerger;
 import org.springblade.core.tool.utils.CollectionUtil;
@@ -42,7 +43,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -126,6 +126,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		TenantGuard.bindTenant(this, role, ROLE);
 		if (Func.isEmpty(role.getTenantId())) {
 			throw new ServiceException("租户ID不能为空");
+		}
+		if (!SecureUtil.isAdministrator()) {
+			if (Func.toStr(role.getRoleAlias()).equals(RoleConstant.ADMINISTRATOR)) {
+				throw new ServiceException("无权限创建超管角色！");
+			}
 		}
 		return saveOrUpdate(role);
 	}

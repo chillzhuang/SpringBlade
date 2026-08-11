@@ -174,7 +174,7 @@ public class SecureUtil {
 	 * @return boolean
 	 */
 	public static boolean isAdministrator() {
-		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMINISTRATOR);
+		return hasRole(RoleConstant.ADMINISTRATOR);
 	}
 
 	/**
@@ -183,7 +183,17 @@ public class SecureUtil {
 	 * @return boolean
 	 */
 	public static boolean isAdmin() {
-		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMIN);
+		return hasRole(RoleConstant.ADMIN);
+	}
+
+	/**
+	 * 判定当前会话是否持有指定角色
+	 *
+	 * @param role 角色别名
+	 * @return boolean
+	 */
+	private static boolean hasRole(String role) {
+		return CollectionUtil.contains(Func.toStrArray(getUserRole()), role);
 	}
 
 	/**

@@ -7,13 +7,14 @@
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
     <packaging>jar</packaging>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
 
     <properties>
-        <blade.tool.version>5.0.0</blade.tool.version>
+        <blade.tool.version>5.0.1</blade.tool.version>
 
         <java.version>21</java.version>
         <maven.plugin.version>3.15.0</maven.plugin.version>
+        <maven.enforcer.version>3.6.3</maven.enforcer.version>
 
         <!-- 推荐使用Harbor -->
         <docker.registry.url>192.168.186.129</docker.registry.url>
@@ -151,6 +152,34 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Jackson 3 封禁门禁：将本工程直连依赖引入的 Jackson 3 转为构建期失败 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.version}</version>
+                <executions>
+                    <execution>
+                        <id>ban-jackson-3</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>tools.jackson*</exclude>
+                                        <exclude>org.springframework.boot:spring-boot-jackson</exclude>
+                                    </excludes>
+                                    <message>
+                                        检测到 Jackson 3 进入依赖树，与 SpringBlade 锁定的 Jackson 2 管线冲突。
+                                        定位：mvn dependency:tree -Dincludes='tools.jackson*' 并对引入方补 spring-boot-jackson 排除；放行：-Denforcer.skip=true
+                                    </message>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
