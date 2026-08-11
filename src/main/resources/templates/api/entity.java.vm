@@ -1,3 +1,21 @@
+#set($hasTenant = false)
+#set($hasKeyField = false)
+#set($hasLongKey = false)
+#foreach($field in $!{table.fields})
+#if($!{field.name} == $!{tenantColumn})
+#set($hasTenant = true)
+#end
+#if($!{field.keyFlag})
+#set($hasKeyField = true)
+#end
+#if($!{field.keyFlag} && $!{field.propertyType} == "Long")
+#set($hasLongKey = true)
+#end
+#end
+#set($useTenantEntity = false)
+#if($hasTenant && "$!superEntityClass" == "BaseEntity")
+#set($useTenantEntity = true)
+#end
 /**
  * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
@@ -16,7 +34,19 @@
 package $!{package.Entity};
 
 #foreach($pkg in $!{table.importPackages})
+#if($useTenantEntity && $!{pkg} == "org.springblade.core.mp.base.BaseEntity")
+import org.springblade.core.mp.base.TenantEntity;
+#elseif($!{pkg} == "java.io.Serializable" && $!{superEntityClass} && !$!{activeRecord})
+## 继承父类时不直接实现 Serializable，跳过强制注入的导入
+#elseif(!$hasKeyField && ($!{pkg} == "com.baomidou.mybatisplus.annotation.IdType" || $!{pkg} == "com.baomidou.mybatisplus.annotation.TableId"))
+## 主键列归入公共字段时实体内不产出主键注解，跳过全局 idType 注入的导入
+#else
 import $!{pkg};
+#end
+#end
+#if($hasLongKey)
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 #end
 #if($!{entityLombokModel})
 import lombok.Data;
@@ -46,7 +76,7 @@ import java.io.Serial;
 @Schema(description = #if ("$!{table.comment}"=="")"$!{entity}对象"#else"$!{table.comment}"#end)
 #end
 #if($!{superEntityClass})
-public class $!{entity} extends $!{superEntityClass}#if($!{activeRecord})<$!{entity}>#end {
+public class $!{entity} extends #if($useTenantEntity)TenantEntity#{else}$!{superEntityClass}#end#if($!{activeRecord})<$!{entity}>#end {
 #elseif($!{activeRecord})
 @Accessors(chain = true)
 public class $!{entity} extends Model<$!{entity}> {
@@ -59,7 +89,7 @@ public class $!{entity} implements Serializable {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{tenantColumn})
+#if($!{field.name} != $!{tenantColumn} || !$useTenantEntity)
 #if($!{field.keyFlag})
 #set($keyPropertyName=$!{field.propertyName})
 #end
@@ -79,6 +109,9 @@ public class $!{entity} implements Serializable {
 	@TableId(value = "$!{field.name}", type = IdType.$!{idType})
 #elseif($!{field.convert})
 	@TableId("$!{field.name}")
+#end
+#if($!{field.propertyType} == "Long")
+	@JsonSerialize(using = ToStringSerializer.class)
 #end
 ## 普通字段
 #elseif($!{field.fill})

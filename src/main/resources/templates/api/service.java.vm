@@ -15,11 +15,11 @@
  */
 package $!{package.Service};
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import $!{superServiceClassPackage};
 import $!{package.Entity}.$!{entity};
 #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{voPackage}.$!{entity}VO;
-import $!{superServiceClassPackage};
-import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * $!{table.comment} 服务类

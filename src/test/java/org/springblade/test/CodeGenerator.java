@@ -68,7 +68,11 @@ public class CodeGenerator {
 	/**
 	 * 基础业务字段
 	 */
-	public static String[] SUPER_ENTITY_COLUMNS = {"create_time", "create_user", "update_time", "update_user", "status", "is_deleted"};
+	public static String[] SUPER_ENTITY_COLUMNS = {"create_time", "create_user", "create_dept", "update_time", "update_user", "status", "is_deleted"};
+	/**
+	 * 控制器是否包含服务名前缀(单体版路由须带前缀,与前端请求地址保持一致)
+	 */
+	public static Boolean HAS_SERVICE_NAME = Boolean.TRUE;
 
 	/**
 	 * RUN THIS
@@ -86,6 +90,7 @@ public class CodeGenerator {
 		generator.setExcludeTables(EXCLUDE_TABLES);
 		generator.setHasSuperEntity(HAS_SUPER_ENTITY);
 		generator.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
+		generator.setHasServiceName(HAS_SERVICE_NAME);
 		generator.run();
 	}
 
