@@ -127,6 +127,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		if (Func.isEmpty(role.getTenantId())) {
 			throw new ServiceException("租户ID不能为空");
 		}
+		if (!SecureUtil.isAdministrator()) {
+			if (Func.toStr(role.getRoleAlias()).equals(RoleConstant.ADMINISTRATOR)) {
+				throw new ServiceException("无权限创建超管角色！");
+			}
+		}
 		return saveOrUpdate(role);
 	}
 

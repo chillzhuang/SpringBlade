@@ -43,6 +43,7 @@ import org.springblade.system.user.entity.UserOauth;
 import org.springblade.system.user.vo.UserVO;
 import org.springblade.system.excel.UserExcel;
 import org.springblade.system.mapper.UserMapper;
+import org.springblade.system.service.IRoleService;
 import org.springblade.system.service.IUserOauthService;
 import org.springblade.system.service.IUserService;
 import org.springblade.system.wrapper.UserWrapper;
@@ -54,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.springblade.core.tenant.TenantGuard.EntityType.ROLE;
 import static org.springblade.core.tenant.TenantGuard.EntityType.USER;
 
 /**
@@ -68,6 +70,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	private static final String MINUS_ONE = "-1";
 
 	private ISysClient sysClient;
+	private IRoleService roleService;
 	private IUserOauthService userOauthService;
 	private BladeRedis bladeRedis;
 
@@ -77,12 +80,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 		if (Func.isEmpty(user.getTenantId())) {
 			throw new ServiceException("租户ID不能为空");
 		}
+		TenantGuard.verifyBatch(roleService, Func.toLongList(user.getRoleId()), ROLE);
 		return doSubmit(user);
 	}
 
 	@Override
 	public boolean update(User user) {
 		TenantGuard.bindTenant(this, user, USER);
+		TenantGuard.verifyBatch(roleService, Func.toLongList(user.getRoleId()), ROLE);
 		return doSubmit(user);
 	}
 
@@ -214,6 +219,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 		CacheUtil.clear(CacheConstant.USER_CACHE);
 		List<Long> idList = Func.toLongList(userIds);
 		TenantGuard.verifyBatch(this, idList, USER);
+		TenantGuard.verifyBatch(roleService, Func.toLongList(roleIds), ROLE);
 		User user = new User();
 		user.setRoleId(roleIds);
 		return this.update(user, Wrappers.<User>update().lambda().in(User::getId, idList));

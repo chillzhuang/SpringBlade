@@ -9,13 +9,14 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>5.0.0</revision>
+        <revision>5.0.1</revision>
 
-        <blade.tool.version>5.0.0</blade.tool.version>
+        <blade.tool.version>5.0.1</blade.tool.version>
 
         <java.version>21</java.version>
         <maven.plugin.version>3.15.0</maven.plugin.version>
         <maven.flatten.version>1.7.3</maven.flatten.version>
+        <maven.enforcer.version>3.6.3</maven.enforcer.version>
 
         <!-- 推荐使用Harbor -->
         <docker.registry.url>10.211.55.5</docker.registry.url>
@@ -150,6 +151,42 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <!--
+                序列化管线门禁：把各服务直连依赖引入的 Jackson 3 自动配置模块转为构建期失败，全模块继承执行。
+                封禁对象仅为该自动配置模块，Jackson 3 的库不在范围内；
+                spring-boot-jackson2 为精确坐标匹配，同样不受影响。
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.version}</version>
+                <executions>
+                    <execution>
+                        <id>ban-jackson3-autoconfigure</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>org.springframework.boot:spring-boot-jackson</exclude>
+                                        <exclude>org.springframework.boot:spring-boot-jackson-test</exclude>
+                                    </excludes>
+                                    <message>
+                                        检测到 spring-boot-jackson 进入依赖树。该模块会注册 JsonMapper Bean，
+                                        使 Boot 4 改用 Jackson 3 的消息转换器，
+                                        @BladeView 视图过滤、大数转字符串、日期格式等序列化约定将静默失效。
+                                        请执行 mvn dependency:tree -Dincludes='org.springframework.boot:spring-boot-jackson'
+                                        定位引入路径，并对引入方补充排除。
+                                        注意：tools.jackson 系构件本身不在封禁范围，可以正常引入。
+                                    </message>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>

@@ -75,8 +75,22 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
         </dependency>
+        <!-- 网关不含 blade-core-tool，需自带 Jackson 2 兼容装配，为过滤器与异常处理器提供 ObjectMapper -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-jackson2</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!--
+            Jackson 3 库本体。网关不含 blade-core-cloud，需自行引入：
+            网关内置的 RemoveJsonAttributes 响应体过滤器默认装配且硬依赖 Jackson 3 的对象映射器，缺席即启动失败。
+            此处只引入库，不引入 spring-boot-jackson 自动配置模块，序列化管线仍由上方的 Jackson 2 承载。
+        -->
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
