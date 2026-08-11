@@ -15,11 +15,12 @@
  */
 package $!{package.Mapper};
 
+import $!{superMapperClassPackage};
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import $!{package.Entity}.$!{entity};
 #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{voPackage}.$!{entity}VO;
-import $!{superMapperClassPackage};
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.util.List;
 
 /**

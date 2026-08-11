@@ -16,7 +16,6 @@
 #set($wrapperPackage=$package.Entity.replace("pojo.entity","wrapper"))
 package $!{wrapperPackage};
 
-import lombok.AllArgsConstructor;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
 import $!{package.Entity}.$!{entity};
@@ -29,11 +28,11 @@ import $!{voPackage}.$!{entity}VO;
  * @author $!{author}
  * @since $!{date}
  */
-public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO>  {
+public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO> {
 
 	public static $!{entity}Wrapper build() {
-        return new $!{entity}Wrapper();
-    }
+		return new $!{entity}Wrapper();
+	}
 
 	@Override
 	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {

@@ -635,6 +635,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping(AppConstant.APPLICATION_{MODULE}_NAME + "/{modelCode}")
+@ApiOrder
 @Tag(name = "{中文名}", description = "{中文名}接口")
 public class {Name}Controller extends BladeController {
 
@@ -644,7 +645,6 @@ public class {Name}Controller extends BladeController {
      * 详情
      */
     @GetMapping("/detail")
-    @ApiOrder(1)
     @Operation(summary = "详情", description = "传入{modelCode}")
     public R<{Name}VO> detail({Name} {modelCode}) {
         {Name} detail = {modelCode}Service.getOne(Condition.getQueryWrapper({modelCode}));
@@ -655,7 +655,6 @@ public class {Name}Controller extends BladeController {
      * 分页列表
      */
     @GetMapping("/list")
-    @ApiOrder(2)
     @Operation(summary = "分页", description = "传入{modelCode}")
     @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
     public R<IPage<{Name}VO>> list(@RequestParam Map<String, Object> {modelCode}, Query query) {
@@ -670,7 +669,6 @@ public class {Name}Controller extends BladeController {
      * 自定义分页
      */
     @GetMapping("/page")
-    @ApiOrder(3)
     @Operation(summary = "自定义分页", description = "传入{modelCode}")
     public R<IPage<{Name}VO>> page({Name}VO {modelCode}, Query query) {
         IPage<{Name}VO> pages = {modelCode}Service.select{Name}Page(Condition.getPage(query), {modelCode});
@@ -681,7 +679,6 @@ public class {Name}Controller extends BladeController {
      * 新增
      */
     @PostMapping("/save")
-    @ApiOrder(4)
     @Operation(summary = "新增", description = "传入{modelCode}")
     public R save(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.save({modelCode}));
@@ -691,7 +688,6 @@ public class {Name}Controller extends BladeController {
      * 修改
      */
     @PostMapping("/update")
-    @ApiOrder(5)
     @Operation(summary = "修改", description = "传入{modelCode}")
     public R update(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.updateById({modelCode}));
@@ -701,7 +697,6 @@ public class {Name}Controller extends BladeController {
      * 新增或修改
      */
     @PostMapping("/submit")
-    @ApiOrder(6)
     @Operation(summary = "新增或修改", description = "传入{modelCode}")
     public R submit(@Valid @RequestBody {Name} {modelCode}) {
         return R.status({modelCode}Service.saveOrUpdate({modelCode}));
@@ -711,7 +706,6 @@ public class {Name}Controller extends BladeController {
      * 删除
      */
     @PostMapping("/remove")
-    @ApiOrder(7)
     @Operation(summary = "逻辑删除", description = "传入ids")
     public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
         return R.status({modelCode}Service.deleteLogic(Func.toLongList(ids)));
@@ -761,7 +755,6 @@ public R<IPage<{Name}>> list(@RequestParam Map<String, Object> {modelCode}, Quer
 
 ```java
 @PostMapping("/remove")
-@ApiOrder(7)
 @Operation(summary = "删除", description = "传入ids")
 public R remove(@Parameter(description = "主键集合", required = true) @RequestParam String ids) {
     return R.status({modelCode}Service.removeBatchByIds(Func.toLongList(ids)));
@@ -783,7 +776,6 @@ SpringBlade 开源版仅支持角色级权限：
 
 ```java
 @GetMapping("/export-{modelCode}")
-@ApiOrder(8)
 @Operation(summary = "导出数据", description = "传入{modelCode}")
 @PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 public void export{Name}(@RequestParam Map<String, Object> {modelCode}, HttpServletResponse response) {

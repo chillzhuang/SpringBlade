@@ -64,7 +64,7 @@ public class CodeGenerator {
 	/**
 	 * 基础业务字段
 	 */
-	public static String[] SUPER_ENTITY_COLUMNS = {"create_time", "create_user", "update_time", "update_user", "status", "is_deleted"};
+	public static String[] SUPER_ENTITY_COLUMNS = {"create_time", "create_user", "create_dept", "update_time", "update_user", "status", "is_deleted"};
 
 
 	/**

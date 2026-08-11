@@ -1,14 +1,23 @@
+#set($hasTenant = false)
+#foreach($field in $!{table.fields})
+#if($!{field.name} == $!{tenantColumn})
+#set($hasTenant = true)
+#end
+#end
+#set($useTenantEntity = false)
+#if($hasTenant && "$!superEntityClass" == "BaseEntity")
+#set($useTenantEntity = true)
+#end
 <template>
   <basic-container>
     <avue-crud :option="option"
                :table-loading="loading"
                :data="data"
-               ref="crudRef"
-               v-model="form"
-               v-model:search="search"
-               v-model:page="page"
+               :page="page"
                :permission="permissionList"
                :before-open="beforeOpen"
+               v-model="form"
+               ref="crudRef"
                @row-update="rowUpdate"
                @row-save="rowSave"
                @row-del="rowDel"
@@ -17,6 +26,7 @@
                @selection-change="selectionChange"
                @current-change="currentChange"
                @size-change="sizeChange"
+               @refresh-change="refreshChange"
                @on-load="onLoad">
       <template #menu-left>
         <el-button type="danger"
@@ -41,8 +51,8 @@ import { validData } from '@/utils/util';
 interface $!{entity}Entity {
   id: string;
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{tenantColumn})
-#if($!{field.propertyName} != "id")
+#if($!{field.name} != $!{tenantColumn} || !$useTenantEntity)
+#if(!$!{field.keyFlag})
 #if($!{field.propertyType} == "Integer" || $!{field.propertyType} == "Long" || $!{field.propertyType} == "Short" || $!{field.propertyType} == "Byte" || $!{field.propertyType} == "Double" || $!{field.propertyType} == "Float" || $!{field.propertyType} == "BigDecimal")
   $!{field.propertyName}?: number;
 #elseif($!{field.propertyType} == "Boolean")
@@ -65,14 +75,13 @@ const permission = computed(() => store.getters.permission);
 // 表格实例与数据状态
 const crudRef = ref();
 const form = ref<$!{entity}Form>({});
-const search = ref<Partial<$!{entity}Entity>>({});
 const data = ref<$!{entity}Entity[]>([]);
 const selectionList = ref<$!{entity}Entity[]>([]);
 const query = ref<Partial<$!{entity}Entity>>({});
 const loading = ref(true);
 
-// 分页参数（整体替换，需用 ref）
-const page = ref({
+// 分页参数
+const page = reactive({
   pageSize: 10,
   currentPage: 1,
   total: 0,
@@ -85,16 +94,17 @@ const ids = computed(() => selectionList.value.map(ele => ele.id).join(','));
 const option = reactive({
   height: 'auto',
   calcHeight: 210,
+  tip: false,
   searchShow: true,
   searchMenuSpan: 6,
-  tip: false,
   border: true,
   index: true,
   viewBtn: true,
   selection: true,
   column: [
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{tenantColumn})
+#if($!{field.name} != $!{tenantColumn} || !$useTenantEntity)
+#if(!$!{field.keyFlag})
     {
       label: '$!{field.comment}',
       prop: '$!{field.propertyName}',
@@ -104,6 +114,7 @@ const option = reactive({
         trigger: 'blur',
       }],
     },
+#end
 #end
 #end
   ],
@@ -121,9 +132,9 @@ const permissionList = computed(() => ({
 const onLoad = (pageData: { currentPage: number; pageSize: number }, params: Partial<$!{entity}Entity> = {}) => {
   loading.value = true;
   getList(pageData.currentPage, pageData.pageSize, Object.assign(params, query.value)).then(res => {
-    const list = res.data.data;
-    page.value.total = list.total;
-    data.value = list.records;
+    const listData = res.data.data;
+    page.total = listData.total;
+    data.value = listData.records;
     loading.value = false;
     selectionClear();
   });
@@ -132,25 +143,30 @@ const onLoad = (pageData: { currentPage: number; pageSize: number }, params: Par
 // 条件检索
 const searchChange = (params: Partial<$!{entity}Entity>, done: () => void) => {
   query.value = params;
-  page.value.currentPage = 1;
-  onLoad(page.value, params);
+  page.currentPage = 1;
+  onLoad(page, params);
   done();
 };
 
 // 重置检索条件
 const searchReset = () => {
   query.value = {};
-  onLoad(page.value);
+  onLoad(page);
 };
 
 // 切换页码
 const currentChange = (currentPage: number) => {
-  page.value.currentPage = currentPage;
+  page.currentPage = currentPage;
 };
 
 // 调整每页条数
 const sizeChange = (pageSize: number) => {
-  page.value.pageSize = pageSize;
+  page.pageSize = pageSize;
+};
+
+// 刷新当前列表
+const refreshChange = () => {
+  onLoad(page, query.value);
 };
 
 // 记录当前选中行
@@ -168,7 +184,7 @@ const selectionClear = () => {
 const rowSave = (row: $!{entity}Form, done: () => void, loading: () => void) => {
   add(row).then(() => {
     done();
-    onLoad(page.value);
+    onLoad(page);
     ElMessage({
       type: 'success',
       message: '操作成功!',
@@ -183,7 +199,7 @@ const rowSave = (row: $!{entity}Form, done: () => void, loading: () => void) => 
 const rowUpdate = (row: $!{entity}Form, index: number, done: () => void, loading: () => void) => {
   update(row).then(() => {
     done();
-    onLoad(page.value);
+    onLoad(page);
     ElMessage({
       type: 'success',
       message: '操作成功!',
@@ -205,7 +221,7 @@ const rowDel = (row: $!{entity}Entity) => {
       return remove(row.id);
     })
     .then(() => {
-      onLoad(page.value);
+      onLoad(page);
       ElMessage({
         type: 'success',
         message: '操作成功!',
@@ -228,7 +244,7 @@ const handleDelete = () => {
       return remove(ids.value);
     })
     .then(() => {
-      onLoad(page.value);
+      onLoad(page);
       ElMessage({
         type: 'success',
         message: '操作成功!',
@@ -237,7 +253,7 @@ const handleDelete = () => {
     });
 };
 
-// 打开弹窗前置处理：编辑与查看回填详情
+// 打开弹窗前加载编辑/查看详情
 const beforeOpen = (done: () => void, type: string) => {
   if (['edit', 'view'].includes(type)) {
     getDetail(form.value.id).then(res => {
