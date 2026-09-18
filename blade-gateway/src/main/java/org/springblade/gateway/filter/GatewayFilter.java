@@ -17,6 +17,7 @@ package org.springblade.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import org.springblade.gateway.props.RequestProperties;
+import org.springblade.gateway.utils.WebUtil;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,7 +34,6 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 全局拦截器
@@ -94,15 +94,16 @@ public class GatewayFilter implements WebFilter, Ordered {
 				return Mono.empty();
 			}
 		}
+		// 客户端地址在网关解析一次，黑白名单与下游服务共用同一结果
+		String clientIp = WebUtil.getIP(request);
 		// 处理黑白名单与拦截请求
 		if (requestProperties.getEnabled()) {
 			String path = request.getPath().value();
-			String ip = Objects.requireNonNull(request.getRemoteAddress()).getHostString();
-			if (isRequestBlock(path, ip)) {
+			if (isRequestBlock(path, clientIp)) {
 				throw new RuntimeException(DEFAULT_MESSAGE);
 			}
 		}
-		return chain.filter(exchange);
+		return chain.filter(WebUtil.setIP(exchange, clientIp));
 	}
 
 
