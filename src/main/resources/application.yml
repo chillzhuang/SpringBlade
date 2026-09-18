@@ -103,8 +103,8 @@ oss:
   name: qiniu
   tenant-mode: true
   endpoint: http://prt1thnw3.bkt.clouddn.com
-  access-key: N_Loh1ngBqcJovwiAJqR91Ifj2vgOWHOf8AwBA_h
-  secret-key: AuzuA1KHAbkIndCU0dB3Zfii2O3crHNODDmpxHRS
+  access-key: xxxxxxx
+  secret-key: xxxxxxx
   bucket-name: blade
 
 #第三方登陆配置
