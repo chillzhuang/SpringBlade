@@ -9,9 +9,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>5.0.1</revision>
+        <revision>5.0.2</revision>
 
-        <blade.tool.version>5.0.1</blade.tool.version>
+        <blade.tool.version>5.0.2</blade.tool.version>
 
         <java.version>21</java.version>
         <maven.plugin.version>3.15.0</maven.plugin.version>
