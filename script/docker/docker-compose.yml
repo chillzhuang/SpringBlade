@@ -1,7 +1,7 @@
 version: '3'
 services:
   nacos:
-    image: nacos/nacos-server:v3.2.2
+    image: nacos/nacos-server:v3.2.4
     hostname: "nacos-standalone"
     environment:
       - NACOS_AUTH_ENABLE=true
@@ -24,7 +24,7 @@ services:
         ipv4_address: 172.30.0.48
 
   sentinel:
-    image: bladex/sentinel-dashboard:1.8.0
+    image: bladex/sentinel-dashboard:1.8.9
     hostname: "sentinel"
     ports:
       - 8858:8858
@@ -59,7 +59,7 @@ services:
       - blade_net
 
   blade-redis:
-    image: redis:5.0.2-alpine
+    image: redis:7-alpine
     hostname: "blade-redis"
     ports:
     - 3379:6379
