@@ -37,7 +37,7 @@ public class TokenGranterBuilder {
 	private static final Map<String, ITokenGranter> GRANTER_POOL = new ConcurrentHashMap<>();
 
 	static {
-		GRANTER_POOL.put(PasswordTokenGranter.GRANT_TYPE, SpringUtil.getBean(PasswordTokenGranter.class));
+		//GRANTER_POOL.put(PasswordTokenGranter.GRANT_TYPE, SpringUtil.getBean(PasswordTokenGranter.class));
 		GRANTER_POOL.put(CaptchaTokenGranter.GRANT_TYPE, SpringUtil.getBean(CaptchaTokenGranter.class));
 		GRANTER_POOL.put(RefreshTokenGranter.GRANT_TYPE, SpringUtil.getBean(RefreshTokenGranter.class));
 		GRANTER_POOL.put(SocialTokenGranter.GRANT_TYPE, SpringUtil.getBean(SocialTokenGranter.class));
