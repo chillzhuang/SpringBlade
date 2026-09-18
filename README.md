@@ -44,37 +44,31 @@
 | Nacos Alibaba        | 3.2.2      |
 | Mybatis Plus         | 3.5.17     |
 
-
 ## 工程结构
 ``` 
 SpringBlade
-├── src/main/java/org/springblade
-│   ├── Application.java -- 启动类
-│   ├── common -- 公共模块
-│   │   ├── cache -- 缓存配置
-│   │   ├── config -- 系统配置
-│   │   ├── constant -- 常量定义
-│   │   ├── launch -- 启动配置
-│   │   └── tool -- 工具类
-│   ├── core -- 核心模块
-│   │   ├── log -- 日志拓展
-│   │   └── secure -- 安全拓展
-│   └── modules -- 业务模块
-│       ├── auth -- 认证授权模块
-│       ├── desk -- 工作台模块
-│       ├── develop -- 代码生成模块
-│       ├── resource -- 资源管理模块
-│       └── system -- 系统管理模块
-├── src/main/resources
-│   ├── application.yml -- 主配置文件
-│   ├── application-dev.yml -- 开发环境配置
-│   ├── application-test.yml -- 测试环境配置
-│   ├── application-prod.yml -- 生产环境配置
-│   └── config -- 其他配置文件
-├── doc -- 文档目录
-│   ├── script -- 启动脚本
-│   └── sql -- 数据库脚本
-└── pom.xml -- Maven配置文件
+├── blade-auth -- 授权服务提供
+├── blade-common -- 常用工具封装包
+├── blade-gateway -- Spring Cloud 网关
+├── blade-ops -- 运维中心
+├    ├── blade-admin -- spring-cloud后台管理
+├    ├── blade-develop -- 代码生成
+├    ├── blade-report -- 报表模块
+├    ├── blade-resource -- 资源模块
+├    ├── blade-seata-order -- seata分布式事务demo
+├    ├── blade-seata-storage -- seata分布式事务demo
+├── blade-service -- 业务模块
+├    ├── blade-demo -- 示例模块 
+├    ├── blade-desk -- 工作台模块 
+├    ├── blade-log -- 日志模块 
+├    └── blade-system -- 系统模块 
+├── blade-service-api -- 业务模块api封装
+├    ├── blade-demo-api -- 示例api 
+├    ├── blade-desk-api -- 工作台api 
+├    ├── blade-dict-api -- 字典api 
+├    ├── blade-scope-api -- 权限api 
+├    ├── blade-system-api -- 系统api 
+└──  └── blade-user-api -- 用户api 
 ```
 
 ## 官方信息
